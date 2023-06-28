@@ -28,7 +28,12 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta http-equiv="Content-Security-Policy" content="
+            default-src 'self' data: gap: https://*.googleapis.com/ https://*.fontawesome.com/ https://*.gstatic.com 'unsafe-eval'; 
+            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.fontawesome.com/; 
+            media-src *; 
+            img-src 'self' data: content:;
+            ">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -38,6 +43,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <!-- Icons from Font Awesome -->
+        <script src="https://kit.fontawesome.com/2fa58dfbff.js" crossorigin="anonymous"></script>
         <title>Rubik's Solver</title>
     </head>
     <body>
@@ -51,7 +58,12 @@
             </div> -->
 
             <!-- TODO: CUBE LOGO -->
+
             <!-- TODO: Start TEXT WITH ARROW -->
+            <i class="fa-solid fa-arrow-right-long"></i>
+            <div>
+
+            </div>
         </div>
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
