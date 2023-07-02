@@ -30,7 +30,12 @@ function onDeviceReady() {
     findActivePage();
 }
 
+
 let activePage;
+
+let touchStartX = 0;
+let touchEndX = 0;
+
 
 /* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
 function onStart() {
@@ -55,19 +60,49 @@ function findActivePage() {
 function onHomePage() {
     // Listen to swipes left and right swipes
     // console.log("GUMANA BA?");
-    listenSwipeLeft();
+    listenToSwipes();
 }
 
-function listenSwipeLeft() {
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
+function listenToSwipes() {
+    touchStartX = 0;
+    touchEndX = 0;
+
     addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
-        console.log(`start: ${e.changedTouches[0].screenX}`);
+        // console.log(`start: ${e.changedTouches[0].screenX}`);
     })
     addEventListener("touchend", (e) => {
         touchEndX = e.changedTouches[0].screenX;
-        console.log(`end: ${e.changedTouches[0].screenX}`);
+        // console.log(`end: ${e.changedTouches[0].screenX}`);
+        checkIfSwipe();
     })
+}
+
+function checkIfSwipe() {
+    let distance = Math.abs(touchStartX - touchEndX)
+    const MIN_SWIPE_DISTANCE = 50;
+
+    if (distance >= MIN_SWIPE_DISTANCE) {
+        // console.log("SWIPED");
+        checkSwipeDirection();
+    }
+
+    console.log(distance);
+}
+
+function checkSwipeDirection() {
+    if (touchStartX > touchEndX) {
+        onSwipeRight();
+    }
+    else {
+        onSwipeLeft();
+    }
+}
+
+function onSwipeRight() {
+    console.log("SWIPED RIGHT");
+}
+
+function onSwipeLeft() {
+    console.log("SWIPED Left");
 }
