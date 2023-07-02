@@ -26,4 +26,25 @@ function onDeviceReady() {
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
+
+    findCurrentPage();
+}
+
+let activePage;
+
+/* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
+function onStart() {
+    findCurrentPage();
+}
+onStart();
+
+
+/* Home Page */
+function findCurrentPage() {
+    activePage = document.querySelector("main > *");
+    console.log(activePage.classList[0]);
+}
+
+function onHomePage() {
+    
 }
