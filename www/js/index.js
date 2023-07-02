@@ -108,12 +108,12 @@ function onSwipeRight() {
         }
     }
     
-    function onSwipeLeft() {
-        // console.log("SWIPED Left");
-        
-        switch (activePage) {
-            case "home-page":
-                // Change contents in main
-                console.log("Change contents in main");
+function onSwipeLeft() {
+    // console.log("SWIPED Left");
+    
+    switch (activePage) {
+        case "home-page":
+            // Change contents in main
+            console.log("Change contents in main");
     }
 }
