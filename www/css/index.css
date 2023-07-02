@@ -76,13 +76,16 @@ body {
 
 }
 
-.app {
+.app, .app > main {
     height: 100%;
-    /* padding: 1rem; */
+}
+
+.app > main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
 
 h1 {
     font-size: 3rem;
