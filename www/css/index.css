@@ -88,6 +88,11 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    display: none;
+}
+
+.app > main > div.active {
+    display: flex;
 }
 
 

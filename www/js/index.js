@@ -27,31 +27,41 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
     document.getElementById('deviceready').classList.add('ready');
 
-    findActivePage();
+    onStart();
 }
 
 
 let activePage;
+let activePageName;
+mapPages = new Map();
 
 let touchStartX = 0;
 let touchEndX = 0;
 
 
-/* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
 function onStart() {
     findActivePage();
+    let pages = document.querySelectorAll("main > div");
+    // console.log(pages);
+    pages.forEach(page => {
+        mapPages.set(page.classList[0], page);
+    });
+    
+    console.log(mapPages);
+    
 }
+/* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
 onStart();
 
 
 /* Home Page */
 function findActivePage() {
-    activePage = document.querySelector("main > *");
-    activePage = activePage.classList[0] 
+    activePage = document.querySelector("main > div.active");
+    activePageName = activePage.classList[0] 
     // console.log(activePage.classList[0]);
 
 
-    if (activePage === "home-page") {
+    if (activePageName === "home-page") {
         onHomePage();
         // console.log("GUMANA BA?");
     };
@@ -87,7 +97,7 @@ function checkIfSwipe() {
         checkSwipeDirection();
     }
 
-    console.log(distance);
+    // console.log(distance);
 }
 
 function checkSwipeDirection() {
@@ -102,7 +112,7 @@ function checkSwipeDirection() {
 function onSwipeRight() {
     // console.log("SWIPED RIGHT");
 
-    switch (activePage) {
+    switch (activePageName) {
         case "home-page":
             console.log("Prompt to close here ...");
         }
@@ -111,9 +121,23 @@ function onSwipeRight() {
 function onSwipeLeft() {
     // console.log("SWIPED Left");
     
-    switch (activePage) {
+    switch (activePageName) {
         case "home-page":
             // Change contents in main
-            console.log("Change contents in main");
+            // console.log(mapPages.get("cube-select-page"));
+            changePage(mapPages.get("cube-select-page"));
     }
 }
+
+
+function changePage(pageToActivate) {
+    activePage.classList.toggle("active");
+    pageToActivate.classList.toggle("active");
+    findActivePage();
+}
+
+/* TODO:
+- Go back when swiping right
+- Find a way to go back to prev page when clicking phones back button
+- Delete console log comments
+*/
