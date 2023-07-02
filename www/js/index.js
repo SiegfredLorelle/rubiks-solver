@@ -100,9 +100,20 @@ function checkSwipeDirection() {
 }
 
 function onSwipeRight() {
-    console.log("SWIPED RIGHT");
-}
+    // console.log("SWIPED RIGHT");
 
-function onSwipeLeft() {
-    console.log("SWIPED Left");
+    switch (activePage) {
+        case "home-page":
+            console.log("Prompt to close here ...");
+        }
+    }
+    
+    function onSwipeLeft() {
+        // console.log("SWIPED Left");
+        
+        switch (activePage) {
+            case "home-page":
+                // Change contents in main
+                console.log("Change contents in main");
+    }
 }
