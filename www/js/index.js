@@ -25,10 +25,15 @@ function onDeviceReady() {
     // Cordova is now initialized. Have fun!
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
+    // document.getElementById('deviceready').classList.add('ready');
 
     onStart();
+    document.addEventListener("backbutton", onBack, false);
+
 }
+
+/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
+// onStart();
 
 let activePage;
 let activePageName;
@@ -48,22 +53,24 @@ function onStart() {
         mapPages.set(page.classList[0], page);
     });
 
-    // alert("BOBO");
-    // document.querySelector("main").style.backgroundColor = "pink";
-    // console.log(mapPages);
-    
 }
-/* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
-onStart();
+
+function onBack() {
+    if (confirm("Exit?")) {
+        navigator.app.exitApp();
+    } 
+}
 
 
-/* Home Page */
 function findActivePage() {
     activePage = document.querySelector("main > div.active");
     activePageName = activePage.classList[0]; 
 
     offListeners();
-    
+    manageActivePage();
+}
+
+function manageActivePage() {
     if (activePageName === "home-page") {
         onHomePage();
     }
@@ -71,6 +78,8 @@ function findActivePage() {
         onCubeSelectPage();
     }
 }
+
+
 
 function onHomePage() {
     listenToSwipes();
@@ -134,18 +143,17 @@ function onSwipeRight() {
             break;
         default:
             console.log("No pg to redirect");
-        }
     }
+}
     
-    function onSwipeLeft() {
-        switch (activePageName) {
-            case "home-page":
-                changePage(mapPages.get("cube-select-page"));
-                break;
+function onSwipeLeft() {
+    switch (activePageName) {
+        case "home-page":
+            changePage(mapPages.get("cube-select-page"));
+            break;
 
-            default:
-                console.log("No pg to redirect");
-            
+        default:
+            console.log("No pg to redirect");
     }
 }
 
@@ -157,8 +165,5 @@ function changePage(pageToActivate) {
     console.log(activePageName);
 }
 
-/* TODO:
-- Go back when swiping right
-- Find a way to go back to prev page when clicking phones back button
-- Delete console log comments
-- Swap swipe right and left (wrong direction)*/
+// /* TODO:
+// - Find a way to go back to prev page when clicking phones back button
