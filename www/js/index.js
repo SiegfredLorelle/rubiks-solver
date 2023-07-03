@@ -28,7 +28,7 @@ function onDeviceReady() {
     // document.getElementById('deviceready').classList.add('ready');
 
     onStart();
-    document.addEventListener("backbutton", onBack, false);
+    document.addEventListener("backbutton", onBackButton, false);
 
 }
 
@@ -55,12 +55,13 @@ function onStart() {
 
 }
 
-function onBack() {
+
+function exitApp() {
     if (confirm("Exit?")) {
         navigator.app.exitApp();
     } 
-}
 
+}
 
 function findActivePage() {
     activePage = document.querySelector("main > div.active");
@@ -136,7 +137,7 @@ function onSwipeRight() {
     // console.log("SWIPED RIGHT");
     switch (activePageName) {
         case "home-page":
-            console.log("Prompt to close here ...");
+            exitApp();
             break;
         case "cube-select-page":
             changePage(mapPages.get("home-page"));
@@ -165,5 +166,17 @@ function changePage(pageToActivate) {
     console.log(activePageName);
 }
 
+function onBackButton() {
+    switch(activePageName) {
+        case "home-page":
+            exitApp();
+            break;
+        case "cube-select-page":
+            changePage(mapPages.get("home-page"));
+            break;
+    }
+}
+
 // /* TODO:
 // - Find a way to go back to prev page when clicking phones back button
+// Lagay prompt when swipe left from home
