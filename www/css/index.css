@@ -73,7 +73,6 @@ body {
                                           /* offset horizontal: half of image width and text area width */
         }
     }
-
 }
 
 .app,
@@ -162,7 +161,6 @@ div.start-arrow-container > span > i {
         animation:fade 3000ms infinite;
         -webkit-animation:fade 3000ms infinite;
     }
-
 }
 
 
