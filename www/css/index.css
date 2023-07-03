@@ -16,11 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-*, *::before, *::after {
+*, 
+*::before, 
+*::after {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
     margin: 0;
     padding: 0;
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 
 /* IN CORDOVA DEFAULT STRUCTURE */
@@ -41,7 +43,7 @@ body {
     width:100%;
 }
 
-body {
+body, button {
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     text-align: center;
@@ -79,14 +81,12 @@ body {
 .app > main,
 .app > main > div {
     max-height: 100%;
+    max-width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
 .app > main > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     display: none;
 }
 
@@ -95,7 +95,7 @@ body {
 }
 
 
-h1 {
+h1, h2 {
     font-size: 3rem;
     font-weight:bolder;
     overflow:visible;
@@ -112,20 +112,73 @@ img {
     width: 100px;
 }
 
+button {
+    border: none;
+    background-color: transparent;
+}
+
+li {
+    list-style-type: none;
+}
+
+i {
+    font-size: 1.25rem;
+}
+
 .italicize {
     font-style: italic;
 }
 
-div.start-arrow-container {
-    font-family: 'DM Sans', sans-serif;
+.flex {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.home-page > .start-arrow-container {
+    font-family: 'DM Sans', sans-serif;
     margin-bottom: 3rem;
 }
 
-div.start-arrow-container > span > i {
+.home-page > .start-arrow-container > span > i {
     font-size: 2.5rem;
 }
+
+
+
+.cube-select-page > div > .cube-sizes-container {
+    margin: 3rem 0 3rem 0;
+}
+
+
+.cube-select-page > div > .cube-sizes-container > li {
+    margin: 1rem;
+}
+.cube-select-page > div > .cube-sizes-container > li > button {
+    font-size: 1.5rem;
+    background-color: #414141;
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 10px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.cube-select-page > div > .cube-sizes-container > li > button > img {
+    height: 50px;
+    width: 50px;
+    margin-right: 1rem;
+}
+
+.cube-select-page > div > .bottom-icon-container.flex {
+    flex-direction: row;
+    padding: 1rem;
+}
+
+
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {

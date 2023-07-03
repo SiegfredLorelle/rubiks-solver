@@ -28,16 +28,14 @@ function onDeviceReady() {
     // document.getElementById('deviceready').classList.add('ready');
 
     onStart();
-    document.addEventListener("backbutton", onBack, false);
+    document.addEventListener("backbutton", onBackButton, false);
 
 }
 
-/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
-// onStart();
 
 let activePage;
 let activePageName;
-mapPages = new Map();
+let mapPages = new Map();
 let touchStartListener;
 let touchEndListener;
 
@@ -47,20 +45,22 @@ let touchEndX = 0;
 
 function onStart() {
     findActivePage();
-
+    
     let pages = document.querySelectorAll("main > div");
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
-
 }
 
-function onBack() {
+/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
+onStart();
+
+function exitApp() {
     if (confirm("Exit?")) {
         navigator.app.exitApp();
     } 
-}
 
+}
 
 function findActivePage() {
     activePage = document.querySelector("main > div.active");
@@ -136,7 +136,7 @@ function onSwipeRight() {
     // console.log("SWIPED RIGHT");
     switch (activePageName) {
         case "home-page":
-            console.log("Prompt to close here ...");
+            exitApp();
             break;
         case "cube-select-page":
             changePage(mapPages.get("home-page"));
@@ -165,5 +165,17 @@ function changePage(pageToActivate) {
     console.log(activePageName);
 }
 
+function onBackButton() {
+    switch(activePageName) {
+        case "home-page":
+            exitApp();
+            break;
+        case "cube-select-page":
+            changePage(mapPages.get("home-page"));
+            break;
+    }
+}
+
 // /* TODO:
 // - Find a way to go back to prev page when clicking phones back button
+// Lagay prompt when swipe left from home
