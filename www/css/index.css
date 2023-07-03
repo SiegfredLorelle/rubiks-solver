@@ -121,6 +121,10 @@ li {
     list-style-type: none;
 }
 
+i {
+    font-size: 1.25rem;
+}
+
 .italicize {
     font-style: italic;
 }
@@ -169,11 +173,11 @@ li {
     margin-right: 1rem;
 }
 
-
 .cube-select-page > div > .bottom-icon-container.flex {
     flex-direction: row;
-
+    padding: 1rem;
 }
+
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */
