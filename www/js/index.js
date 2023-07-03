@@ -30,10 +30,11 @@ function onDeviceReady() {
     onStart();
 }
 
-
 let activePage;
 let activePageName;
 mapPages = new Map();
+let touchStartListener;
+let touchEndListener;
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -41,13 +42,15 @@ let touchEndX = 0;
 
 function onStart() {
     findActivePage();
+
     let pages = document.querySelectorAll("main > div");
-    // console.log(pages);
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
-    
-    console.log(mapPages);
+
+    // alert("BOBO");
+    // document.querySelector("main").style.backgroundColor = "pink";
+    // console.log(mapPages);
     
 }
 /* FOR TESTING ON WEB, USE ON DEVICE READY ON MOBILE APPS */
@@ -57,35 +60,49 @@ onStart();
 /* Home Page */
 function findActivePage() {
     activePage = document.querySelector("main > div.active");
-    activePageName = activePage.classList[0] 
-    // console.log(activePage.classList[0]);
+    activePageName = activePage.classList[0]; 
 
-
+    offListeners();
+    
     if (activePageName === "home-page") {
         onHomePage();
-        // console.log("GUMANA BA?");
-    };
+    }
+    else if (activePageName === "cube-select-page") {
+        onCubeSelectPage();
+    }
 }
 
 function onHomePage() {
-    // Listen to swipes left and right swipes
-    // console.log("GUMANA BA?");
     listenToSwipes();
+}
+
+function onCubeSelectPage() {
+    listenToSwipes();
+}
+
+function offListeners() {
+    unlistenToSwipes();
 }
 
 function listenToSwipes() {
     touchStartX = 0;
     touchEndX = 0;
 
-    addEventListener("touchstart", (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        // console.log(`start: ${e.changedTouches[0].screenX}`);
-    })
-    addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        // console.log(`end: ${e.changedTouches[0].screenX}`);
-        checkIfSwipe();
-    })
+    addEventListener("touchstart", respondTouchStart);
+    addEventListener("touchend", respondTouchEnd);
+}
+
+function respondTouchStart(event) {
+    touchStartX = event.changedTouches[0].screenX;
+}
+function respondTouchEnd(event) {
+    touchEndX = event.changedTouches[0].screenX;
+    checkIfSwipe();
+}
+
+function unlistenToSwipes() {
+    removeEventListener("touchstart", respondTouchStart);
+    removeEventListener("touchend", respondTouchEnd);
 }
 
 function checkIfSwipe() {
@@ -93,11 +110,8 @@ function checkIfSwipe() {
     const MIN_SWIPE_DISTANCE = 50;
 
     if (distance >= MIN_SWIPE_DISTANCE) {
-        // console.log("SWIPED");
         checkSwipeDirection();
     }
-
-    // console.log(distance);
 }
 
 function checkSwipeDirection() {
@@ -111,33 +125,40 @@ function checkSwipeDirection() {
 
 function onSwipeRight() {
     // console.log("SWIPED RIGHT");
-
     switch (activePageName) {
         case "home-page":
             console.log("Prompt to close here ...");
+            break;
+        case "cube-select-page":
+            changePage(mapPages.get("home-page"));
+            break;
+        default:
+            console.log("No pg to redirect");
         }
     }
     
-function onSwipeLeft() {
-    // console.log("SWIPED Left");
-    
-    switch (activePageName) {
-        case "home-page":
-            // Change contents in main
-            // console.log(mapPages.get("cube-select-page"));
-            changePage(mapPages.get("cube-select-page"));
+    function onSwipeLeft() {
+        switch (activePageName) {
+            case "home-page":
+                changePage(mapPages.get("cube-select-page"));
+                break;
+
+            default:
+                console.log("No pg to redirect");
+            
     }
 }
 
 
 function changePage(pageToActivate) {
-    activePage.classList.toggle("active");
-    pageToActivate.classList.toggle("active");
+    activePage.classList.remove("active");
+    pageToActivate.classList.add("active");
     findActivePage();
+    console.log(activePageName);
 }
 
 /* TODO:
 - Go back when swiping right
 - Find a way to go back to prev page when clicking phones back button
 - Delete console log comments
-*/
+- Swap swipe right and left (wrong direction)*/
