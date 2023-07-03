@@ -32,12 +32,10 @@ function onDeviceReady() {
 
 }
 
-/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
-// onStart();
 
 let activePage;
 let activePageName;
-mapPages = new Map();
+let mapPages = new Map();
 let touchStartListener;
 let touchEndListener;
 
@@ -47,14 +45,15 @@ let touchEndX = 0;
 
 function onStart() {
     findActivePage();
-
+    
     let pages = document.querySelectorAll("main > div");
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
-
 }
 
+/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
+onStart();
 
 function exitApp() {
     if (confirm("Exit?")) {

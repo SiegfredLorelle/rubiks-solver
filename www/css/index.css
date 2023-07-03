@@ -48,7 +48,7 @@ body {
 }
 
 /* IN CORDOVA DEFAULT STRUCTURE */
-@media DISABLED {
+@m  edia DISABLED {
 
     /* Portrait layout (default) */
     .app {
@@ -84,9 +84,6 @@ body {
 }
 
 .app > main > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     display: none;
 }
 
@@ -95,7 +92,7 @@ body {
 }
 
 
-h1 {
+h1, h2 {
     font-size: 3rem;
     font-weight:bolder;
     overflow:visible;
@@ -116,16 +113,27 @@ img {
     font-style: italic;
 }
 
-div.start-arrow-container {
-    font-family: 'DM Sans', sans-serif;
+.flex {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.home-page > .start-arrow-container {
+    font-family: 'DM Sans', sans-serif;
     margin-bottom: 3rem;
 }
 
-div.start-arrow-container > span > i {
+.home-page > .start-arrow-container > span > i {
     font-size: 2.5rem;
 }
+
+
+.cube-select-page > div > .bottom-icon-container.flex {
+    flex-direction: row;
+}
+
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
