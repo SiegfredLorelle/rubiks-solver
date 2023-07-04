@@ -36,20 +36,26 @@ function onDeviceReady() {
 let activePage;
 let activePageName;
 let mapPages = new Map();
-let touchStartListener;
-let touchEndListener;
 
+let cubesSelectButtons;
+let selectedCube;
+
+// let touchStartListener;
+// let touchEndListener;
 let touchStartX = 0;
 let touchEndX = 0;
 
 
 function onStart() {
-    findActivePage();
     
     let pages = document.querySelectorAll("main > div");
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
+    
+    cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+
+    findActivePage();
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -58,8 +64,7 @@ onStart();
 function exitApp() {
     if (confirm("Exit?")) {
         navigator.app.exitApp();
-    } 
-
+    }
 }
 
 function findActivePage() {
@@ -87,10 +92,32 @@ function onHomePage() {
 
 function onCubeSelectPage() {
     listenToSwipes();
+    listenToCubeSelectBtnClick();
 }
+
+
+function listenToCubeSelectBtnClick() {
+    cubesSelectButtons.forEach(button => {
+        button.addEventListener("click", onCubeSelectBtnClick);
+    });
+}
+
+function unlistenToCubeSelectBntClick() {
+    cubesSelectButtons.forEach(button => {
+        button.addEventListener("click", onCubeSelectBtnClick);
+    });
+}
+
+function onCubeSelectBtnClick(event) {
+    selectedCube = event.target.value;
+    console.log(selectedCube);
+    changePage("color-assign-page");
+}
+
 
 function offListeners() {
     unlistenToSwipes();
+    unlistenToCubeSelectBntClick();
 }
 
 function listenToSwipes() {
@@ -133,14 +160,17 @@ function checkSwipeDirection() {
 }
 
 function onSwipeRight() {
-    // console.log("SWIPED RIGHT");
     switch (activePageName) {
         case "home-page":
             exitApp();
             break;
         case "cube-select-page":
-            changePage(mapPages.get("home-page"));
+            changePage("home-page");
             break;
+        case "color-assign-page":
+            changePage("cube-select-page");
+            break;
+                
         default:
             console.log("No pg to redirect");
     }
@@ -149,7 +179,7 @@ function onSwipeRight() {
 function onSwipeLeft() {
     switch (activePageName) {
         case "home-page":
-            changePage(mapPages.get("cube-select-page"));
+            changePage("cube-select-page");
             break;
 
         default:
@@ -159,6 +189,8 @@ function onSwipeLeft() {
 
 
 function changePage(pageToActivate) {
+    pageToActivate = mapPages.get(pageToActivate);
+
     activePage.classList.remove("active");
     pageToActivate.classList.add("active");
     findActivePage();
@@ -171,11 +203,10 @@ function onBackButton() {
             exitApp();
             break;
         case "cube-select-page":
-            changePage(mapPages.get("home-page"));
+            changePage("home-page");
+            break;
+        case "color-assign-page":
+            changePage("cube-select-page");
             break;
     }
 }
-
-// /* TODO:
-// - Find a way to go back to prev page when clicking phones back button
-// Lagay prompt when swipe left from home
