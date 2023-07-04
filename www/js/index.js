@@ -39,6 +39,8 @@ let mapPages = new Map();
 let touchStartListener;
 let touchEndListener;
 
+let cubesSelectButtons;
+
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -87,6 +89,15 @@ function onHomePage() {
 
 function onCubeSelectPage() {
     listenToSwipes();
+    listenToCubeSelectClick();
+}
+
+
+function listenToCubeSelectClick() {
+    cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+    cubesSelectButtons.forEach(button => {
+        button.addEventListener("click", () => {console.log(button.value);});
+    });
 }
 
 function offListeners() {
@@ -175,7 +186,3 @@ function onBackButton() {
             break;
     }
 }
-
-// /* TODO:
-// - Find a way to go back to prev page when clicking phones back button
-// Lagay prompt when swipe left from home
