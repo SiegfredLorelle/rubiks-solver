@@ -47,12 +47,15 @@ let touchEndX = 0;
 
 
 function onStart() {
-    findActivePage();
     
     let pages = document.querySelectorAll("main > div");
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
+    
+    cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+
+    findActivePage();
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -61,8 +64,7 @@ onStart();
 function exitApp() {
     if (confirm("Exit?")) {
         navigator.app.exitApp();
-    } 
-
+    }
 }
 
 function findActivePage() {
@@ -90,23 +92,32 @@ function onHomePage() {
 
 function onCubeSelectPage() {
     listenToSwipes();
-    listenToCubeSelectClick();
+    listenToCubeSelectBtnClick();
 }
 
 
-function listenToCubeSelectClick() {
-    cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+function listenToCubeSelectBtnClick() {
     cubesSelectButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            selectedCube = button.value;
-            changePage("color-assign-page");
-        });
+        button.addEventListener("click", onCubeSelectBtnClick);
     });
+}
+
+function unlistenToCubeSelectBntClick() {
+    cubesSelectButtons.forEach(button => {
+        button.addEventListener("click", onCubeSelectBtnClick);
+    });
+}
+
+function onCubeSelectBtnClick(event) {
+    selectedCube = event.target.value;
+    console.log(selectedCube);
+    changePage("color-assign-page");
 }
 
 
 function offListeners() {
     unlistenToSwipes();
+    unlistenToCubeSelectBntClick();
 }
 
 function listenToSwipes() {
@@ -149,7 +160,6 @@ function checkSwipeDirection() {
 }
 
 function onSwipeRight() {
-    // console.log("SWIPED RIGHT");
     switch (activePageName) {
         case "home-page":
             exitApp();
@@ -157,6 +167,10 @@ function onSwipeRight() {
         case "cube-select-page":
             changePage("home-page");
             break;
+        case "color-assign-page":
+            changePage("cube-select-page");
+            break;
+                
         default:
             console.log("No pg to redirect");
     }
@@ -176,7 +190,7 @@ function onSwipeLeft() {
 
 function changePage(pageToActivate) {
     pageToActivate = mapPages.get(pageToActivate);
-    
+
     activePage.classList.remove("active");
     pageToActivate.classList.add("active");
     findActivePage();
@@ -190,6 +204,9 @@ function onBackButton() {
             break;
         case "cube-select-page":
             changePage("home-page");
+            break;
+        case "color-assign-page":
+            changePage("cube-select-page");
             break;
     }
 }
