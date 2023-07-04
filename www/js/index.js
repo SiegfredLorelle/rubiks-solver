@@ -82,6 +82,10 @@ function manageActivePage() {
     else if (activePageName === "cube-select-page") {
         onCubeSelectPage();
     }
+
+    else if (activePageName === "color-assign-page") {
+        onColorAssignPage();
+    }
 }
 
 
@@ -93,6 +97,10 @@ function onHomePage() {
 function onCubeSelectPage() {
     listenToSwipes();
     listenToCubeSelectBtnClick();
+}
+
+function onColorAssignPage() {
+    listenToSwipes();
 }
 
 
