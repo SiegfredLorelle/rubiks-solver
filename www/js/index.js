@@ -124,9 +124,12 @@ function onCubeSelectBtnClick(event) {
 }
 
 function listenToHold() {
-    addEventListener("touchstart", startHoldTimer);
-    addEventListener("touchend", resetHoldTimer);
-    // addEventListener("touchmove", resetHoldTimer);
+    let colors = document.querySelectorAll(".color-container > div > input");
+    colors.forEach(color => {
+        color.addEventListener("touchstart", startHoldTimer);
+        color.addEventListener("touchend", resetHoldTimer);
+        color.addEventListener("touchmove", resetHoldTimer);
+    });
 }
 
 function startHoldTimer() {
