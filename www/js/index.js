@@ -40,10 +40,13 @@ let mapPages = new Map();
 let cubesSelectButtons;
 let selectedCube;
 
-// let touchStartListener;
-// let touchEndListener;
+let colors;
+
 let touchStartX = 0;
 let touchEndX = 0;
+
+let holdTimer;
+let MIN_TOUCH_DURATION = 300;
 
 
 function onStart() {
@@ -52,8 +55,9 @@ function onStart() {
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
-    
+
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+    colors = document.querySelectorAll(".color-container > div > input");
 
     findActivePage();
 }
@@ -89,7 +93,6 @@ function manageActivePage() {
 }
 
 
-
 function onHomePage() {
     listenToSwipes();
 }
@@ -101,6 +104,7 @@ function onCubeSelectPage() {
 
 function onColorAssignPage() {
     listenToSwipes();
+    listenToHold();
 }
 
 
@@ -120,6 +124,50 @@ function onCubeSelectBtnClick(event) {
     selectedCube = event.target.value;
     console.log(selectedCube);
     changePage("color-assign-page");
+}
+
+function listenToHold() {
+    let colors = document.querySelectorAll(".color-container > div > input");
+    colors.forEach(color => {
+        color.addEventListener("touchstart", startHoldTimer);
+        color.addEventListener("touchend", resetHoldTimer);
+        color.addEventListener("touchmove", resetHoldTimer);
+    });
+}
+
+function startHoldTimer(event) {
+    // holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
+    holdTimer = setTimeout(() => {
+        onHold(event.target);
+    }, MIN_TOUCH_DURATION);
+    disableColors();
+
+}
+
+function resetHoldTimer() {
+    if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = 0;
+    }
+}
+
+
+function onHold(heldColor) {
+    console.log("HOLD", heldColor);
+    heldColor.disabled = false;
+    heldColor.click();
+    
+}
+
+function listenToTap() {
+    addEventListener("click", disableColors);
+}
+
+function disableColors() {
+    colors.forEach(color => {
+        color.disabled = true;
+        color.blur();
+    });
 }
 
 
