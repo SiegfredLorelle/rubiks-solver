@@ -127,7 +127,10 @@ i {
 
 input[type="color"] {
     border: none;
-    
+    background-color: transparent;
+    color: transparent;
+    outline: none;
+
 }
 
 .italicize {
