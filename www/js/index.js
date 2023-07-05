@@ -40,10 +40,11 @@ let mapPages = new Map();
 let cubesSelectButtons;
 let selectedCube;
 
-// let touchStartListener;
-// let touchEndListener;
 let touchStartX = 0;
 let touchEndX = 0;
+
+let holdTimer;
+let MIN_TOUCH_DURATION = 300;
 
 
 function onStart() {
@@ -52,7 +53,7 @@ function onStart() {
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
     });
-    
+
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
 
     findActivePage();
@@ -89,7 +90,6 @@ function manageActivePage() {
 }
 
 
-
 function onHomePage() {
     listenToSwipes();
 }
@@ -101,6 +101,7 @@ function onCubeSelectPage() {
 
 function onColorAssignPage() {
     listenToSwipes();
+    listenToHold();
 }
 
 
@@ -122,6 +123,27 @@ function onCubeSelectBtnClick(event) {
     changePage("color-assign-page");
 }
 
+function listenToHold() {
+    addEventListener("touchstart", startHoldTimer);
+    addEventListener("touchend", resetHoldTimer);
+    // addEventListener("touchmove", resetHoldTimer);
+}
+
+function startHoldTimer() {
+    holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
+}
+function resetHoldTimer() {
+    // console.log(holdTimer);
+    if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = 0;
+    }
+}
+
+
+function onHold() {
+    console.log("HOLD");
+}
 
 function offListeners() {
     unlistenToSwipes();
