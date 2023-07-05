@@ -133,6 +133,7 @@ i {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 
@@ -173,12 +174,33 @@ i {
     margin-right: 1rem;
 }
 
+.cube-select-page > div {
+    width: 100%;
+}
+
 .cube-select-page > div > .bottom-icon-container.flex {
     flex-direction: row;
     padding: 1rem;
+    
 }
 
 
+.color-assign-page > div {
+    width: 100%;
+}
+
+.color-assign-page > div > nav {
+    flex-direction: row;
+}
+
+.color-assign-page > div > nav > h2 {
+    font-size: 1.5rem;
+    justify-content: space-between;
+}
+
+.color-assign-page > div > nav > i {
+    padding: 1rem;
+}
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
