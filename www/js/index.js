@@ -40,6 +40,8 @@ let mapPages = new Map();
 let cubesSelectButtons;
 let selectedCube;
 
+let colors;
+
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -55,6 +57,7 @@ function onStart() {
     });
 
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
+    colors = document.querySelectorAll(".color-container > div > input");
 
     findActivePage();
 }
@@ -132,11 +135,16 @@ function listenToHold() {
     });
 }
 
-function startHoldTimer() {
-    holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
+function startHoldTimer(event) {
+    // holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
+    holdTimer = setTimeout(() => {
+        onHold(event.target);
+    }, MIN_TOUCH_DURATION);
+    disableColors();
+
 }
+
 function resetHoldTimer() {
-    // console.log(holdTimer);
     if (holdTimer) {
         clearTimeout(holdTimer);
         holdTimer = 0;
@@ -144,9 +152,24 @@ function resetHoldTimer() {
 }
 
 
-function onHold() {
-    console.log("HOLD");
+function onHold(heldColor) {
+    console.log("HOLD", heldColor);
+    heldColor.disabled = false;
+    heldColor.click();
+    
 }
+
+function listenToTap() {
+    addEventListener("click", disableColors);
+}
+
+function disableColors() {
+    colors.forEach(color => {
+        color.disabled = true;
+        color.blur();
+    });
+}
+
 
 function offListeners() {
     unlistenToSwipes();
