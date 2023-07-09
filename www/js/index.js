@@ -218,6 +218,16 @@ function checkSwipeDirection() {
 function onSwipeRight() {
     switch (activePageName) {
         case "home-page":
+            changePage("cube-select-page");
+            break;
+        default:
+                console.log("No pg to redirect");
+    }
+}
+
+function onSwipeLeft() {
+    switch (activePageName) {
+        case "home-page":
             exitApp();
             break;
         case "cube-select-page":
@@ -226,18 +236,6 @@ function onSwipeRight() {
         case "color-assign-page":
             changePage("cube-select-page");
             break;
-                
-        default:
-            console.log("No pg to redirect");
-    }
-}
-    
-function onSwipeLeft() {
-    switch (activePageName) {
-        case "home-page":
-            changePage("cube-select-page");
-            break;
-
         default:
             console.log("No pg to redirect");
     }
