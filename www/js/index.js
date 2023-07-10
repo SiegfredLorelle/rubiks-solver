@@ -105,6 +105,8 @@ function onCubeSelectPage() {
 function onColorAssignPage() {
     listenToSwipes();
     listenToHold();
+    window.version = '0.99.2';
+    window.game = new Game();
 }
 
 
@@ -174,6 +176,8 @@ function disableColors() {
 function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
+    window.game = null;
+
 }
 
 function listenToSwipes() {
