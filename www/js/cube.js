@@ -150,7 +150,7 @@ class World extends Animation {
       ? ( this.height / 100 ) * aspect
       : this.width / 100;
 
-    document.documentElement.style.fontSize = docFontSize + 'px';
+    // document.documentElement.style.fontSize = docFontSize + 'px';
 
     if ( this.onResize ) this.onResize.forEach( cb => cb() );
 
