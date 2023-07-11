@@ -207,6 +207,7 @@ input[type="color"]::-webkit-color-swatch {
 .color-assign-page > div {
     width: 100%;
     height: 100%;
+    justify-content: start;
 }
 
 .color-assign-page > div > nav {
@@ -214,6 +215,10 @@ input[type="color"]::-webkit-color-swatch {
     width: 100%;
     /* align-items: normal; */
     /* justify-content: space-between; */
+}
+
+.color-assign-page > div > .ui > .ui__game {
+    height: 100%;
 }
 
 .color-assign-page > div > nav > h2 {
