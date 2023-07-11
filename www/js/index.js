@@ -103,7 +103,7 @@ function onCubeSelectPage() {
 }
 
 function onColorAssignPage() {
-    listenToSwipes();
+    // listenToSwipes();
     listenToHold();
     window.version = '0.99.2';
     window.game = new Game();
@@ -138,7 +138,6 @@ function listenToHold() {
 }
 
 function startHoldTimer(event) {
-    // holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
     holdTimer = setTimeout(() => {
         onHold(event.target);
     }, MIN_TOUCH_DURATION);
