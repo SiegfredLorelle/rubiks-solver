@@ -103,7 +103,7 @@ function onCubeSelectPage() {
 }
 
 function onColorAssignPage() {
-    listenToSwipes();
+    // listenToSwipes();
     listenToHold();
     window.version = '0.99.2';
     window.game = new Game();
@@ -138,7 +138,6 @@ function listenToHold() {
 }
 
 function startHoldTimer(event) {
-    // holdTimer = setTimeout(onHold, MIN_TOUCH_DURATION);
     holdTimer = setTimeout(() => {
         onHold(event.target);
     }, MIN_TOUCH_DURATION);
@@ -176,8 +175,15 @@ function disableColors() {
 function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
+    reset3Dcube();
+  }
+  
+function reset3Dcube() {
     window.game = null;
-
+    gameCanvas = document.querySelector(".ui__game");
+    for (const canvas of gameCanvas.children) {
+        canvas.remove();
+    }
 }
 
 function listenToSwipes() {

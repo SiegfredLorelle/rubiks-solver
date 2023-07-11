@@ -140,17 +140,17 @@ class World extends Animation {
       ? ( this.stage.height / 2 ) / Math.tan( fovRad / 2 )
       : ( this.stage.width / this.camera.aspect ) / ( 2 * Math.tan( fovRad / 2 ) );
 
-    distance *= 0.5;
+    distance *= 0.4;
 
     this.camera.position.set( distance, distance, distance);
     this.camera.lookAt( this.scene.position );
     this.camera.updateProjectionMatrix();
 
-    const docFontSize = ( aspect < this.camera.aspect )
-      ? ( this.height / 100 ) * aspect
-      : this.width / 100;
+    // const docFontSize = ( aspect < this.camera.aspect )
+    //   ? ( this.height / 100 ) * aspect
+    //   : this.width / 100;
 
-    document.documentElement.style.fontSize = docFontSize + 'px';
+    // document.documentElement.style.fontSize = docFontSize + 'px';
 
     if ( this.onResize ) this.onResize.forEach( cb => cb() );
 
@@ -1913,7 +1913,7 @@ class Transition {
 
     this.tweens.buttons = {};
     this.tweens.timer = [];
-    this.tweens.title = [];
+    // this.tweens.title = [];
     this.tweens.best = [];
     this.tweens.complete = [];
     this.tweens.prefs = [];
@@ -1922,38 +1922,38 @@ class Transition {
 
   }
 
-  buttons( show, hide ) {
+  // buttons( show, hide ) {
 
-    const buttonTween = ( button, show ) => {
+  //   const buttonTween = ( button, show ) => {
 
-      return new Tween( {
-        target: button.style,
-        duration: 300,
-        easing: show ? Easing.Power.Out( 2 ) : Easing.Power.In( 3 ),
-        from: { opacity: show ? 0 : 1 },
-        to: { opacity: show ? 1 : 0 },
-        onUpdate: tween => {
+  //     return new Tween( {
+  //       target: button.style,
+  //       duration: 300,
+  //       easing: show ? Easing.Power.Out( 2 ) : Easing.Power.In( 3 ),
+  //       from: { opacity: show ? 0 : 1 },
+  //       to: { opacity: show ? 1 : 0 },
+  //       onUpdate: tween => {
 
-          const translate = show ? 1 - tween.value : tween.value;
-          button.style.transform = `translate3d(0, ${translate * 1.5}em, 0)`;
+  //         const translate = show ? 1 - tween.value : tween.value;
+  //         button.style.transform = `translate3d(0, ${translate * 1.5}em, 0)`;
 
-        },
-        onComplete: () => button.style.pointerEvents = show ? 'all' : 'none'
-      } );
+  //       },
+  //       onComplete: () => button.style.pointerEvents = show ? 'all' : 'none'
+  //     } );
 
-    };
+  //   };
 
-    hide.forEach( button =>
-      this.tweens.buttons[ button ] = buttonTween( this.game.dom.buttons[ button ], false )
-    );
+  //   hide.forEach( button =>
+  //     this.tweens.buttons[ button ] = buttonTween( this.game.dom.buttons[ button ], false )
+  //   );
 
-    setTimeout( () => show.forEach( button => {
+  //   setTimeout( () => show.forEach( button => {
 
-      this.tweens.buttons[ button ] = buttonTween( this.game.dom.buttons[ button ], true );
+  //     this.tweens.buttons[ button ] = buttonTween( this.game.dom.buttons[ button ], true );
 
-    } ), hide ? 500 : 0 );
+  //   } ), hide ? 500 : 0 );
 
-  }
+  // }
 
   cube( show, theming = false ) {
 
@@ -2259,73 +2259,73 @@ class Transition {
 
   }
 
-  title( show ) {
+  // title( show ) {
 
-    this.activeTransitions++;
+  //   this.activeTransitions++;
 
-    const title = this.game.dom.texts.title;
+  //   const title = this.game.dom.texts.title;
 
-    if ( title.querySelector( 'span i' ) === null )
-      title.querySelectorAll( 'span' ).forEach( span => this.splitLetters( span ) );
+  //   if ( title.querySelector( 'span i' ) === null )
+  //     title.querySelectorAll( 'span' ).forEach( span => this.splitLetters( span ) );
 
-    const letters = title.querySelectorAll( 'i' );
+  //   const letters = title.querySelectorAll( 'i' );
 
-    this.flipLetters( 'title', letters, show );
+  //   this.flipLetters( 'title', letters, show );
 
-    title.style.opacity = 1;
+  //   title.style.opacity = 1;
 
-    const note = this.game.dom.texts.note;
+  //   const note = this.game.dom.texts.note;
 
-    this.tweens.title[ letters.length ] = new Tween( {
-      target: note.style,
-      easing: Easing.Sine.InOut(),
-      duration: show ? 800 : 400,
-      yoyo: show ? true : null,
-      from: { opacity: show ? 0 : ( parseFloat( getComputedStyle( note ).opacity ) ) },
-      to: { opacity: show ? 1 : 0 },
-    } );
+  //   this.tweens.title[ letters.length ] = new Tween( {
+  //     target: note.style,
+  //     easing: Easing.Sine.InOut(),
+  //     duration: show ? 800 : 400,
+  //     yoyo: show ? true : null,
+  //     from: { opacity: show ? 0 : ( parseFloat( getComputedStyle( note ).opacity ) ) },
+  //     to: { opacity: show ? 1 : 0 },
+  //   } );
 
-    setTimeout( () => this.activeTransitions--, this.durations.title );
+  //   setTimeout( () => this.activeTransitions--, this.durations.title );
 
-  }
+  // }
 
-  timer( show ) {
+  // timer( show ) {
 
-    this.activeTransitions++;
+  //   this.activeTransitions++;
 
-    const timer = this.game.dom.texts.timer;
+  //   const timer = this.game.dom.texts.timer;
 
-    timer.style.opacity = 0;
-    this.game.timer.convert();
-    this.game.timer.setText();
+  //   // timer.style.opacity = 0;
+  //   // this.game.timer.convert();
+  //   // this.game.timer.setText();
 
-    this.splitLetters( timer );
-    const letters = timer.querySelectorAll( 'i' );
-    this.flipLetters( 'timer', letters, show );
+  //   // this.splitLetters( timer );
+  //   // const letters = timer.querySelectorAll( 'i' );
+  //   this.flipLetters( 'timer', letters, show );
 
-    timer.style.opacity = 1;
+  //   timer.style.opacity = 1;
 
-    setTimeout( () => this.activeTransitions--, this.durations.timer );
+  //   setTimeout( () => this.activeTransitions--, this.durations.timer );
 
-  }
+  // }
 
-  splitLetters( element ) {
+  // splitLetters( element ) {
 
-    const text = element.innerHTML;
+  //   const text = element.innerHTML;
 
-    element.innerHTML = '';
+  //   element.innerHTML = '';
 
-    text.split( '' ).forEach( letter => {
+  //   text.split( '' ).forEach( letter => {
 
-      const i = document.createElement( 'i' );
+  //     const i = document.createElement( 'i' );
 
-      i.innerHTML = letter;
+  //     i.innerHTML = letter;
 
-      element.appendChild( i );
+  //     element.appendChild( i );
 
-    } );
+  //   } );
 
-  }
+  // }
 
   flipLetters( type, letters, show ) {
 
@@ -2409,7 +2409,7 @@ class Timer extends Animation {
     if ( this.converted != old ) {
 
       localStorage.setItem( 'theCube_time', this.deltaTime );
-      this.setText();
+      // this.setText();
 
     }
 
@@ -2424,11 +2424,11 @@ class Timer extends Animation {
 
   }
 
-  setText() {
+  // setText() {
 
-    this.game.dom.texts.timer.innerHTML = this.converted;
+  //   this.game.dom.texts.timer.innerHTML = this.converted;
 
-  }
+  // }
 
 }
 
@@ -2480,123 +2480,123 @@ document.querySelectorAll( 'range' ).forEach( el => {
 
 } );
 
-class Range {
+// class Range {
 
-  constructor( name, options ) {
+//   constructor( name, options ) {
 
-    options = Object.assign( {
-      range: [ 0, 1 ],
-      value: 0,
-      step: 0,
-      onUpdate: () => {},
-      onComplete: () => {},
-    }, options || {} );
+//     options = Object.assign( {
+//       range: [ 0, 1 ],
+//       value: 0,
+//       step: 0,
+//       onUpdate: () => {},
+//       onComplete: () => {},
+//     }, options || {} );
 
-    this.element = document.querySelector( '.range[name="' + name + '"]' );
-    this.track = this.element.querySelector( '.range__track' );
-    this.handle = this.element.querySelector( '.range__handle' );
-    this.list = [].slice.call( this.element.querySelectorAll( '.range__list div' ) );
+//     // this.element = document.querySelector( '.range[name="' + name + '"]' );
+//     // this.track = this.element.querySelector( '.range__track' );
+//     // this.handle = this.element.querySelector( '.range__handle' );
+//     // this.list = [].slice.call( this.element.querySelectorAll( '.range__list div' ) );
 
-    this.value = options.value;
-    this.min = options.range[0];
-    this.max = options.range[1];
-    this.step = options.step;
+//     this.value = options.value;
+//     this.min = options.range[0];
+//     this.max = options.range[1];
+//     this.step = options.step;
 
-    this.onUpdate = options.onUpdate;
-    this.onComplete = options.onComplete;
+//     this.onUpdate = options.onUpdate;
+//     this.onComplete = options.onComplete;
 
-    this.setValue( this.value );
+//     // this.setValue( this.value );
 
-    this.initDraggable();
+//     this.initDraggable();
 
-  }
+//   }
 
-  setValue( value ) {
+//   // setValue( value ) {
 
-    this.value = this.round( this.limitValue( value ) );
-    this.setHandlePosition();
+//   //   this.value = this.round( this.limitValue( value ) );
+//   //   this.setHandlePosition();
 
-  }
+//   // }
 
-  initDraggable() {
+//   initDraggable() {
 
-    let current;
+//     let current;
 
-    this.draggable = new Draggable( this.handle, { calcDelta: true } );
+//     this.draggable = new Draggable( this.handle, { calcDelta: true } );
 
-    this.draggable.onDragStart = position => {
+//     this.draggable.onDragStart = position => {
 
-      current = this.positionFromValue( this.value );
-      this.handle.style.left = current + 'px';
+//       current = this.positionFromValue( this.value );
+//       this.handle.style.left = current + 'px';
 
-    };
+//     };
 
-    this.draggable.onDragMove = position => {
+//     this.draggable.onDragMove = position => {
 
-      current = this.limitPosition( current + position.delta.x );
-      this.value = this.round( this.valueFromPosition( current ) );
-      this.setHandlePosition();
+//       current = this.limitPosition( current + position.delta.x );
+//       this.value = this.round( this.valueFromPosition( current ) );
+//       this.setHandlePosition();
       
-      this.onUpdate( this.value );
+//       this.onUpdate( this.value );
 
-    };
+//     };
 
-    this.draggable.onDragEnd = position => {
+//     this.draggable.onDragEnd = position => {
 
-      this.onComplete( this.value );
+//       this.onComplete( this.value );
 
-    };
+//     };
 
-  }
+//   }
 
-  round( value ) {
+//   round( value ) {
 
-    if ( this.step < 1 ) return value;
+//     if ( this.step < 1 ) return value;
 
-    return Math.round( ( value - this.min ) / this.step ) * this.step + this.min;
+//     return Math.round( ( value - this.min ) / this.step ) * this.step + this.min;
 
-  }
+//   }
 
-  limitValue( value ) {
+//   limitValue( value ) {
 
-    const max = Math.max( this.max, this.min );
-    const min = Math.min( this.max, this.min );
+//     const max = Math.max( this.max, this.min );
+//     const min = Math.min( this.max, this.min );
 
-    return Math.min( Math.max( value, min ), max );
+//     return Math.min( Math.max( value, min ), max );
 
-  }
+//   }
 
-  limitPosition( position ) {
+//   limitPosition( position ) {
 
-    return Math.min( Math.max( position, 0 ), this.track.offsetWidth );
+//     return Math.min( Math.max( position, 0 ), this.track.offsetWidth );
 
-  }
+//   }
 
-  percentsFromValue( value ) {
+//   percentsFromValue( value ) {
 
-    return ( value - this.min ) / ( this.max - this.min );
+//     return ( value - this.min ) / ( this.max - this.min );
 
-  }
+//   }
 
-  valueFromPosition( position ) {
+//   valueFromPosition( position ) {
 
-    return this.min + ( this.max - this.min ) * ( position / this.track.offsetWidth );
+//     return this.min + ( this.max - this.min ) * ( position / this.track.offsetWidth );
 
-  }
+//   }
 
-  positionFromValue( value ) {
+//   positionFromValue( value ) {
 
-    return this.percentsFromValue( value ) * this.track.offsetWidth;
+//     return this.percentsFromValue( value ) * this.track.offsetWidth;
 
-  }
+//   }
 
-  setHandlePosition() {
+//   // setHandlePosition() {
 
-    this.handle.style.left = this.percentsFromValue( this.value ) * 100 + '%';
+//   //   this.handle.style.left = this.percentsFromValue( this.value ) * 100 + '%';
 
-  }
+//   // }
 
-}
+// }
 
 class Preferences {
 
@@ -2700,11 +2700,11 @@ class Preferences {
 
     };
 
-    this.ranges.scramble.list.forEach( ( item, i ) => {
+    // this.ranges.scramble.list.forEach( ( item, i ) => {
 
-      item.innerHTML = this.game.scrambler.scrambleLength[ this.game.cube.size ][ i ];
+    //   item.innerHTML = this.game.scrambler.scrambleLength[ this.game.cube.size ][ i ];
 
-    } );
+    // } );
     
   }
 
@@ -2996,28 +2996,28 @@ class Scores {
 
   }
 
-  calcStats() {
+  // calcStats() {
 
-    const s = this.game.cube.sizeGenerated;
-    const data = this.data[ s ];
+  //   const s = this.game.cube.sizeGenerated;
+  //   const data = this.data[ s ];
 
-    this.setStat( 'cube-size', `${s}<i>x</i>${s}<i>x</i>${s}` );
-    this.setStat( 'total-solves', data.solves );
-    this.setStat( 'best-time', this.convertTime( data.best ) );
-    this.setStat( 'worst-time', this.convertTime( data.worst ) );
-    this.setStat( 'average-5', this.getAverage( 5 ) );
-    this.setStat( 'average-12', this.getAverage( 12 ) );
-    this.setStat( 'average-25', this.getAverage( 25 ) );
+  //   this.setStat( 'cube-size', `${s}<i>x</i>${s}<i>x</i>${s}` );
+  //   this.setStat( 'total-solves', data.solves );
+  //   this.setStat( 'best-time', this.convertTime( data.best ) );
+  //   this.setStat( 'worst-time', this.convertTime( data.worst ) );
+  //   this.setStat( 'average-5', this.getAverage( 5 ) );
+  //   this.setStat( 'average-12', this.getAverage( 12 ) );
+  //   this.setStat( 'average-25', this.getAverage( 25 ) );
 
-  }
+  // }
 
-  setStat( name, value ) {
+  // setStat( name, value ) {
 
-    if ( value === 0 ) value = '-';
+  //   if ( value === 0 ) value = '-';
 
-    this.game.dom.stats.querySelector( `.stats[name="${name}"] b` ).innerHTML = value;
+  //   this.game.dom.stats.querySelector( `.stats[name="${name}"] b` ).innerHTML = value;
 
-  }
+  // }
 
   getAverage( count ) {
 
@@ -3221,10 +3221,10 @@ class Storage {
   savePreferences() {
 
     const preferences = {
-      cubeSize: this.game.cube.size,
-      flipConfig: this.game.controls.flipConfig,
-      dificulty: this.game.scrambler.dificulty,
-      fov: this.game.world.fov,
+      cubeSize: 3,
+      flipConfig: 0,
+      dificulty: 1,
+      fov: 10,
       theme: this.game.themes.theme,
       colors: this.game.themes.colors,
     };
@@ -3318,11 +3318,11 @@ class Themes {
 
     const colors = this.getColors();
 
-    this.game.dom.prefs.querySelectorAll( '.range__handle div' ).forEach( range => {
+    // this.game.dom.prefs.querySelectorAll( '.range__handle div' ).forEach( range => {
 
-      range.style.background = '#' + colors.R.toString(16).padStart(6, '0');
+    //   range.style.background = '#' + colors.R.toString(16).padStart(6, '0');
 
-    } );
+    // } );
 
     this.game.cube.updateColors( colors );
 
@@ -3758,15 +3758,15 @@ class Game {
     this.transition.init();
 
     this.storage.loadGame();
-    this.scores.calcStats();
+    // this.scores.calcStats();
 
     setTimeout( () => {
 
       this.transition.float();
       this.transition.cube( SHOW );
 
-      setTimeout( () => this.transition.title( SHOW ), 700 );
-      setTimeout( () => this.transition.buttons( BUTTONS.Menu, BUTTONS.None ), 1000 );
+      // setTimeout( () => this.transition.title( SHOW ), 700 );
+      // setTimeout( () => this.transition.buttons( BUTTONS.Menu, BUTTONS.None ), 1000 );
 
     }, 500 );
 
@@ -3816,43 +3816,43 @@ class Game {
 
     };
 
-    this.dom.buttons.back.onclick = event => {
+    // this.dom.buttons.back.onclick = event => {
 
-      if ( this.transition.activeTransitions > 0 ) return;
+    //   if ( this.transition.activeTransitions > 0 ) return;
 
-      if ( this.state === STATE.Playing ) {
+    //   if ( this.state === STATE.Playing ) {
 
-        this.game( HIDE );
+    //     this.game( HIDE );
 
-      } else if ( this.state === STATE.Prefs ) {
+    //   } else if ( this.state === STATE.Prefs ) {
 
-        this.prefs( HIDE );
+    //     this.prefs( HIDE );
 
-      } else if ( this.state === STATE.Theme ) {
+    //   } else if ( this.state === STATE.Theme ) {
 
-        this.theme( HIDE );
+    //     this.theme( HIDE );
 
-      }
+    //   }
 
-    };
+    // };
 
-    this.dom.buttons.reset.onclick = event => {
+    // this.dom.buttons.reset.onclick = event => {
 
-      if ( this.state === STATE.Theme ) {
+    //   if ( this.state === STATE.Theme ) {
 
-        this.themeEditor.resetTheme();
+    //     this.themeEditor.resetTheme();
 
-      }
+    //   }
       
-    };
+    // };
 
-    this.dom.buttons.prefs.onclick = event => this.prefs( SHOW );
+    // this.dom.buttons.prefs.onclick = event => this.prefs( SHOW );
 
-    this.dom.buttons.theme.onclick = event => this.theme( SHOW );
+    // this.dom.buttons.theme.onclick = event => this.theme( SHOW );
 
-    this.dom.buttons.stats.onclick = event => this.stats( SHOW );
+    // this.dom.buttons.stats.onclick = event => this.stats( SHOW );
 
-    this.controls.onSolved = () => this.complete( SHOW );
+    // this.controls.onSolved = () => this.complete( SHOW );
 
   }
 
@@ -3874,15 +3874,15 @@ class Game {
       this.state = STATE.Playing;
       this.saved = true;
 
-      this.transition.buttons( BUTTONS.None, BUTTONS.Menu );
+      // this.transition.buttons( BUTTONS.None, BUTTONS.Menu );
 
       this.transition.zoom( STATE.Playing, duration );
-      this.transition.title( HIDE );
+      // this.transition.title( HIDE );
 
       setTimeout( () => {
 
-        this.transition.timer( SHOW );
-        this.transition.buttons( BUTTONS.Playing, BUTTONS.None );
+        // this.transition.timer( SHOW );
+        // this.transition.buttons( BUTTONS.Playing, BUTTONS.None );
 
       }, this.transition.durations.zoom - 1000 );
 
@@ -3905,7 +3905,7 @@ class Game {
       if ( ! this.newGame ) this.timer.stop();
       this.transition.timer( HIDE );
 
-      setTimeout( () => this.transition.title( SHOW ), this.transition.durations.zoom - 1000 );
+      // setTimeout( () => this.transition.title( SHOW ), this.transition.durations.zoom - 1000 );
 
       this.playing = false;
       this.controls.disable();
@@ -3924,7 +3924,7 @@ class Game {
 
       this.transition.buttons( BUTTONS.Prefs, BUTTONS.Menu );
 
-      this.transition.title( HIDE );
+      // this.transition.title( HIDE );
       this.transition.cube( HIDE );
 
       setTimeout( () => this.transition.preferences( SHOW ), 1000 );
@@ -3940,7 +3940,7 @@ class Game {
       this.transition.preferences( HIDE );
 
       setTimeout( () => this.transition.cube( SHOW ), 500 );
-      setTimeout( () => this.transition.title( SHOW ), 1200 );
+      // setTimeout( () => this.transition.title( SHOW ), 1200 );
 
     }
 
@@ -4006,7 +4006,7 @@ class Game {
 
       this.transition.buttons( BUTTONS.Stats, BUTTONS.Menu );
 
-      this.transition.title( HIDE );
+      // this.transition.title( HIDE );
       this.transition.cube( HIDE );
 
       setTimeout( () => this.transition.stats( SHOW ), 1000 );
@@ -4020,7 +4020,7 @@ class Game {
       this.transition.stats( HIDE );
 
       setTimeout( () => this.transition.cube( SHOW ), 500 );
-      setTimeout( () => this.transition.title( SHOW ), 1200 );
+      // setTimeout( () => this.transition.title( SHOW ), 1200 );
 
     }
 

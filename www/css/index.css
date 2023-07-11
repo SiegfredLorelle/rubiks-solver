@@ -207,6 +207,7 @@ input[type="color"]::-webkit-color-swatch {
 .color-assign-page > div {
     width: 100%;
     height: 100%;
+    justify-content: start;
 }
 
 .color-assign-page > div > nav {
@@ -215,6 +216,16 @@ input[type="color"]::-webkit-color-swatch {
     /* align-items: normal; */
     /* justify-content: space-between; */
 }
+
+.color-assign-page > div > .ui > .ui__game {
+    height: 100%;
+    /* width: 100%; */
+}
+
+/* .color-assign-page > div > .ui > .ui__game > canvas {
+    height: 50%;
+    width: 100%;
+} */
 
 .color-assign-page > div > nav > h2 {
     font-size: 1.5rem;
