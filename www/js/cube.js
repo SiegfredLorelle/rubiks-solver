@@ -140,7 +140,7 @@ class World extends Animation {
       ? ( this.stage.height / 2 ) / Math.tan( fovRad / 2 )
       : ( this.stage.width / this.camera.aspect ) / ( 2 * Math.tan( fovRad / 2 ) );
 
-    distance *= 0.5;
+    distance *= 0.4;
 
     this.camera.position.set( distance, distance, distance);
     this.camera.lookAt( this.scene.position );
