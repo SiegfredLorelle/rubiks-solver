@@ -204,51 +204,57 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
-.color-assign-page > div {
+.color-assign-page {
     width: 100%;
     height: 100%;
     justify-content: start;
 }
 
-.color-assign-page > div > nav {
+
+.color-assign-page > nav {
     flex-direction: row;
     width: 100%;
+    height: 10%;
+    padding: 0.5rem;
     /* align-items: normal; */
     /* justify-content: space-between; */
 }
 
-.color-assign-page > div > .ui > .ui__game {
-    height: 100%;
-    /* width: 100%; */
+.color-assign-page > .ui, 
+.color-assign-page > .ui > .ui__game {
+    height: 80%;
+    width: 100%;
 }
 
-/* .color-assign-page > div > .ui > .ui__game > canvas {
-    height: 50%;
-    width: 100%;
-} */
 
-.color-assign-page > div > nav > h2 {
+.color-assign-page > nav > h2 {
     font-size: 1.5rem;
     justify-content: space-between;
 }
 
-.color-assign-page > div > nav > i {
+.color-assign-page > nav > i {
     padding: 1rem;
 }
+.color-assign-page > .color-container,
+.color-assign-page > .solve-reset-container {
+    padding-bottom: 1.5rem;
+}
 
-.color-assign-page > div > .color-container > .flex-row {
+.color-assign-page > .color-container > .flex-row {
     justify-content: center;
 }
-.color-assign-page > div > .color-container > .flex-row > input[type="color"] {
+.color-assign-page > .color-container > .flex-row > input[type="color"] {
     margin: 0.5rem;
 }
 
-.color-assign-page > div > .solve-reset-container {
-    margin-bottom: 3rem;
+.color-assign-page > .solve-reset-container {
+    /* margin-bottom: 3rem; */
     width: 100%;
+    /* height: 10%; */
+    /* height: 5%; */
 }
 
-.color-assign-page > div > .solve-reset-container > button {
+.color-assign-page > .solve-reset-container > button {
     width: 33%;
     background-color: #020202;
     border-radius: 10px;
