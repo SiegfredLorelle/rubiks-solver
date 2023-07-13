@@ -105,10 +105,11 @@ function onCubeSelectPage() {
 function onColorAssignPage() {
     // listenToSwipes();
     listenToHold();
+    listenToColorTap();
     window.version = '0.99.2';
     window.game = new Game();
+    
 }
-
 
 function listenToCubeSelectBtnClick() {
     cubesSelectButtons.forEach(button => {
@@ -129,7 +130,7 @@ function onCubeSelectBtnClick(event) {
 }
 
 function listenToHold() {
-    let colors = document.querySelectorAll(".color-container > div > input");
+    
     colors.forEach(color => {
         color.addEventListener("touchstart", startHoldTimer);
         color.addEventListener("touchend", resetHoldTimer);
@@ -142,7 +143,6 @@ function startHoldTimer(event) {
         onHold(event.target);
     }, MIN_TOUCH_DURATION);
     disableColors();
-
 }
 
 function resetHoldTimer() {
@@ -152,16 +152,11 @@ function resetHoldTimer() {
     }
 }
 
-
 function onHold(heldColor) {
-    console.log("HOLD", heldColor);
+    // console.log("HOLD", heldColor);
     heldColor.disabled = false;
     heldColor.click();
     
-}
-
-function listenToTap() {
-    addEventListener("click", disableColors);
 }
 
 function disableColors() {
@@ -171,6 +166,17 @@ function disableColors() {
     });
 }
 
+
+function listenToColorTap() {
+    colors.forEach(color => {
+        // console.log("SELECT COLOR");
+        color.addEventListener("touchstart", selectColor);
+    })
+}
+
+function selectColor(event) {
+    console.log(event.target.value);
+}
 
 function offListeners() {
     unlistenToSwipes();
@@ -275,3 +281,5 @@ function onBackButton() {
             break;
     }
 }
+
+

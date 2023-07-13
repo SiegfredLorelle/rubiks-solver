@@ -2993,6 +2993,7 @@ class Themes {
 
     this.colors = JSON.parse( JSON.stringify( this.defaults ) );
 
+
   }
 
   getColors() {
