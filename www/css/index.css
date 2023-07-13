@@ -77,6 +77,7 @@ body, button {
     }
 }
 
+
 .app,
 .app > main,
 .app > main > div {
@@ -267,7 +268,7 @@ input[type="color"]::-webkit-color-swatch {
     color: #ffffff;
 }
 
-.responsive {
+.home-logo-responsive {
     padding-top: 35%;
     width: 100%;
     max-width: 300px;
