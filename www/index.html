@@ -18,9 +18,10 @@
     under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!--
+
+<head>
+    <meta charset="utf-8">
+    <!--
         Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
             https://cordova.apache.org/docs/en/latest/
         Some notes:
@@ -28,108 +29,112 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="
+    <meta http-equiv="Content-Security-Policy" content="
             default-src 'self' data: gap: https://*.googleapis.com/ https://*.fontawesome.com/ https://*.gstatic.com https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js 'unsafe-eval'; 
             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.fontawesome.com/; 
             media-src *; 
             img-src 'self' data: content:;
             ">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/index.css">
-        <!-- Fonts from Google Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Montserrat&display=swap" rel="stylesheet">
-        <!-- Icons from Font Awesome -->
-        <script src="https://kit.fontawesome.com/2fa58dfbff.js" crossorigin="anonymous"></script>
-        <title>Rubik's Solver</title>
-    </head>
-    <body>
-        <div class="app">
-            <main>
-                <!-- Home Page -->
-                <div class="home-page active flex">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Fonts from Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,700;1,700&family=Lexend:wght@800&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <!-- Icons from Font Awesome -->
+    <script src="https://kit.fontawesome.com/2fa58dfbff.js" crossorigin="anonymous"></script>
+    <title>Rubik's Solver</title>
+</head>
+
+<body>
+    <div class="app">
+        <main>
+            <!-- Home Page -->
+            <div class="home-page active flex">
                     <div>
-                        <!--<h1>Rubik's Solver</h1>-->
-                        <img src="img/logo.png" class="responsive" alt="EDIT THIS! Temporary Image for Cube">
+                        <img src="img/home-logo.png" class="home-logo-responsive"
+                            alt="EDIT THIS! Temporary Image for Cube">
                     </div>
                     <div class="start-arrow-container italicize flex">
                         <span>Start</span>
                         <span><i class="fa-solid fa-arrow-right-long"></i></span>
                     </div>
                 </div>
-                
-                <!-- Cube Select Page -->
-                <div class="cube-select-page flex">
-                    <div>
-                      <img src="img/logo.png" class="menu-responsive" alt="EDIT THIS! Temporary Image for Cube">
-                        <ul class="cube-sizes-container">
-                            <li><button class="flex" value="2x2"><img src="img/rubiks-icon.png" class="img-icon">2x2 Cube</button></li>
-                            <li><button class="flex" value="3x3"><img src="img/rubiks-icon.png" class="img-icon">3x3 Cube</button></li>
-                        </ul>
+
+            <!-- Cube Select Page -->
+            <div class="cube-select-page flex">
+                <div>
+                    <img src="img/menu-logo.png" class="menu-responsive" alt="EDIT THIS! Temporary Image for Cube">
+                    <ul class="cube-sizes-container">
+                        <li><button class="flex" value="2x2"><img src="img/rubiks-icon.png" class="img-icon" alt="rubiks icon">
+                            2x2 Cube</button></li>
+                        <li><button class="flex" value="3x3"><img src="img/rubiks-icon.png" class="img-icon" alt="rubiks icon">
+                            3x3 Cube</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="bottom-icon-container flex">
+                        <i class="fa-solid fa-house"></i>
+                        <i class="fa-solid fa-gear"></i>
                     </div>
-                    <div>
-                        <div class="bottom-icon-container flex">
-                            <i class="fa-solid fa-house"></i>
-                            <i class="fa-solid fa-gear"></i>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Cube Select Page -->
+            <div class="color-assign-page flex">
+                <!-- <div class="flex"> -->
+                <nav class="flex">
+                    <i class="fa-solid fa-house"></i>
+                    <h2>Rubik's<br>Solver</h2>
+                    <i class="fa-solid fa-circle-info"></i>
+                </nav>
+
+                <!-- TODO: Rotatable 3d CUBE -->
+                <!-- <img src="img/logo.png" class="center" alt="EDIT THIS! Temporary Image for Cube"> -->
+                <div class="ui">
+                    <div class="ui__background"></div>
+                    <div class="ui__game"></div>
+                </div>
+
+                <div class="color-container">
+                    <div class="flex-row">
+                        <input type="color" value="#ffffff" disabled>
+                        <input type="color" value="#1a76bf" disabled>
+                        <input type="color" value="#eee25a" disabled>
+                    </div>
+                    <div class="flex-row">
+                        <input type="color" value="#ff5442" disabled>
+                        <input type="color" value="#feb147" disabled>
+                        <input type="color" value="#54ce8e" disabled>
                     </div>
                 </div>
 
-                <!-- Cube Select Page -->
-                <div class="color-assign-page flex">
-                    <!-- <div class="flex"> -->
-                        <nav class="flex">
-                            <i class="fa-solid fa-house"></i>
-                            <h2>Rubik's<br>Solver</h2>
-                            <i class="fa-solid fa-circle-info"></i>
-                        </nav>
 
-                        <!-- TODO: Rotatable 3d CUBE -->
-                        <!-- <img src="img/logo.png" class="center" alt="EDIT THIS! Temporary Image for Cube"> -->
-                        <div class="ui">
-                            <div class="ui__background"></div>
-                            <div class="ui__game"></div>
-                        </div>
-                        
-                          <div class="color-container">
-                              <div class="flex-row">
-                                  <input type="color" value="#ffffff" disabled>
-                                  <input type="color" value="#1a76bf" disabled>
-                                  <input type="color" value="#eee25a" disabled>
-                              </div>
-                              <div class="flex-row">
-                                  <input type="color" value="#ff5442" disabled>
-                                  <input type="color" value="#feb147" disabled>
-                                  <input type="color" value="#54ce8e" disabled>
-                              </div>
-                          </div>
+                <div class="solve-reset-container flex">
+                    <button>Solve</button>
+                    <button>Reset</button>
+                    <!-- </div> -->
 
 
-                      <div class="solve-reset-container flex">
-                          <button>Solve</button>
-                          <button>Reset</button>
-                <!-- </div> -->
+        </main>
 
 
-            </main>
-            
-            
-            <!-- NOTE: FROM CORDOVA DEFAULT -->
-            <!-- <div id="deviceready" class="blink">
+        <!-- NOTE: FROM CORDOVA DEFAULT -->
+        <!-- <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div> -->
 
-        </div>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js'></script>
-        <script  src="./js/cube.js"></script>
-        <script src="cordova.js"></script>
-        <script src="./js/index.js"></script>
-    </body>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js'></script>
+    <script src="./js/cube.js"></script>
+    <script src="cordova.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
 </html>
 
 <!-- BUG: QUICK TAPS TRIGGERING SWIPES WHEN TAPS ARE FAR FROM EACH OTHER -->
