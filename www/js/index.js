@@ -176,8 +176,9 @@ function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
     reset3Dcube();
-  }
-  
+}
+
+
 function reset3Dcube() {
     window.game = null;
     gameCanvas = document.querySelector(".ui__game");
