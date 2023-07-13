@@ -41,6 +41,7 @@ let cubesSelectButtons;
 let selectedCube;
 
 let colors;
+let selectedColor;
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -106,6 +107,7 @@ function onColorAssignPage() {
     // listenToSwipes();
     listenToHold();
     listenToColorTap();
+    listenToValueChange();
     window.version = '0.99.2';
     window.game = new Game();
     
@@ -169,13 +171,25 @@ function disableColors() {
 
 function listenToColorTap() {
     colors.forEach(color => {
-        // console.log("SELECT COLOR");
         color.addEventListener("touchstart", selectColor);
     })
 }
 
 function selectColor(event) {
-    console.log(event.target.value);
+    selectedColor = event.target.value;
+    console.log(selectedColor);
+
+}
+
+function listenToValueChange() {
+    colors.forEach(color => {
+        color.addEventListener("change", onColorChange);
+    });
+}
+
+function onColorChange(event) {
+    selectedColor = event.target.value;
+    console.log(selectedColor);
 }
 
 function offListeners() {
