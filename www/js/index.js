@@ -42,12 +42,13 @@ let selectedCube;
 
 let colors;
 let selectedColor;
+let settingsBtn;
 
 let touchStartX = 0;
 let touchEndX = 0;
 
 let holdTimer;
-let MIN_TOUCH_DURATION = 300;
+const MIN_TOUCH_DURATION = 300;
 
 
 function onStart() {
@@ -59,6 +60,7 @@ function onStart() {
 
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
+    settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
 
     findActivePage();
 }
@@ -91,6 +93,9 @@ function manageActivePage() {
     else if (activePageName === "color-assign-page") {
         onColorAssignPage();
     }
+    else if (activePageName === "settings-page") {
+        onSettingsPage();
+    }
 }
 
 
@@ -101,6 +106,7 @@ function onHomePage() {
 function onCubeSelectPage() {
     listenToSwipes();
     listenToCubeSelectBtnClick();
+    listenToSettingsBtnClick();
 }
 
 function onColorAssignPage() {
@@ -110,7 +116,10 @@ function onColorAssignPage() {
     listenToValueChange();
     window.version = '0.99.2';
     window.game = new Game();
-    
+}
+
+function onSettingsPage() {
+    listenToSwipes();
 }
 
 function listenToCubeSelectBtnClick() {
@@ -129,6 +138,15 @@ function onCubeSelectBtnClick(event) {
     selectedCube = event.target.value;
     console.log(selectedCube);
     changePage("color-assign-page");
+}
+
+function listenToSettingsBtnClick() {
+    settingsBtn.addEventListener("click", onSettingsBtnClick);
+}
+
+function onSettingsBtnClick() {
+    console.log(settingsBtn);
+    changePage("settings-page");
 }
 
 function listenToHold() {
@@ -252,7 +270,7 @@ function onSwipeRight() {
             changePage("cube-select-page");
             break;
         default:
-                console.log("No pg to redirect");
+            console.log("No pg to redirect");
     }
 }
 
@@ -267,6 +285,10 @@ function onSwipeLeft() {
         case "color-assign-page":
             changePage("cube-select-page");
             break;
+        case "settings-page":
+            changePage("cube-select-page");
+            break;
+
         default:
             console.log("No pg to redirect");
     }
@@ -291,6 +313,9 @@ function onBackButton() {
             changePage("home-page");
             break;
         case "color-assign-page":
+            changePage("cube-select-page");
+            break;
+        case "settings-page":
             changePage("cube-select-page");
             break;
     }
