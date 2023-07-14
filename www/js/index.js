@@ -58,6 +58,7 @@ function onStart() {
         mapPages.set(page.classList[0], page);
     });
 
+    selectedColor = document.querySelector(".color-assign-page > .color-container > .flex-row > input[type='color'].active").value;
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
