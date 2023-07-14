@@ -41,12 +41,14 @@ let cubesSelectButtons;
 let selectedCube;
 
 let colors;
+let selectedColor;
+let settingsBtn;
 
 let touchStartX = 0;
 let touchEndX = 0;
 
 let holdTimer;
-let MIN_TOUCH_DURATION = 300;
+const MIN_TOUCH_DURATION = 300;
 
 
 function onStart() {
@@ -58,6 +60,7 @@ function onStart() {
 
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
+    settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
 
     findActivePage();
 }
@@ -90,6 +93,9 @@ function manageActivePage() {
     else if (activePageName === "color-assign-page") {
         onColorAssignPage();
     }
+    else if (activePageName === "settings-page") {
+        onSettingsPage();
+    }
 }
 
 
@@ -100,15 +106,21 @@ function onHomePage() {
 function onCubeSelectPage() {
     listenToSwipes();
     listenToCubeSelectBtnClick();
+    listenToSettingsBtnClick();
 }
 
 function onColorAssignPage() {
     // listenToSwipes();
     listenToHold();
+    listenToColorTap();
+    listenToValueChange();
     window.version = '0.99.2';
     window.game = new Game();
 }
 
+function onSettingsPage() {
+    listenToSwipes();
+}
 
 function listenToCubeSelectBtnClick() {
     cubesSelectButtons.forEach(button => {
@@ -128,8 +140,17 @@ function onCubeSelectBtnClick(event) {
     changePage("color-assign-page");
 }
 
+function listenToSettingsBtnClick() {
+    settingsBtn.addEventListener("click", onSettingsBtnClick);
+}
+
+function onSettingsBtnClick() {
+    console.log(settingsBtn);
+    changePage("settings-page");
+}
+
 function listenToHold() {
-    let colors = document.querySelectorAll(".color-container > div > input");
+    
     colors.forEach(color => {
         color.addEventListener("touchstart", startHoldTimer);
         color.addEventListener("touchend", resetHoldTimer);
@@ -142,7 +163,6 @@ function startHoldTimer(event) {
         onHold(event.target);
     }, MIN_TOUCH_DURATION);
     disableColors();
-
 }
 
 function resetHoldTimer() {
@@ -152,16 +172,11 @@ function resetHoldTimer() {
     }
 }
 
-
 function onHold(heldColor) {
-    console.log("HOLD", heldColor);
+    // console.log("HOLD", heldColor);
     heldColor.disabled = false;
     heldColor.click();
     
-}
-
-function listenToTap() {
-    addEventListener("click", disableColors);
 }
 
 function disableColors() {
@@ -171,6 +186,29 @@ function disableColors() {
     });
 }
 
+
+function listenToColorTap() {
+    colors.forEach(color => {
+        color.addEventListener("touchstart", onSelectColor);
+    })
+}
+
+function onSelectColor(event) {
+    selectedColor = event.target.value;
+    console.log(selectedColor);
+
+}
+
+function listenToValueChange() {
+    colors.forEach(color => {
+        color.addEventListener("change", onColorChange);
+    });
+}
+
+function onColorChange(event) {
+    selectedColor = event.target.value;
+    console.log(selectedColor);
+}
 
 function offListeners() {
     unlistenToSwipes();
@@ -232,7 +270,7 @@ function onSwipeRight() {
             changePage("cube-select-page");
             break;
         default:
-                console.log("No pg to redirect");
+            console.log("No pg to redirect");
     }
 }
 
@@ -247,6 +285,10 @@ function onSwipeLeft() {
         case "color-assign-page":
             changePage("cube-select-page");
             break;
+        case "settings-page":
+            changePage("cube-select-page");
+            break;
+
         default:
             console.log("No pg to redirect");
     }
@@ -273,5 +315,10 @@ function onBackButton() {
         case "color-assign-page":
             changePage("cube-select-page");
             break;
+        case "settings-page":
+            changePage("cube-select-page");
+            break;
     }
 }
+
+
