@@ -201,6 +201,7 @@ function onSelectColor(event) {
         color.classList.remove("selected");
     });
     event.target.classList.toggle("selected");
+    window.game.cube.updateEdgesColors();
 
 }
 

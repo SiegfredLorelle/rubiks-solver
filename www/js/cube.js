@@ -876,31 +876,20 @@ class Cube {
     if ( typeof this.pieces !== 'object' && typeof this.edges !== 'object' ) return;
 
     this.pieces.forEach( piece => piece.userData.cube.material.color.setHex( colors.P ) );
-    this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
 
+
+    /* NOTE: APPLIES COLOR TO CUBE */
+    
+    /* COLORS TO ALL EDGES */
+    // this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
+    
   }
-
-  // loadFromData( data ) {
-
-    // this.size = data.size;
-
-    // this.reset();
-    // this.init();
-
-    // this.pieces.forEach( piece => {
-
-    //   const index = data.names.indexOf( piece.name );
-
-    //   const position = data.positions[index];
-    //   const rotation = data.rotations[index];
-
-    //   piece.position.set( position.x, position.y, position.z );
-    //   piece.rotation.set( rotation.x, rotation.y, rotation.z );
-
-    // } );
-
-  // }
-
+  
+  updateEdgesColors() {
+    this.edges[0].material.color.setHex(0x000000);
+    console.log(this.edges[0]);
+    
+  }
 }
 
 const Easing = {
@@ -1910,16 +1899,6 @@ class Transition {
     this.game.cube.animator.rotation.x = - Math.PI / 3;
     this.game.world.camera.zoom = this.data.cameraZoom;
     this.game.world.camera.updateProjectionMatrix();
-
-    // this.tweens.buttons = {};
-    // this.tweens.timer = [];
-    // this.tweens.title = [];
-    // this.tweens.best = [];
-    // this.tweens.complete = [];
-    // this.tweens.prefs = [];
-    // this.tweens.theme = [];
-    // this.tweens.stats = [];
-
   }
 
 
@@ -2030,8 +2009,6 @@ class Transition {
 
     this.activeTransitions++;
 
-    // const cubeY = 
-
     this.tweens.elevate = new Tween( {
       target: this.game.cube.object.position,
       duration: complete ? 1500 : 0,
@@ -2066,261 +2043,8 @@ class Transition {
 
     setTimeout( () => this.activeTransitions--, duration );
 
-  } 
-
-  // stats( show ) {
-
-    // if ( show ) this.game.scores.calcStats();
-
-    // this.activeTransitions++;
-
-    // this.tweens.stats.forEach( tween => { tween.stop(); tween = null; } );
-
-    // let tweenId = -1;
-
-    // const stats = this.game.dom.stats.querySelectorAll( '.stats' );
-    // const easing = show ? Easing.Power.Out( 2 ) : Easing.Power.In( 3 );
-
-    // stats.forEach( ( stat, index ) => {
-
-    //   const delay = index * ( show ? 80 : 60 );
-
-    //   this.tweens.stats[ tweenId++ ] = new Tween( {
-    //     delay: delay,
-    //     duration: 400,
-    //     easing: easing,
-    //     onUpdate: tween => {
-
-    //       const translate = show ? ( 1 - tween.value ) * 2 : tween.value;
-    //       const opacity = show ? tween.value : ( 1 - tween.value );
-
-    //       stat.style.transform = `translate3d(0, ${translate}em, 0)`;
-    //       stat.style.opacity = opacity;
-
-    //     }
-    //   } );
-
-    // } );
-
-    // this.durations.stats = 0;
-
-    // setTimeout( () => this.activeTransitions--, this.durations.stats );
-
-  // }
-
-  // preferences( show ) {
-
-  //   this.ranges( this.game.dom.prefs.querySelectorAll( '.range' ), 'prefs', show );
-
-  // }
-
-  // theming( show ) {
-
-  //   this.ranges( this.game.dom.theme.querySelectorAll( '.range' ), 'prefs', show );
-
-  // }
-
-  ranges( ranges, type, show ) {
-
-    // this.activeTransitions++;
-
-    // this.tweens[ type ].forEach( tween => { tween.stop(); tween = null; } );
-
-    // const easing = show ? Easing.Power.Out(2) : Easing.Power.In(3);
-
-    // let tweenId = -1;
-    // let listMax = 0;
-
-    // ranges.forEach( ( range, rangeIndex ) => {
-    
-    //   const label = range.querySelector( '.range__label' );
-    //   const track = range.querySelector( '.range__track-line' );
-    //   const handle = range.querySelector( '.range__handle' );
-    //   const list = range.querySelectorAll( '.range__list div' );
-
-    //   const delay = rangeIndex * ( show ? 120 : 100 );
-
-    //   label.style.opacity = show ? 0 : 1;
-    //   track.style.opacity = show ? 0 : 1;
-    //   handle.style.opacity = show ? 0 : 1;
-    //   handle.style.pointerEvents = show ? 'all' : 'none';
-
-    //   this.tweens[ type ][ tweenId++ ] = new Tween( {
-    //     delay: show ? delay : delay,
-    //     duration: 400,
-    //     easing: easing,
-    //     onUpdate: tween => {
-
-    //       const translate = show ? ( 1 - tween.value ) : tween.value;
-    //       const opacity = show ? tween.value : ( 1 - tween.value );
-
-    //       label.style.transform = `translate3d(0, ${translate}em, 0)`;
-    //       label.style.opacity = opacity;
-
-    //     }
-    //   } );
-
-    //   this.tweens[ type ][ tweenId++ ] = new Tween( {
-    //     delay: show ? delay + 100 : delay,
-    //     duration: 400,
-    //     easing: easing,
-    //     onUpdate: tween => {
-
-    //       const translate = show ? ( 1 - tween.value ) : tween.value;
-    //       const scale = show ? tween.value : ( 1 - tween.value );
-    //       const opacity = scale;
-
-    //       track.style.transform = `translate3d(0, ${translate}em, 0) scale3d(${scale}, 1, 1)`;
-    //       track.style.opacity = opacity;
-
-    //     }
-    //   } );
-
-    //   this.tweens[ type ][ tweenId++ ] = new Tween( {
-    //     delay: show ? delay + 100 : delay,
-    //     duration: 400,
-    //     easing: easing,
-    //     onUpdate: tween => {
-
-    //       const translate = show ? ( 1 - tween.value ) : tween.value;
-    //       const opacity = 1 - translate;
-    //       const scale = 0.5 + opacity * 0.5;
-
-    //       handle.style.transform = `translate3d(0, ${translate}em, 0) scale3d(${scale}, ${scale}, ${scale})`;
-    //       handle.style.opacity = opacity;
-
-    //     }
-    //   } );
-
-    //   list.forEach( ( listItem, labelIndex ) => {
-
-    //     listItem.style.opacity = show ? 0 : 1;
-
-    //     this.tweens[ type ][ tweenId++ ] = new Tween( {
-    //       delay: show ? delay + 200 + labelIndex * 50 : delay,
-    //       duration: 400,
-    //       easing: easing,
-    //       onUpdate: tween => {
-
-    //         const translate = show ? ( 1 - tween.value ) : tween.value;
-    //         const opacity = show ? tween.value : ( 1 - tween.value );
-
-    //         listItem.style.transform = `translate3d(0, ${translate}em, 0)`;
-    //         listItem.style.opacity = opacity;
-
-    //       }
-    //     } );
-
-    //   } );
-
-    //   listMax = list.length > listMax ? list.length - 1 : listMax;
-
-    //   range.style.opacity = 1;
-
-    // } );
-
-    // this.durations[ type ] = show
-    //   ? ( ( ranges.length - 1 ) * 100 ) + 200 + listMax * 50 + 400
-    //   : ( ( ranges.length - 1 ) * 100 ) + 400;
-
-    // setTimeout( () => this.activeTransitions--, this.durations[ type ] ); 
-
   }
 
-  // title( show ) {
-
-  //   this.activeTransitions++;
-
-  //   const title = this.game.dom.texts.title;
-
-  //   if ( title.querySelector( 'span i' ) === null )
-  //     title.querySelectorAll( 'span' ).forEach( span => this.splitLetters( span ) );
-
-  //   const letters = title.querySelectorAll( 'i' );
-
-  //   this.flipLetters( 'title', letters, show );
-
-  //   title.style.opacity = 1;
-
-  //   const note = this.game.dom.texts.note;
-
-  //   this.tweens.title[ letters.length ] = new Tween( {
-  //     target: note.style,
-  //     easing: Easing.Sine.InOut(),
-  //     duration: show ? 800 : 400,
-  //     yoyo: show ? true : null,
-  //     from: { opacity: show ? 0 : ( parseFloat( getComputedStyle( note ).opacity ) ) },
-  //     to: { opacity: show ? 1 : 0 },
-  //   } );
-
-  //   setTimeout( () => this.activeTransitions--, this.durations.title );
-
-  // }
-
-  // timer( show ) {
-
-  //   this.activeTransitions++;
-
-  //   const timer = this.game.dom.texts.timer;
-
-  //   // timer.style.opacity = 0;
-  //   // this.game.timer.convert();
-  //   // this.game.timer.setText();
-
-  //   // this.splitLetters( timer );
-  //   // const letters = timer.querySelectorAll( 'i' );
-  //   this.flipLetters( 'timer', letters, show );
-
-  //   timer.style.opacity = 1;
-
-  //   setTimeout( () => this.activeTransitions--, this.durations.timer );
-
-  // }
-
-  // splitLetters( element ) {
-
-  //   const text = element.innerHTML;
-
-  //   element.innerHTML = '';
-
-  //   text.split( '' ).forEach( letter => {
-
-  //     const i = document.createElement( 'i' );
-
-  //     i.innerHTML = letter;
-
-  //     element.appendChild( i );
-
-  //   } );
-
-  // }
-
-  // flipLetters( type, letters, show ) {
-
-  //   try { this.tweens[ type ].forEach( tween => tween.stop() ); } catch(e) {}
-  //   letters.forEach( ( letter, index ) => {
-
-  //     letter.style.opacity = show ? 0 : 1;
-
-  //     this.tweens[ type ][ index ] = new Tween( {
-  //       easing: Easing.Sine.Out(),
-  //       duration: show ? 800 : 400,
-  //       delay: index * 50,
-  //       onUpdate: tween => {
-
-  //         const rotation = show ? ( 1 - tween.value ) * -80 : tween.value * 80;
-
-  //         letter.style.transform = `rotate3d(0, 1, 0, ${rotation}deg)`;
-  //         letter.style.opacity = show ? tween.value : ( 1 - tween.value );
-
-  //       },
-  //     } );
-
-  //   } );
-
-  //   this.durations[ type ] = ( letters.length - 1 ) * 50 + ( show ? 800 : 400 );
-
-  // }
 
 }
 
@@ -2569,15 +2293,15 @@ class Confetti {
 
   updateColors( colors ) {
 
-    this.holders.forEach( holder => {
+    // this.holders.forEach( holder => {
 
-      holder.options.colors.forEach( ( color, index ) => {
+    //   holder.options.colors.forEach( ( color, index ) => {
 
-        holder.options.colors[ index ] = colors[ [ 'D', 'F', 'R', 'B', 'L' ][ index ] ];
+    //     holder.options.colors[ index ] = colors[ [ 'D', 'F', 'R', 'B', 'L' ][ index ] ];
 
-      } );
+    //   } );
 
-    } );
+    // } );
 
   }
 
@@ -2981,9 +2705,9 @@ class Themes {
     this.defaults = {
       cube: {
         U: 0xfff7ff, // white
-        D: 0xfff7ff, // yellow
+        D: 0x000000, // yellow
         F: 0xfff7ff, // red
-        R: 0xfff7ff, // blue
+        R: 0xd1d5db, // blue
         B: 0xfff7ff, // orange
         L: 0xfff7ff, // green
         P: 0x08101a, // piece
@@ -3011,7 +2735,7 @@ class Themes {
 
     this.game.cube.updateColors( colors );
 
-    this.game.confetti.updateColors( colors );
+    // this.game.confetti.updateColors( colors );
 
     this.game.dom.back.style.background = '#' + colors.G.toString(16).padStart(6, '0');
 
@@ -3326,51 +3050,6 @@ class Game {
       }
 
     };
-
-  }
-
-  game( show ) {
-
-    if ( show ) {
-
-      if ( ! this.saved ) {
-
-        // this.scrambler.scramble();
-        // this.controls.scrambleCube();
-        this.newGame = true;
-
-      }
-
-        // this.scrambler.converted.length * ( this.controls.flipSpeeds[0] + 10 );
-
-      this.state = STATE.Playing;
-      this.saved = true;
-
-      setTimeout( () => {
-
-        this.controls.enable();
-        if ( ! this.newGame ) this.timer.start( true );
-
-      }, this.transition.durations.zoom );
-
-    } else {
-
-      this.state = STATE.Menu;
-
-      this.transition.buttons( BUTTONS.Menu, BUTTONS.Playing );
-
-      this.transition.zoom( STATE.Menu, 0 );
-
-      this.controls.disable();
-      if ( ! this.newGame ) this.timer.stop();
-      this.transition.timer( HIDE );
-
-      // setTimeout( () => this.transition.title( SHOW ), this.transition.durations.zoom - 1000 );
-
-      this.playing = false;
-      this.controls.disable();
-
-    }
 
   }
 
