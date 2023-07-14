@@ -281,7 +281,7 @@ input[type="color"]::-webkit-color-swatch {
     color: #ffffff;
 }
 
-.color-assign-page > .color-container > .flex-row > input[type="color"].active {
+.color-assign-page > .color-container > .flex-row > input[type="color"].selected {
     box-shadow: 7px 9px 0 black;
 }
 
