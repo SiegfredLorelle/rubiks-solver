@@ -30,7 +30,7 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#333333;
+    background-color:#d8d2d2;
     background-image:linear-gradient(to bottom, #A7A7A7 0%, #E4E4E4 51%);
     font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
     font-size:12px;
@@ -54,7 +54,7 @@ body, button {
 
     /* Portrait layout (default) */
     .app {
-        background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+        background:url(www/img/background.jpg) no-repeat center top; /* 170px x 200px */
         position:absolute;             /* position in the center of the screen */
         left:50%;
         top:50%;
@@ -103,6 +103,7 @@ h1, h2 {
     padding:1em;
     text-align:center;
 }
+
 
 .center {
     margin: 0 auto 0 auto;
@@ -162,14 +163,15 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .home-page > .start-arrow-container {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: 3rem;
+    color: #020202;
 }
+
 
 .home-page > .start-arrow-container > span > i {
     font-size: 2.5rem;
 }
-
 
 
 .cube-select-page > div > .cube-sizes-container {
@@ -182,7 +184,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 .cube-select-page > div > .cube-sizes-container > li > button {
     font-size: 1.5rem;
-    background-color: #414141;
+    background-color: #747070;
     width: 100%;
     padding: 1rem 0;
     border-radius: 10px;
@@ -205,7 +207,7 @@ input[type="color"]::-webkit-color-swatch {
 .cube-select-page > div > .bottom-icon-container.flex {
     flex-direction: row;
     padding: 1rem;
-    
+    color: #020202;
 }
 
 
@@ -213,6 +215,7 @@ input[type="color"]::-webkit-color-swatch {
     width: 100%;
     height: 100%;
     justify-content: start;
+    background-color: #979191;
 }
 
 
@@ -221,6 +224,14 @@ input[type="color"]::-webkit-color-swatch {
     width: 100%;
     height: 10%;
     padding: 0.5rem;
+    color: #020202;
+    /* align-items: normal; */
+    /* justify-content: space-between; */
+}
+
+.color-assign-page > nav > img {
+    width: 70px;
+    height: 70px;
     /* align-items: normal; */
     /* justify-content: space-between; */
 }
@@ -247,9 +258,11 @@ input[type="color"]::-webkit-color-swatch {
 
 .color-assign-page > .color-container > .flex-row {
     justify-content: center;
+
 }
 .color-assign-page > .color-container > .flex-row > input[type="color"] {
     margin: 0.5rem;
+
 }
 
 .color-assign-page > .solve-reset-container {
@@ -269,11 +282,12 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .home-logo-responsive {
-    padding-top: 35%;
+    padding-top: 10%;
     width: 100%;
     max-width: 300px;
-    height: auto;
+    height: 100%;
   }
+
 
 .cube-select-page > div > .menu-responsive {
     padding-top: 30%;
@@ -282,6 +296,89 @@ input[type="color"]::-webkit-color-swatch {
     height: auto;
 }
 
+.rubiks-container {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    perspective: 700px;
+    top: calc(50% - 100px);
+    left: calc(50% - 100px);
+  }
+  .rubiks-cube {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transform-style: preserve-3d;
+    transition: transform 2s ease;
+    background: black;
+  }
+  
+  .cube-side {
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+    position: absolute;
+    backface-visibility: hidden;
+    background: black;
+    border-radius: 7px;
+  }
+  
+  @for $j from 1 through length($sides) {
+    @for $i from 1 through $repeat {
+      .cube-side:nth-of-type(#{$j}) .cube-side-square:nth-of-type(#{length($colors)}n
+          + #{$i}) {
+        background: nth($colors, random(length($colors)));
+      }
+    }
+  }
+  .cube-side .cube-side-square {
+    display: inline-block;
+    border: 6px solid;
+    width: 33%;
+    height: 33%;
+    border-radius: 12px;
+  }
+  
+  
+  .cube-side.side-front {
+    transform: translateZ(100px);
+    background-color: #4B946A;
+  }
+  .cube-side.side-back {
+    transform: rotateX(-180deg) translateZ(100px);
+    background-color: #cc1919;
+  }
+  .cube-side.side-right {
+    transform: rotateY(90deg) translateZ(100px);
+    background-color: #f5e504;
+  }
+  .cube-side.side-left {
+    transform: rotateY(-90deg) translateZ(100px);
+    background-color: #f58504;
+  }
+  .cube-side.side-top {
+    transform: rotateX(90deg) translateZ(100px);
+    background-color: #0481f5;
+  }
+  .cube-side.side-bottom {
+    transform: rotateX(-90deg) translateZ(100px);
+    background-color: #dbdee0;
+  }
+  
+  .rubiks-cube {
+    animation: rubiksCubeRotate 20s linear infinite both alternate;
+  }
+  
+    @keyframes rubiksCubeRotate {
+      0%       { transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg); }
+      15%      { transform: rotateZ(45deg) rotateX(45deg) rotateY(45deg); }
+      30%      { transform: rotateZ(45deg) rotateX(90deg) rotateY(90deg); }
+      45%      { transform: rotateZ(45deg) rotateX(135deg) rotateY(135deg); }
+      60%      { transform: rotateZ(45deg) rotateX(90deg) rotateY(180deg);  }
+      75%      { transform: rotateZ(45deg) rotateX(45deg) rotateY(225deg); }
+      100%      { transform: rotateZ(45deg) rotateX(0deg) rotateY(270deg); }
+    }
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
@@ -322,6 +419,6 @@ input[type="color"]::-webkit-color-swatch {
 
 @media screen and (prefers-color-scheme: dark) {
     body {
-        background-image:linear-gradient(to bottom, #585858 0%, #1B1B1B 51%);
+        background-image:linear-gradient(to bottom, #808080 0%, rgb(66, 65, 65) 51%);
     }
 }
