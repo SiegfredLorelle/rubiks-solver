@@ -171,11 +171,11 @@ function disableColors() {
 
 function listenToColorTap() {
     colors.forEach(color => {
-        color.addEventListener("touchstart", selectColor);
+        color.addEventListener("touchstart", onSelectColor);
     })
 }
 
-function selectColor(event) {
+function onSelectColor(event) {
     selectedColor = event.target.value;
     console.log(selectedColor);
 
