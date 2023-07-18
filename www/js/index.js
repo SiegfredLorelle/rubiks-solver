@@ -38,7 +38,7 @@ let activePageName;
 let mapPages = new Map();
 
 let cubesSelectButtons;
-let selectedCube;
+// let selectedCube;
 
 let colors;
 let selectedColor;
@@ -120,6 +120,7 @@ function onColorAssignPage() {
     listenToValueChange();
     window.version = '0.99.2';
     window.game = new Game();
+    // window.game.cube.size = 2;
 }
 
 function onSettingsPage() {
@@ -200,15 +201,15 @@ function listenToColorTap() {
 function onSelectColor(event) {
     selectedColor = event.target.value;
     console.log(selectedColor);
-    colors.forEach(color => {
-        color.classList.remove("selected");
-    });
-    event.target.classList.toggle("selected");
+    // colors.forEach(color => {
+    //     color.classList.remove("selected");
+    // });
+    // event.target.classList.toggle("selected");
 
 
     window.game.cube.updateEdgesColors(edgeIndex, selectedColor);
+    console.log(edgeIndex);
     edgeIndex++;
-
     // console.log(window.game.controls);
     // console.log(window.game.cube);
     // window.game.themeEditor.getPieceColor(event); 

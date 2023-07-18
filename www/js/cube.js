@@ -1,6 +1,8 @@
 // Three.js - https://github.com/mrdoob/three.js/
 // RoundedBoxGeometry - https://github.com/pailhead/three-rounded-box
 
+let selectedCube;
+
 const animationEngine = ( () => {
 
   let uniqueID = 0;
@@ -676,7 +678,7 @@ class Cube {
   constructor( game ) {
 
     this.game = game;
-    this.size = 3;
+    this.size = parseInt(selectedCube);
 
     this.geometry = {
       pieceCornerRadius: 0.12,
@@ -2158,7 +2160,7 @@ class Preferences {
         step: 1,
         onUpdate: value => {
 
-          this.game.cube.size = value;
+          // this.game.cube.size = value;
 
           this.game.preferences.ranges.scramble.list.forEach( ( item, i ) => {
 
