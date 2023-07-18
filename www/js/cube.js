@@ -885,11 +885,25 @@ class Cube {
     
   }
   
-  updateEdgesColors() {
-    this.edges[0].material.color.setHex(0x000000);
-    console.log(this.edges[0]);
+  updateEdgesColors( index, color) {
+    // this.edge[]
+    // let index = 0;
+    color = color.slice(1);
+
+    this.edges[index].material.color.setHex(`0x${color}`);
+    // console.log(this.edges[0]);
+
+    // this.edges.forEach(edge => {
+    //   // console.log(edge);
+    //   edge.addEventListener("click", (event) => {
+    //     console.log(event.target);
+    //   })
+    // });
+
+    // for
     
   }
+
 }
 
 const Easing = {
@@ -1189,7 +1203,9 @@ class Draggable {
       ? ( event.touches[ 0 ] || event.changedTouches[ 0 ] )
       : event;
 
-    this.position.current.set( dragEvent.pageX, dragEvent.pageY );
+      
+      this.position.current.set( dragEvent.pageX, dragEvent.pageY );
+      // console.log(this.position.current);
 
   }
 
@@ -2748,9 +2764,19 @@ class ThemeEditor {
   constructor( game ) {
 
     this.game = game;
+    this.getPieceColor = this.getPieceColor.bind( this );
 
   }
 
+  colorFromHSL( h, s, l ) {
+
+    h = Math.round( h );
+    s = Math.round( s );
+    l = Math.round( l );
+
+    return new THREE.Color( `hsl(${h}, ${s}%, ${l}%)` );
+
+  }
 
   setHSL( color = null, animate = false ) {
 
@@ -2814,12 +2840,52 @@ class ThemeEditor {
       lightness.setValue( l * 100 );
 
       this.updateHSL();
-      this.game.storage.savePreferences();
+      // this.game.storage.savePreferences();
 
     }
 
   }
+  updateHSL() {
 
+    const { hue, saturation, lightness } = this.game.preferences.ranges;
+
+    const h = hue.value;
+    const s = saturation.value;
+    const l = lightness.value;
+
+    const color = this.colorFromHSL( h, s, l ).getStyle();
+
+    hue.handle.style.color = color;
+    saturation.handle.style.color = color;
+    lightness.handle.style.color = color;
+
+    saturation.track.style.color = this.colorFromHSL( h, 100, 50 ).getStyle();
+    lightness.track.style.color = this.colorFromHSL( h, s, 50 ).getStyle();
+
+    this.game.dom.theme.style.display = 'none';
+    this.game.dom.theme.offsetHeight;
+    this.game.dom.theme.style.display = '';
+
+    const theme = this.game.themes.theme;
+
+    this.game.themes.colors[ theme ][ this.editColor ] = this.colorFromHSL( h, s, l ).getHex();
+    this.game.themes.setTheme();
+
+  }
+
+  colorPicker( enable ) {
+
+    if ( enable ) {
+
+      this.game.dom.game.addEventListener( 'click', this.getPieceColor, false );
+
+    } else {
+
+      this.game.dom.game.removeEventListener( 'click', this.getPieceColor, false );
+
+    }
+
+  }
 
   getPieceColor( event ) {
 
@@ -2828,27 +2894,28 @@ class ThemeEditor {
       : event;
 
     const clickPosition = new THREE.Vector2( clickEvent.pageX, clickEvent.pageY );
-
+    
     let edgeIntersect = this.game.controls.getIntersect( clickPosition, this.game.cube.edges, true );
     let pieceIntersect = this.game.controls.getIntersect( clickPosition, this.game.cube.cubes, true );
-
+    
     if ( edgeIntersect !== false ) {
 
       const edge = edgeIntersect.object;
-
+      
       const position = edge.parent
-        .localToWorld( edge.position.clone() )
+      .localToWorld( edge.position.clone() )
         .sub( this.game.cube.object.position )
         .sub( this.game.cube.animator.position );
+        
+        const mainAxis = this.game.controls.getMainAxis( position );
+        if ( position.multiplyScalar( 2 ).round()[ mainAxis ] < 1 ) edgeIntersect = false;
+        
+      }
+      
+      const name = edgeIntersect ? edgeIntersect.object.name : pieceIntersect ? 'P' : 'G';
+      // console.log(clickPosition, name);
 
-      const mainAxis = this.game.controls.getMainAxis( position );
-      if ( position.multiplyScalar( 2 ).round()[ mainAxis ] < 1 ) edgeIntersect = false;
-
-    }
-
-    const name = edgeIntersect ? edgeIntersect.object.name : pieceIntersect ? 'P' : 'G';
-
-    this.setHSL( name, true );
+    // this.setHSL( name, true );
 
   }
 
@@ -3009,7 +3076,7 @@ class Game {
 
   initActions() {
 
-    let tappedTwice = false;
+    // let tappedTwice = false;.
 
     this.dom.game.addEventListener( 'click', event => {
 
@@ -3018,23 +3085,23 @@ class Game {
 
       if ( this.state === STATE.Menu ) {
 
-        if ( ! tappedTwice ) {
+        // if ( ! tappedTwice ) {
 
-          tappedTwice = true;
-          setTimeout( () => tappedTwice = false, 300 );
-          return false;
+        //   tappedTwice = true;
+        //   setTimeout( () => tappedTwice = false, 300 );
+        //   return false;
 
-        }
+        // }
 
-        this.game( SHOW );
+        // this.game( SHOW );
 
-      } else if ( this.state === STATE.Complete ) {
+      // } else if ( this.state === STATE.Complete ) {
 
-        this.complete( HIDE );
+      //   // this.complete( HIDE );
 
-      } else if ( this.state === STATE.Stats ) {
+      // } else if ( this.state === STATE.Stats ) {
 
-        this.stats( HIDE );
+      //   // this.stats( HIDE );
 
       } 
 
@@ -3051,6 +3118,13 @@ class Game {
 
     };
 
+  }
+
+  theme( show ) {
+
+    this.themeEditor.colorPicker( show );
+    
+  
   }
 
 }

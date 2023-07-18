@@ -42,7 +42,9 @@ let selectedCube;
 
 let colors;
 let selectedColor;
+let edgeIndex;
 let settingsBtn;
+
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -62,6 +64,7 @@ function onStart() {
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
+    edgeIndex = 0;
 
     findActivePage();
 }
@@ -201,7 +204,20 @@ function onSelectColor(event) {
         color.classList.remove("selected");
     });
     event.target.classList.toggle("selected");
-    window.game.cube.updateEdgesColors();
+
+
+    window.game.cube.updateEdgesColors(edgeIndex, selectedColor);
+    edgeIndex++;
+
+    // console.log(window.game.controls);
+    // console.log(window.game.cube);
+    // window.game.themeEditor.getPieceColor(event); 
+    
+        // window.game.cube.edges.forEach(edge => {
+        //     edge.addEventListener("click", () => {
+        //         console.log(edge);
+        //     });
+        // })
 
 }
 
