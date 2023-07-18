@@ -16,10 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-*, 
-*::before, 
+*,
+*::before,
 *::after {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* make transparent link selection, adjust last value opacity 0 to 1.0 */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,23 +28,27 @@
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#d8d2d2;
-    background-image:linear-gradient(to bottom, #A7A7A7 0%, #E4E4E4 51%);
+    -webkit-touch-callout: none;
+    /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;
+    /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;
+    /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color: #d8d2d2;
+    background-image: linear-gradient(to bottom, #A7A7A7 0%, #E4E4E4 51%);
     font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
-    font-size:12px;
-    height:100vh;
-    margin:0px;
-    padding:0px;
+    font-size: 12px;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
     /* Padding to avoid the "unsafe" areas behind notches in the screen */
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
-    text-transform:uppercase;
-    width:100%;
+    text-transform: uppercase;
+    width: 100%;
 }
 
-body, button {
+body,
+button {
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     text-align: center;
@@ -54,54 +59,63 @@ body, button {
 
     /* Portrait layout (default) */
     .app {
-        background:url(www/img/background.jpg) no-repeat center top; /* 170px x 200px */
-        position:absolute;             /* position in the center of the screen */
-        left:50%;
-        top:50%;
-        height:50px;                   /* text area height */
-        width:225px;                   /* text area width */
-        text-align:center;
-        padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-        margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
-                                       /* offset horizontal: half of text area width */
+        background: url(www/img/background.jpg) no-repeat center top;
+        /* 170px x 200px */
+        position: absolute;
+        /* position in the center of the screen */
+        left: 50%;
+        top: 50%;
+        height: 50px;
+        /* text area height */
+        width: 225px;
+        /* text area width */
+        text-align: center;
+        padding: 180px 0px 0px 0px;
+        /* image height is 200px (bottom 20px are overlapped with text) */
+        margin: -115px 0px 0px -112px;
+        /* offset vertical: half of image height and text area height */
+        /* offset horizontal: half of text area width */
     }
-    
+
     /* Landscape layout (with min-width) */
     @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
         .app {
-            background-position:left center;
-            padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
-            margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
-                                          /* offset horizontal: half of image width and text area width */
+            background-position: left center;
+            padding: 75px 0px 75px 170px;
+            /* padding-top + padding-bottom + text area = image height */
+            margin: -90px 0px 0px -198px;
+            /* offset vertical: half of image height */
+            /* offset horizontal: half of image width and text area width */
         }
     }
 }
 
 
 .app,
-.app > main,
-.app > main > div {
+.app>main,
+.app>main>div {
     min-height: 100%;
     min-width: 100%;
     height: 100%;
     /* overflow: hidden; */
 }
 
-.app > main > div {
+.app>main>div {
     display: none;
 }
 
-.app > main > div.active {
+.app>main>div.active {
     display: flex;
 }
 
 
-h1, h2 {
+h1,
+h2 {
     font-size: 3rem;
-    font-weight:bolder;
-    overflow:visible;
-    padding:1em;
-    text-align:center;
+    font-weight: bolder;
+    overflow: visible;
+    padding: 1em;
+    text-align: center;
 }
 
 
@@ -128,7 +142,7 @@ i {
 }
 
 input[type="color"],
-input[type="color"]::-webkit-color-swatch-wrapper, 
+input[type="color"]::-webkit-color-swatch-wrapper,
 input[type="color"]::-webkit-color-swatch {
     border: none;
     background-color: transparent;
@@ -162,53 +176,62 @@ input[type="color"]::-webkit-color-swatch {
     padding-top: 50px;
 }
 
-.home-page > .start-arrow-container {
+.home-page>.start-arrow-container {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 3rem;
     color: #020202;
 }
 
 
-.home-page > .start-arrow-container > span > i {
+.home-page>.start-arrow-container>span>i {
     font-size: 2.5rem;
 }
 
 
-.cube-select-page > div > .cube-sizes-container {
+.cube-select-page>div>.cube-sizes-container {
     margin: 3rem 0 3rem 0;
 }
 
 
-.cube-select-page > div > .cube-sizes-container > li {
-    margin: 1rem;
+.cube-select-page>div>.cube-sizes-container>li {
+    margin: 2rem;
 }
-.cube-select-page > div > .cube-sizes-container > li > button {
+
+.cube-select-page>div>.cube-sizes-container>li>button {
     font-size: 1.5rem;
     background-color: #747070;
-    width: 100%;
-    padding: 1rem 0;
+    width: auto;
+    padding-top: 1rem;
+    padding-right: 3rem;
+    padding-bottom: 1rem;
+    padding-left: 3rem;
     border-radius: 10px;
     align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    padding: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
 }
 
-.cube-select-page > div > .cube-sizes-container > li > button:hover {
+.cube-select-page>div>.cube-sizes-container>li>button:hover {
     background-color: #373535;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.cube-select-page > div > .cube-sizes-container > li > button > img {
+.cube-select-page>div>.cube-sizes-container>li>button>img {
     height: 50px;
     width: 50px;
     margin-right: 1rem;
+    justify-content: flex-start;
 }
 
-.cube-select-page > div {
+.cube-select-page>div {
     width: 100%;
 }
 
-.cube-select-page > div > .bottom-icon-container.flex {
+.cube-select-page>div>.bottom-icon-container.flex {
     flex-direction: row;
     padding: 1rem;
     color: #020202;
@@ -223,7 +246,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
-.color-assign-page > nav {
+.color-assign-page>nav {
     flex-direction: row;
     width: 100%;
     height: 10%;
@@ -233,50 +256,52 @@ input[type="color"]::-webkit-color-swatch {
     /* justify-content: space-between; */
 }
 
-.color-assign-page > nav > img {
+.color-assign-page>nav>img {
     width: 70px;
     height: 70px;
     /* align-items: normal; */
     /* justify-content: space-between; */
 }
 
-.color-assign-page > .ui, 
-.color-assign-page > .ui > .ui__game {
+.color-assign-page>.ui,
+.color-assign-page>.ui>.ui__game {
     height: 80%;
     width: 100%;
 }
 
 
-.color-assign-page > nav > h2 {
+.color-assign-page>nav>h2 {
     font-size: 1.5rem;
     justify-content: space-between;
 }
 
-.color-assign-page > nav > i {
+.color-assign-page>nav>i {
     padding: 1rem;
 }
-.color-assign-page > .color-container,
-.color-assign-page > .solve-reset-container {
+
+.color-assign-page>.color-container,
+.color-assign-page>.solve-reset-container {
     padding-bottom: 1.5rem;
 }
 
-.color-assign-page > .color-container > .flex-row {
+.color-assign-page>.color-container>.flex-row {
     justify-content: center;
 
 }
-.color-assign-page > .color-container > .flex-row > input[type="color"] {
+
+.color-assign-page>.color-container>.flex-row>input[type="color"] {
     margin: 0.5rem;
 
 }
 
-.color-assign-page > .solve-reset-container {
+.color-assign-page>.solve-reset-container {
     /* margin-bottom: 3rem; */
     width: 100%;
     /* height: 10%; */
     /* height: 5%; */
 }
 
-.color-assign-page > .solve-reset-container > button {
+.color-assign-page>.solve-reset-container>button {
     width: 33%;
     background-color: #020202;
     border-radius: 10px;
@@ -285,21 +310,22 @@ input[type="color"]::-webkit-color-swatch {
     color: #ffffff;
 }
 
-.color-assign-page > .color-container > .flex-row > input[type="color"].selected {
+.color-assign-page>.color-container>.flex-row>input[type="color"].selected {
     box-shadow: 7px 9px 0 black;
 }
 
 
 .home-logo-responsive {
-    padding-top: 10%;
+    padding-top: 0;
     width: 100%;
     max-width: 300px;
     height: 100%;
 }
 
 
-.cube-select-page > div > .menu-responsive {
-    padding-top: 30%;
+.cube-select-page>div>.menu-responsive {
+    padding-top: 5rem;
+    padding-bottom: 1rem;
     width: 100%;
     max-width: 250px;
     height: auto;
@@ -354,22 +380,27 @@ input[type="color"]::-webkit-color-swatch {
     transform: translateZ(100px);
     background-color: #ffffff;
 }
+
 .cube-side.side-back {
     transform: rotateX(-180deg) translateZ(100px);
     background-color: #cc1919;
 }
+
 .cube-side.side-right {
     transform: rotateY(90deg) translateZ(100px);
     background-color: #f5e504;
 }
+
 .cube-side.side-left {
     transform: rotateY(-90deg) translateZ(100px);
     background-color: #f58504;
 }
+
 .cube-side.side-top {
     transform: rotateX(90deg) translateZ(100px);
     background-color: #0481f5;
 }
+
 .cube-side.side-bottom {
     transform: rotateX(-90deg) translateZ(100px);
     background-color: rgb(4, 131, 4);
@@ -380,54 +411,87 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 @keyframes rubiksCubeRotate {
-    0%       { transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg); }
-    15%      { transform: rotateZ(45deg) rotateX(45deg) rotateY(45deg); }
-    30%      { transform: rotateZ(45deg) rotateX(90deg) rotateY(90deg); }
-    45%      { transform: rotateZ(45deg) rotateX(135deg) rotateY(135deg); }
-    60%      { transform: rotateZ(45deg) rotateX(90deg) rotateY(180deg);  }
-    75%      { transform: rotateZ(45deg) rotateX(45deg) rotateY(225deg); }
-    100%      { transform: rotateZ(45deg) rotateX(0deg) rotateY(270deg); }
+    0% {
+        transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+    }
+
+    15% {
+        transform: rotateZ(45deg) rotateX(45deg) rotateY(45deg);
+    }
+
+    30% {
+        transform: rotateZ(45deg) rotateX(90deg) rotateY(90deg);
+    }
+
+    45% {
+        transform: rotateZ(45deg) rotateX(135deg) rotateY(135deg);
+    }
+
+    60% {
+        transform: rotateZ(45deg) rotateX(90deg) rotateY(180deg);
+    }
+
+    75% {
+        transform: rotateZ(45deg) rotateX(45deg) rotateY(225deg);
+    }
+
+    100% {
+        transform: rotateZ(45deg) rotateX(0deg) rotateY(270deg);
+    }
 }
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
 
     .event {
-        border-radius:4px;
-        color:#FFFFFF;
-        font-size:12px;
-        margin:0px 30px;
-        padding:2px 0px;
+        border-radius: 4px;
+        color: #FFFFFF;
+        font-size: 12px;
+        margin: 0px 30px;
+        padding: 2px 0px;
     }
-    
+
     .event.listening {
-        background-color:#333333;
-        display:block;
+        background-color: #333333;
+        display: block;
     }
-    
+
     .event.received {
-        background-color:#4B946A;
-        display:none;
+        background-color: #4B946A;
+        display: none;
     }
-    
-    #deviceready.ready .event.listening { display: none; }
-    #deviceready.ready .event.received { display: block; }
-    
+
+    #deviceready.ready .event.listening {
+        display: none;
+    }
+
+    #deviceready.ready .event.received {
+        display: block;
+    }
+
     @keyframes fade {
-        from { opacity: 1.0; }
-        50% { opacity: 0.4; }
-        to { opacity: 1.0; }
+        from {
+            opacity: 1.0;
+        }
+
+        50% {
+            opacity: 0.4;
+        }
+
+        to {
+            opacity: 1.0;
+        }
     }
-    
+
     .blink {
-        animation:fade 3000ms infinite;
-        -webkit-animation:fade 3000ms infinite;
+        animation: fade 3000ms infinite;
+        -webkit-animation: fade 3000ms infinite;
     }
 }
 
 
 @media screen and (prefers-color-scheme: dark) {
     body {
-        background-image:linear-gradient(to bottom, #808080 0%, rgb(66, 65, 65) 51%);
+        background-image: linear-gradient(to bottom, #808080 0%, rgb(66, 65, 65) 51%);
     }
 }
