@@ -301,6 +301,8 @@ input[type="color"]::-webkit-color-swatch {
     height: auto;
 }
 
+/* animated rubiks */
+
 .rubiks-container {
     width: 200px;
     height: 200px;
@@ -315,8 +317,8 @@ input[type="color"]::-webkit-color-swatch {
     height: 100%;
     display: block;
     transform-style: preserve-3d;
-    transition: transform 2s ease;
-    background: black;
+    transition: transform 3s ease;
+    background: transparent;
 }
 
 .cube-side {
@@ -324,31 +326,32 @@ input[type="color"]::-webkit-color-swatch {
     height: 100%;
     font-size: 0;
     position: absolute;
-    backface-visibility: hidden;
-    background: black;
-    border-radius: 7px;
+    backface-visibility: visible;
+    background: rgb(255, 255, 255);
+    border-radius: 0px;
 }
 
-@for $j from 1 through length($sides) {
+/* @for $j from 1 through length($sides) {
     @for $i from 1 through $repeat {
         .cube-side:nth-of-type(#{$j}) .cube-side-square:nth-of-type(#{length($colors)}n
         + #{$i}) {
             background: nth($colors, random(length($colors)));
         }
     }
-}
+} */
 .cube-side .cube-side-square {
     display: inline-block;
-    border: 6px solid;
+    border: 5px solid;
     width: 33%;
     height: 33%;
-    border-radius: 12px;
+    border-radius: 5px;
+    border-color: #020202;
 }
 
 
 .cube-side.side-front {
     transform: translateZ(100px);
-    background-color: #4B946A;
+    background-color: #ffffff;
 }
 .cube-side.side-back {
     transform: rotateX(-180deg) translateZ(100px);
@@ -368,7 +371,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 .cube-side.side-bottom {
     transform: rotateX(-90deg) translateZ(100px);
-    background-color: #dbdee0;
+    background-color: rgb(4, 131, 4);
 }
 
 .rubiks-cube {
