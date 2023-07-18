@@ -64,7 +64,7 @@ function onStart() {
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
-    edgeIndex = 0;
+    // edgeIndex = 7;
 
     findActivePage();
 }
@@ -205,10 +205,23 @@ function onSelectColor(event) {
     //     color.classList.remove("selected");
     // });
     // event.target.classList.toggle("selected");
+    const indices = [
+        11, 23, 5 , 17,
+        21, 18, 15, 12,
+        20, 8, 14, 2,
+        6, 9, 0, 3,
+        7, 19, 10, 22,
+        4, 16, 1, 13,
+    ]
 
 
-    window.game.cube.updateEdgesColors(edgeIndex, selectedColor);
+    if (!edgeIndex || edgeIndex >= indices.length) {
+        edgeIndex = 0;
+    }
+
+
     console.log(edgeIndex);
+    window.game.cube.updateEdgesColors(indices[edgeIndex], selectedColor);
     edgeIndex++;
     // console.log(window.game.controls);
     // console.log(window.game.cube);
