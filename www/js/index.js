@@ -150,6 +150,7 @@ function onColorAssignPage() {
     listenToValueChange();
     window.version = '0.99.2';
     window.game = new Game();
+    colorCount = new Map();
     // window.game.cube.size = 2;
 }
 
