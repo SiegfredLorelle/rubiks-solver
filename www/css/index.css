@@ -194,6 +194,10 @@ input[type="color"]::-webkit-color-swatch {
     padding: 1rem;
 }
 
+.cube-select-page > div > .cube-sizes-container > li > button:hover {
+    background-color: #373535;
+}
+
 .cube-select-page > div > .cube-sizes-container > li > button > img {
     height: 50px;
     width: 50px;
@@ -303,6 +307,7 @@ input[type="color"]::-webkit-color-swatch {
 
 /* animated rubiks */
 
+/* Set the initial size of the cube */
 .rubiks-container {
     width: 200px;
     height: 200px;
@@ -311,8 +316,10 @@ input[type="color"]::-webkit-color-swatch {
     top: calc(50% - 100px);
     left: calc(50% - 100px);
 }
+
+/* Make the cube fill the container */
 .rubiks-cube {
-    position: fixed;
+    position: relative;
     width: 100%;
     height: 100%;
     display: block;
@@ -321,6 +328,7 @@ input[type="color"]::-webkit-color-swatch {
     background: transparent;
 }
 
+/* Adjust the size of the cube sides */
 .cube-side {
     width: 100%;
     height: 100%;
@@ -331,14 +339,7 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 0px;
 }
 
-/* @for $j from 1 through length($sides) {
-    @for $i from 1 through $repeat {
-        .cube-side:nth-of-type(#{$j}) .cube-side-square:nth-of-type(#{length($colors)}n
-        + #{$i}) {
-            background: nth($colors, random(length($colors)));
-        }
-    }
-} */
+/* Adjust the size of the cube squares */
 .cube-side .cube-side-square {
     display: inline-block;
     border: 5px solid;
