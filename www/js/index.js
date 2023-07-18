@@ -46,6 +46,36 @@ let edgeIndex;
 let settingsBtn;
 
 
+let edgeIndexToColor = new Map();
+edgeIndexToColor.set(11, null);
+edgeIndexToColor.set(23, null);
+edgeIndexToColor.set(5, null);
+edgeIndexToColor.set(17, null);
+edgeIndexToColor.set(21, null);
+edgeIndexToColor.set(18, null);
+edgeIndexToColor.set(15, null);
+edgeIndexToColor.set(12, null);
+edgeIndexToColor.set(20, null);
+edgeIndexToColor.set(8, null);
+edgeIndexToColor.set(14, null);
+edgeIndexToColor.set(2, null);
+edgeIndexToColor.set(6, null);
+edgeIndexToColor.set(9, null);
+edgeIndexToColor.set(0, null);
+edgeIndexToColor.set(3, null);
+edgeIndexToColor.set(7, null);
+edgeIndexToColor.set(19, null);
+edgeIndexToColor.set(10, null);
+edgeIndexToColor.set(22, null);
+edgeIndexToColor.set(4, null);
+edgeIndexToColor.set(16, null);
+edgeIndexToColor.set(1, null);
+edgeIndexToColor.set(13, null);
+
+const indices = [ ...edgeIndexToColor.keys() ];
+let colorCount = new Map();
+
+
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -205,24 +235,42 @@ function onSelectColor(event) {
     //     color.classList.remove("selected");
     // });
     // event.target.classList.toggle("selected");
-    const indices = [
-        11, 23, 5 , 17,
-        21, 18, 15, 12,
-        20, 8, 14, 2,
-        6, 9, 0, 3,
-        7, 19, 10, 22,
-        4, 16, 1, 13,
-    ]
+    // const indices = [
+    //     11, 23, 5 , 17,
+    //     21, 18, 15, 12,
+    //     20, 8, 14, 2,
+    //     6, 9, 0, 3,
+    //     7, 19, 10, 22,
+    //     4, 16, 1, 13,
+    // ]
 
-
+    
     if (!edgeIndex || edgeIndex >= indices.length) {
         edgeIndex = 0;
     }
-
-
-    console.log(edgeIndex);
+    
+    console.log([ ...colorCount.values() ], selectedColor);
+    if ([ ...colorCount.keys() ].includes(selectedColor)) {
+        if (colorCount.get(selectedColor) >= 4) {
+            console.log("4 COLORS ALREADY");
+            return;
+        }
+        
+        colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
+    }
+    else {
+        colorCount.set(selectedColor, 1);
+    }
+    // console.log(colorCount);
+    
+    
+    // const indices = [ ...edgeIndexToColor.keys() ];
     window.game.cube.updateEdgesColors(indices[edgeIndex], selectedColor);
+    edgeIndexToColor.set(indices[edgeIndex], selectedColor);
     edgeIndex++;
+
+
+
     // console.log(window.game.controls);
     // console.log(window.game.cube);
     // window.game.themeEditor.getPieceColor(event); 
