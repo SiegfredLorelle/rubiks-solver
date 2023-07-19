@@ -36,6 +36,9 @@ function onDeviceReady() {
 let activePage;
 let activePageName;
 let mapPages = new Map();
+let activePart;
+let activePartName;
+let mapParts = new Map();
 
 let cubesSelectButtons;
 // let selectedCube;
@@ -44,6 +47,7 @@ let colors;
 let selectedColor;
 let edgeIndex;
 let settingsBtn;
+let solveBtn;
 
 
 let edgeIndexToColor = new Map();
@@ -95,8 +99,16 @@ function onStart() {
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
     // edgeIndex = 7;
-
+    solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
+    
+    let parts = document.querySelectorAll("main div.part");
+    parts.forEach(part => {
+        mapParts.set(part.classList[0], part);
+    });
+    // console.log(mapParts);
     findActivePage();
+    findActivePart();
+
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -114,6 +126,14 @@ function findActivePage() {
 
     offListeners();
     manageActivePage();
+}
+
+
+function findActivePart() {
+    // switch(activePage) {
+    activePart = document.querySelector("main div.part.active");
+    // console.log(activePart.classList[0]);
+    activePartName = activePart.classList[0];
 }
 
 function manageActivePage() {
@@ -148,6 +168,7 @@ function onColorAssignPage() {
     listenToHold();
     listenToColorTap();
     listenToValueChange();
+    listenToBtnTap();
     window.version = '0.99.2';
     window.game = new Game();
     colorCount = new Map();
@@ -295,6 +316,14 @@ function onColorChange(event) {
     console.log(selectedColor);
 }
 
+function listenToBtnTap() {
+    solveBtn.addEventListener("click", onSolveBtnTap);
+}
+
+function onSolveBtnTap() {
+    changePartOfPage("solver-part");
+}
+
 function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
@@ -390,7 +419,11 @@ function changePage(pageToActivate) {
 }
 
 function changePartOfPage(partOfPageToActivate) {
-
+    partOfPageToActivate = mapParts.get(partOfPageToActivate);
+    activePart.classList.remove("active");
+    partOfPageToActivate.classList.add("active");
+    findActivePart();
+    console.log(activePart);
 }
 
 function onBackButton() {
