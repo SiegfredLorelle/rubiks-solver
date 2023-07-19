@@ -163,7 +163,7 @@
                 </div>
             </div>
 
-            <!-- Cube Select Page -->
+            <!-- Color Assign Page -->
             <div class="color-assign-page flex">
                 <!-- <div class="flex"> -->
                 <nav class="flex">
@@ -178,23 +178,33 @@
                     <div class="ui__game"></div>
                 </div>
 
-                <div class="color-container">
-                    <div class="flex-row">
-                        <input class="selected" type="color" value="#ffffff" disabled>
-                        <input type="color" value="#1a76bf" disabled>
-                        <input type="color" value="#eee25a" disabled>
+                <div class="color-assign-part part active">
+                    <div class="color-container">
+                        <div class="flex-row">
+                            <input class="selected" type="color" value="#ffffff" disabled>
+                            <input type="color" value="#1a76bf" disabled>
+                            <input type="color" value="#eee25a" disabled>
+                        </div>
+                        <div class="flex-row">
+                            <input type="color" value="#ff5442" disabled>
+                            <input type="color" value="#feb147" disabled>
+                            <input type="color" value="#54ce8e" disabled>
+                        </div>
                     </div>
+    
+                    <div class="solve-reset-container flex">
+                        <button class="solve-btn" disabled>Solve</button>
+                        <button class="reset-btn" disabled>Reset</button>
+                    </div>
+                </div>
+                <div class="solver-part part">
+                    <p>MOVE HERE</p>
                     <div class="flex-row">
-                        <input type="color" value="#ff5442" disabled>
-                        <input type="color" value="#feb147" disabled>
-                        <input type="color" value="#54ce8e" disabled>
+                        <button>BACK</button>
+                        <button>NEXT</button>
                     </div>
                 </div>
 
-                <div class="solve-reset-container flex">
-                    <button>Solve</button>
-                    <button>Reset</button>
-                </div>
             </div>
 
             <!-- Settings Page -->

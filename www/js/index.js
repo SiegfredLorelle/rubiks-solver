@@ -36,6 +36,9 @@ function onDeviceReady() {
 let activePage;
 let activePageName;
 let mapPages = new Map();
+let activePart;
+let activePartName;
+let mapParts = new Map();
 
 let cubesSelectButtons;
 // let selectedCube;
@@ -44,6 +47,7 @@ let colors;
 let selectedColor;
 let edgeIndex;
 let settingsBtn;
+let solveBtn;
 
 
 let edgeIndexToColor = new Map();
@@ -90,13 +94,21 @@ function onStart() {
         mapPages.set(page.classList[0], page);
     });
 
-    selectedColor = document.querySelector(".color-assign-page > .color-container > .flex-row > input[type='color'].selected").value;
+    selectedColor = document.querySelector(".color-assign-page .color-container > .flex-row > input[type='color'].selected").value;
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
     // edgeIndex = 7;
-
+    solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
+    
+    let parts = document.querySelectorAll("main div.part");
+    parts.forEach(part => {
+        mapParts.set(part.classList[0], part);
+    });
+    // console.log(mapParts);
     findActivePage();
+    findActivePart();
+
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -114,6 +126,14 @@ function findActivePage() {
 
     offListeners();
     manageActivePage();
+}
+
+
+function findActivePart() {
+    // switch(activePage) {
+    activePart = document.querySelector("main div.part.active");
+    // console.log(activePart.classList[0]);
+    activePartName = activePart.classList[0];
 }
 
 function manageActivePage() {
@@ -141,6 +161,7 @@ function onCubeSelectPage() {
     listenToSwipes();
     listenToCubeSelectBtnClick();
     listenToSettingsBtnClick();
+    solveBtn.disabled = true;
 }
 
 function onColorAssignPage() {
@@ -148,6 +169,7 @@ function onColorAssignPage() {
     listenToHold();
     listenToColorTap();
     listenToValueChange();
+    // listenToBtnTap();    
     window.version = '0.99.2';
     window.game = new Game();
     colorCount = new Map();
@@ -231,7 +253,7 @@ function listenToColorTap() {
 
 function onSelectColor(event) {
     selectedColor = event.target.value;
-    console.log(selectedColor);
+    // console.log(selectedColor);
     // colors.forEach(color => {
     //     color.classList.remove("selected");
     // });
@@ -250,19 +272,25 @@ function onSelectColor(event) {
         edgeIndex = 0;
     }
     
-    console.log([ ...colorCount.values() ], selectedColor);
+    // console.log([ ...colorCount.values() ], selectedColor);
     if ([ ...colorCount.keys() ].includes(selectedColor)) {
         if (colorCount.get(selectedColor) >= 4) {
-            console.log("4 COLORS ALREADY");
+            // console.log("4 COLORS ALREADY");
             return;
         }
         
         colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
+
+        if (checkCubeValidity()) {
+            console.log("VALID");
+            listenToBtnTap();
+            solveBtn.disabled = false;
+        }
     }
+
     else {
         colorCount.set(selectedColor, 1);
     }
-    // console.log(colorCount);
     
     
     // const indices = [ ...edgeIndexToColor.keys() ];
@@ -271,17 +299,23 @@ function onSelectColor(event) {
     edgeIndex++;
 
 
+}
 
-    // console.log(window.game.controls);
-    // console.log(window.game.cube);
-    // window.game.themeEditor.getPieceColor(event); 
-    
-        // window.game.cube.edges.forEach(edge => {
-        //     edge.addEventListener("click", () => {
-        //         console.log(edge);
-        //     });
-        // })
 
+function checkCubeValidity() {
+    const clrCounts = [ ...colorCount.values() ];
+
+    if (clrCounts.length < 6) {
+        return false;
+    }
+
+    for (let count of clrCounts) {
+        console.log(count);
+        if (count < 4) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function listenToValueChange() {
@@ -293,6 +327,14 @@ function listenToValueChange() {
 function onColorChange(event) {
     selectedColor = event.target.value;
     console.log(selectedColor);
+}
+
+function listenToBtnTap() {
+    solveBtn.addEventListener("click", onSolveBtnTap);
+}
+
+function onSolveBtnTap() {
+    changePartOfPage("solver-part");
 }
 
 function offListeners() {
@@ -368,14 +410,22 @@ function onSwipeLeft() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            changePage("cube-select-page");
+            console.log(activePartName);
+            switch(activePartName) {
+                case "color-assign-part":
+                    // changePartOfPage("solver-part");
+                    changePage("cube-select-page");
+                    break;
+                case "solver-part":
+                    changePartOfPage("color-assign-part");
+                    break;
+                default:
+                    console.log("ERROR");
+            }
             break;
         case "settings-page":
             changePage("cube-select-page");
             break;
-
-        default:
-            console.log("No pg to redirect");
     }
 }
 
@@ -389,6 +439,14 @@ function changePage(pageToActivate) {
     console.log(activePageName);
 }
 
+function changePartOfPage(partOfPageToActivate) {
+    partOfPageToActivate = mapParts.get(partOfPageToActivate);
+    activePart.classList.remove("active");
+    partOfPageToActivate.classList.add("active");
+    findActivePart();
+    console.log(activePart);
+}
+
 function onBackButton() {
     switch(activePageName) {
         case "home-page":
@@ -398,7 +456,18 @@ function onBackButton() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            changePage("cube-select-page");
+            console.log(activePartName);
+            switch(activePartName) {
+                case "color-assign-part":
+                    // changePartOfPage("solver-part");
+                    changePage("cube-select-page");
+                    break;
+                case "solver-part":
+                    changePartOfPage("color-assign-part");
+                    break;
+                default:
+                    console.log("ERROR");
+            }
             break;
         case "settings-page":
             changePage("cube-select-page");

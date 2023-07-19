@@ -1,7 +1,7 @@
 // Three.js - https://github.com/mrdoob/three.js/
 // RoundedBoxGeometry - https://github.com/pailhead/three-rounded-box
 
-let selectedCube;
+let selectedCube = 2;
 
 const animationEngine = ( () => {
 
