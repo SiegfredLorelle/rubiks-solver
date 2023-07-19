@@ -90,7 +90,7 @@ function onStart() {
         mapPages.set(page.classList[0], page);
     });
 
-    selectedColor = document.querySelector(".color-assign-page > .color-container > .flex-row > input[type='color'].selected").value;
+    selectedColor = document.querySelector(".color-assign-page .color-container > .flex-row > input[type='color'].selected").value;
     cubesSelectButtons = document.querySelectorAll(".cube-sizes-container li > *");
     colors = document.querySelectorAll(".color-container > div > input");
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
@@ -387,6 +387,10 @@ function changePage(pageToActivate) {
     pageToActivate.classList.add("active");
     findActivePage();
     console.log(activePageName);
+}
+
+function changePartOfPage(partOfPageToActivate) {
+
 }
 
 function onBackButton() {

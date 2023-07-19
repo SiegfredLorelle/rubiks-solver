@@ -166,6 +166,7 @@ input[type="color"]::-webkit-color-swatch {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .flex-row {
@@ -279,29 +280,48 @@ input[type="color"]::-webkit-color-swatch {
     padding: 1rem;
 }
 
-.color-assign-page>.color-container,
-.color-assign-page>.solve-reset-container {
+.part {
+    display: none;
+    width: 100%;
+    height: 30dvh;
+}
+
+.part.active {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.color-assign-page > .color-assign-part {
+    width: 100%;
+}
+
+.color-assign-page> .color-assign-part > .color-container,
+.color-assign-page> .color-assign-part > .solve-reset-container {
     padding-bottom: 1.5rem;
 }
 
-.color-assign-page>.color-container>.flex-row {
+.color-assign-page> .color-assign-part > .color-container>.flex-row {
     justify-content: center;
 
 }
 
-.color-assign-page>.color-container>.flex-row>input[type="color"] {
+.color-assign-page> .color-assign-part > .color-container>.flex-row>input[type="color"] {
     margin: 0.5rem;
 
 }
 
-.color-assign-page>.solve-reset-container {
+.color-assign-page > .color-assign-part > .solve-reset-container {
     /* margin-bottom: 3rem; */
     width: 100%;
     /* height: 10%; */
     /* height: 5%; */
 }
 
-.color-assign-page>.solve-reset-container>button {
+.color-assign-page > .color-assign-part > .solve-reset-container>button,
+.color-assign-page > .solver-part > div > button {
     width: 33%;
     background-color: #020202;
     border-radius: 10px;
@@ -310,8 +330,12 @@ input[type="color"]::-webkit-color-swatch {
     color: #ffffff;
 }
 
-.color-assign-page>.color-container>.flex-row>input[type="color"].selected {
+.color-assign-page> .color-assign-part > .color-container>.flex-row>input[type="color"].selected {
     box-shadow: 7px 9px 0 black;
+}
+
+.color-assign-page > .solver-part > div {
+    margin: 1.5rem;
 }
 
 
@@ -330,6 +354,7 @@ input[type="color"]::-webkit-color-swatch {
     max-width: 250px;
     height: auto;
 }
+
 
 /* animated rubiks */
 
