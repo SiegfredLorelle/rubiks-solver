@@ -161,6 +161,7 @@ function onCubeSelectPage() {
     listenToSwipes();
     listenToCubeSelectBtnClick();
     listenToSettingsBtnClick();
+    solveBtn.disabled = true;
 }
 
 function onColorAssignPage() {
