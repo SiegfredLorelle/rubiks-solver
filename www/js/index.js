@@ -397,14 +397,22 @@ function onSwipeLeft() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            changePage("cube-select-page");
+            console.log(activePartName);
+            switch(activePartName) {
+                case "color-assign-part":
+                    // changePartOfPage("solver-part");
+                    changePage("cube-select-page");
+                    break;
+                case "solver-part":
+                    changePartOfPage("color-assign-part");
+                    break;
+                default:
+                    console.log("ERROR");
+            }
             break;
         case "settings-page":
             changePage("cube-select-page");
             break;
-
-        default:
-            console.log("No pg to redirect");
     }
 }
 
@@ -435,7 +443,18 @@ function onBackButton() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            changePage("cube-select-page");
+            console.log(activePartName);
+            switch(activePartName) {
+                case "color-assign-part":
+                    // changePartOfPage("solver-part");
+                    changePage("cube-select-page");
+                    break;
+                case "solver-part":
+                    changePartOfPage("color-assign-part");
+                    break;
+                default:
+                    console.log("ERROR");
+            }
             break;
         case "settings-page":
             changePage("cube-select-page");
