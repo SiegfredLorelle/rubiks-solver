@@ -168,7 +168,7 @@ function onColorAssignPage() {
     listenToHold();
     listenToColorTap();
     listenToValueChange();
-    listenToBtnTap();
+    // listenToBtnTap();    
     window.version = '0.99.2';
     window.game = new Game();
     colorCount = new Map();
@@ -252,7 +252,7 @@ function listenToColorTap() {
 
 function onSelectColor(event) {
     selectedColor = event.target.value;
-    console.log(selectedColor);
+    // console.log(selectedColor);
     // colors.forEach(color => {
     //     color.classList.remove("selected");
     // });
@@ -271,19 +271,25 @@ function onSelectColor(event) {
         edgeIndex = 0;
     }
     
-    console.log([ ...colorCount.values() ], selectedColor);
+    // console.log([ ...colorCount.values() ], selectedColor);
     if ([ ...colorCount.keys() ].includes(selectedColor)) {
         if (colorCount.get(selectedColor) >= 4) {
-            console.log("4 COLORS ALREADY");
+            // console.log("4 COLORS ALREADY");
             return;
         }
         
         colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
+
+        if (checkCubeValidity()) {
+            console.log("VALID");
+            listenToBtnTap();
+            solveBtn.disabled = false;
+        }
     }
+
     else {
         colorCount.set(selectedColor, 1);
     }
-    // console.log(colorCount);
     
     
     // const indices = [ ...edgeIndexToColor.keys() ];
@@ -292,17 +298,23 @@ function onSelectColor(event) {
     edgeIndex++;
 
 
+}
 
-    // console.log(window.game.controls);
-    // console.log(window.game.cube);
-    // window.game.themeEditor.getPieceColor(event); 
-    
-        // window.game.cube.edges.forEach(edge => {
-        //     edge.addEventListener("click", () => {
-        //         console.log(edge);
-        //     });
-        // })
 
+function checkCubeValidity() {
+    const clrCounts = [ ...colorCount.values() ];
+
+    if (clrCounts.length < 6) {
+        return false;
+    }
+
+    for (let count of clrCounts) {
+        console.log(count);
+        if (count < 4) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function listenToValueChange() {
