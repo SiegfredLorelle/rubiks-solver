@@ -475,7 +475,7 @@ function onSwipeRight() {
 }
 
 function onSwipeLeft() {
-    switch (activePageName) {
+    switch(activePageName) {
         case "home-page":
             exitApp();
             break;
@@ -492,6 +492,8 @@ function onSwipeLeft() {
                 case "solver-part":
                     changePartOfPage("color-assign-part");
                     break;
+                case "solved-part":
+                    changePage("cube-select-page");
                 default:
                     console.log("ERROR");
             }
@@ -509,7 +511,10 @@ function changePage(pageToActivate) {
     pageToActivate.classList.add("active");
     findActivePage();
     console.log(activePageName);
-    changePartOfPage("color-assign-part");
+
+    if (activePart !== "color-assign-part") {
+        changePartOfPage("color-assign-part");
+    }
 }
 
 function changePartOfPage(partOfPageToActivate) {
@@ -538,6 +543,8 @@ function onBackButton() {
                 case "solver-part":
                     changePartOfPage("color-assign-part");
                     break;
+                case "solved-part":
+                    changePage("cube-select-page");
                 default:
                     console.log("ERROR");
             }
