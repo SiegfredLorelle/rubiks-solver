@@ -2597,21 +2597,21 @@ class Storage {
 
   loadPreferences() {
 
-    try {
+    // try {
 
-      const preferences = JSON.parse( localStorage.getItem( 'theCube_preferences' ) );
+    //   const preferences = JSON.parse( localStorage.getItem( 'theCube_preferences' ) );
 
-      if ( ! preferences ) throw new Error();
+    //   if ( ! preferences ) throw new Error();
 
-      this.game.themes.setTheme( preferences.theme );
+    //   this.game.themes.setTheme( preferences.theme );
 
-      return true;
+    //   return true;
 
-    } catch (e) {
+    // } catch (e) {
 
-      this.game.cube.size = 3;
+      this.game.cube.size = parseInt(selectedCube);
       this.game.controls.flipConfig = 0;
-      this.game.scrambler.dificulty = 1;
+      // this.game.scrambler.dificulty = 1;
 
       this.game.world.fov = 10;
       this.game.world.resize();
@@ -2622,7 +2622,7 @@ class Storage {
 
       return false;
 
-    }
+    // }
 
   }
 
