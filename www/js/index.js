@@ -48,6 +48,8 @@ let selectedColor;
 let edgeIndex;
 let settingsBtn;
 let solveBtn;
+let nextMoveBtn;
+let backMoveBtn;
 
 
 let edgeIndexToColor = new Map();
@@ -100,7 +102,8 @@ function onStart() {
     settingsBtn = document.querySelector(".cube-select-page .bottom-icon-container > i:last-child");
     // edgeIndex = 7;
     solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
-    
+    nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
+    // console.log(nextMoveBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
         mapParts.set(part.classList[0], part);
@@ -194,7 +197,7 @@ function unlistenToCubeSelectBntClick() {
 
 function onCubeSelectBtnClick(event) {
     selectedCube = event.target.value;
-    console.log(selectedCube);
+    // console.log(selectedCube);
     changePage("color-assign-page");
 }
 
@@ -203,7 +206,7 @@ function listenToSettingsBtnClick() {
 }
 
 function onSettingsBtnClick() {
-    console.log(settingsBtn);
+    // console.log(settingsBtn);
     changePage("settings-page");
 }
 
@@ -253,11 +256,6 @@ function listenToColorTap() {
 
 function onSelectColor(event) {
     selectedColor = event.target.value;
-    // console.log(selectedColor);
-    // colors.forEach(color => {
-    //     color.classList.remove("selected");
-    // });
-    // event.target.classList.toggle("selected");
     // const indices = [
     //     11, 23, 5 , 17,
     //     21, 18, 15, 12,
@@ -266,6 +264,16 @@ function onSelectColor(event) {
     //     7, 19, 10, 22,
     //     4, 16, 1, 13,
     // ]
+
+
+    // const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+
+    // window.game.controls.flipAxis = new THREE.Vector3();
+    // window.game.controls.flipAxis[ "y" ] = 1;
+
+    // window.game.controls.selectLayer( layer );
+    // window.game.controls.rotateLayer( -1.6, false);
+
 
     
     if (!edgeIndex || edgeIndex >= indices.length) {
@@ -283,7 +291,8 @@ function onSelectColor(event) {
 
         if (checkCubeValidity()) {
             console.log("VALID");
-            listenToBtnTap();
+            listenToBtnTap(solveBtn);
+            listenToBtnTap(nextMoveBtn);
             solveBtn.disabled = false;
         }
     }
@@ -329,12 +338,28 @@ function onColorChange(event) {
     console.log(selectedColor);
 }
 
-function listenToBtnTap() {
-    solveBtn.addEventListener("click", onSolveBtnTap);
+function listenToBtnTap(btn) {
+    switch (btn) {
+        case solveBtn:
+            solveBtn.addEventListener("click", onSolveBtnTap);
+            break;
+            case nextMoveBtn:
+            nextMoveBtn.addEventListener("click", onNextMoveBtnTap);
+    }
 }
 
 function onSolveBtnTap() {
     changePartOfPage("solver-part");
+}
+
+function onNextMoveBtnTap() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
 }
 
 function offListeners() {
