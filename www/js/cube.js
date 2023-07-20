@@ -2609,7 +2609,7 @@ class Storage {
 
     } catch (e) {
 
-      this.game.cube.size = 3;
+      this.game.cube.size = selectedCube;
       this.game.controls.flipConfig = 0;
       this.game.scrambler.dificulty = 1;
 
