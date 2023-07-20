@@ -1261,7 +1261,7 @@ class Controls {
 
     this.game.world.scene.add( this.edges );
 
-    this.onSolved = () => {};
+    this.onSolved = () => { console.log("SOLVED!");};
     this.onMove = () => {};
 
     this.momentum = [];
@@ -1473,7 +1473,7 @@ class Controls {
   }
 
   rotateLayer( rotation, scramble, callback ) {
-    console.log(rotation, scramble);
+    // console.log(rotation, scramble);
     const config = scramble ? 0 : this.flipConfig;
 
     const easing = this.flipEasings[ config ];
@@ -1800,14 +1800,18 @@ class Controls {
 
     } );
 
-    Object.keys( sides ).forEach( side => {
+    // console.log(this.game.cube.edges);
 
-      if ( ! sides[ side ].every( value => value === sides[ side ][ 0 ] ) ) solved = false;
+
+    Object.keys( sides ).forEach( side => {
+      
+      if ( ! sides[ side ].every( value => value === sides[ side ][ 0 ] ) ) {
+        solved = false;
+      }
 
     } );
 
     if ( solved ) this.onSolved();
-
   }
 
 }

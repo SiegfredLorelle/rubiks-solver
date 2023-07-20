@@ -257,7 +257,7 @@ function listenToColorTap() {
 function onSelectColor(event) {
     selectedColor = event.target.value;
     // const indices = [
-    //     11, 23, 5 , 17,
+    //     11, 23, 5, 17,
     //     21, 18, 15, 12,
     //     20, 8, 14, 2,
     //     6, 9, 0, 3,
@@ -294,6 +294,9 @@ function onSelectColor(event) {
             listenToBtnTap(solveBtn);
             listenToBtnTap(nextMoveBtn);
             solveBtn.disabled = false;
+            // window.game.controls.checkIsSolved();
+            // checkIsCubeSolved();
+
         }
     }
 
@@ -310,6 +313,35 @@ function onSelectColor(event) {
 
 }
 
+
+function checkIsCubeSolved() {
+    // console.log(edgeIndexToColor);
+    console.log("CHECKING IF CUBE IS SOLVED ...");
+    let currentColor;
+    let index = 0;
+
+    for (const color of edgeIndexToColor.values()) {
+        console.log(index, color);
+        if (!currentColor) {
+            currentColor = color;
+        }
+        else if (index === 4) {
+            index = 0;
+            currentColor = color;
+        }
+        else {
+            if (currentColor !== color) {
+                return;
+            }
+        }
+        index++;
+    }
+    onCubeSolved();
+}
+
+function onCubeSolved() {
+    console.log("CONGRATS CUBE IS SOLVED");
+}
 
 function checkCubeValidity() {
     const clrCounts = [ ...colorCount.values() ];
@@ -343,8 +375,9 @@ function listenToBtnTap(btn) {
         case solveBtn:
             solveBtn.addEventListener("click", onSolveBtnTap);
             break;
-            case nextMoveBtn:
+        case nextMoveBtn:
             nextMoveBtn.addEventListener("click", onNextMoveBtnTap);
+            break;
     }
 }
 
@@ -360,6 +393,11 @@ function onNextMoveBtnTap() {
 
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    // window.game.controls.checkIsSolved();
+    checkIsCubeSolved();
+
+
 }
 
 function offListeners() {
@@ -470,6 +508,8 @@ function changePartOfPage(partOfPageToActivate) {
     partOfPageToActivate.classList.add("active");
     findActivePart();
     console.log(activePart);
+    checkIsCubeSolved();
+
 }
 
 function onBackButton() {
