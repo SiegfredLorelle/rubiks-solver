@@ -50,7 +50,7 @@ let settingsBtn;
 let solveBtn;
 let nextMoveBtn;
 let backMoveBtn;
-
+let tryAgainBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -103,7 +103,9 @@ function onStart() {
     // edgeIndex = 7;
     solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
     nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
-    // console.log(nextMoveBtn);
+    tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
+
+    // console.log(tryAgainBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
         mapParts.set(part.classList[0], part);
@@ -172,7 +174,7 @@ function onColorAssignPage() {
     listenToHold();
     listenToColorTap();
     listenToValueChange();
-    // listenToBtnTap();    
+    listenToBtnTap(tryAgainBtn);
     window.version = '0.99.2';
     window.game = new Game();
     colorCount = new Map();
@@ -379,6 +381,9 @@ function listenToBtnTap(btn) {
         case nextMoveBtn:
             nextMoveBtn.addEventListener("click", onNextMoveBtnTap);
             break;
+        case tryAgainBtn:
+            tryAgainBtn.addEventListener("click", onTryAgainBtnTap);
+            break;
     }
 }
 
@@ -398,9 +403,12 @@ function onNextMoveBtnTap() {
 
     // window.game.controls.checkIsSolved();
     checkIsCubeSolved();
-
-
 }
+
+function onTryAgainBtnTap() {
+    changePage("cube-select-page");
+}
+
 
 function offListeners() {
     unlistenToSwipes();
@@ -497,11 +505,11 @@ function onSwipeLeft() {
 
 function changePage(pageToActivate) {
     pageToActivate = mapPages.get(pageToActivate);
-
     activePage.classList.remove("active");
     pageToActivate.classList.add("active");
     findActivePage();
     console.log(activePageName);
+    changePartOfPage("color-assign-part");
 }
 
 function changePartOfPage(partOfPageToActivate) {
@@ -510,8 +518,6 @@ function changePartOfPage(partOfPageToActivate) {
     partOfPageToActivate.classList.add("active");
     findActivePart();
     console.log(activePart);
-    // checkIsCubeSolved();
-
 }
 
 function onBackButton() {
