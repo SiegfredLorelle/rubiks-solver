@@ -50,7 +50,7 @@ let settingsBtn;
 let solveBtn;
 let nextMoveBtn;
 let backMoveBtn;
-
+let tryAgainBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -103,7 +103,9 @@ function onStart() {
     // edgeIndex = 7;
     solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
     nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
-    // console.log(nextMoveBtn);
+    tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
+
+    // console.log(tryAgainBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
         mapParts.set(part.classList[0], part);
@@ -172,7 +174,7 @@ function onColorAssignPage() {
     listenToHold();
     listenToColorTap();
     listenToValueChange();
-    // listenToBtnTap();    
+    listenToBtnTap(tryAgainBtn);
     window.version = '0.99.2';
     window.game = new Game();
     colorCount = new Map();
@@ -257,7 +259,7 @@ function listenToColorTap() {
 function onSelectColor(event) {
     selectedColor = event.target.value;
     // const indices = [
-    //     11, 23, 5 , 17,
+    //     11, 23, 5, 17,
     //     21, 18, 15, 12,
     //     20, 8, 14, 2,
     //     6, 9, 0, 3,
@@ -294,6 +296,9 @@ function onSelectColor(event) {
             listenToBtnTap(solveBtn);
             listenToBtnTap(nextMoveBtn);
             solveBtn.disabled = false;
+            // window.game.controls.checkIsSolved();
+            // checkIsCubeSolved();
+
         }
     }
 
@@ -310,6 +315,36 @@ function onSelectColor(event) {
 
 }
 
+
+function checkIsCubeSolved() {
+    // console.log(edgeIndexToColor);
+    console.log("CHECKING IF CUBE IS SOLVED ...");
+    let currentColor;
+    let index = 0;
+
+    for (const color of edgeIndexToColor.values()) {
+        console.log(index, color);
+        if (!currentColor) {
+            currentColor = color;
+        }
+        else if (index === 4) {
+            index = 0;
+            currentColor = color;
+        }
+        else {
+            if (currentColor !== color) {
+                return;
+            }
+        }
+        index++;
+    }
+    onCubeSolved();
+}
+
+function onCubeSolved() {
+    console.log("CONGRATS CUBE IS SOLVED");
+    changePartOfPage("solved-part");
+}
 
 function checkCubeValidity() {
     const clrCounts = [ ...colorCount.values() ];
@@ -343,13 +378,18 @@ function listenToBtnTap(btn) {
         case solveBtn:
             solveBtn.addEventListener("click", onSolveBtnTap);
             break;
-            case nextMoveBtn:
+        case nextMoveBtn:
             nextMoveBtn.addEventListener("click", onNextMoveBtnTap);
+            break;
+        case tryAgainBtn:
+            tryAgainBtn.addEventListener("click", onTryAgainBtnTap);
+            break;
     }
 }
 
 function onSolveBtnTap() {
     changePartOfPage("solver-part");
+    checkIsCubeSolved();
 }
 
 function onNextMoveBtnTap() {
@@ -360,7 +400,15 @@ function onNextMoveBtnTap() {
 
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    // window.game.controls.checkIsSolved();
+    checkIsCubeSolved();
 }
+
+function onTryAgainBtnTap() {
+    changePage("cube-select-page");
+}
+
 
 function offListeners() {
     unlistenToSwipes();
@@ -427,7 +475,7 @@ function onSwipeRight() {
 }
 
 function onSwipeLeft() {
-    switch (activePageName) {
+    switch(activePageName) {
         case "home-page":
             exitApp();
             break;
@@ -444,6 +492,8 @@ function onSwipeLeft() {
                 case "solver-part":
                     changePartOfPage("color-assign-part");
                     break;
+                case "solved-part":
+                    changePage("cube-select-page");
                 default:
                     console.log("ERROR");
             }
@@ -451,17 +501,20 @@ function onSwipeLeft() {
         case "settings-page":
             changePage("cube-select-page");
             break;
-    }
+    }   
 }
 
 
 function changePage(pageToActivate) {
     pageToActivate = mapPages.get(pageToActivate);
-
     activePage.classList.remove("active");
     pageToActivate.classList.add("active");
     findActivePage();
     console.log(activePageName);
+
+    if (activePart !== "color-assign-part") {
+        changePartOfPage("color-assign-part");
+    }
 }
 
 function changePartOfPage(partOfPageToActivate) {
@@ -490,6 +543,8 @@ function onBackButton() {
                 case "solver-part":
                     changePartOfPage("color-assign-part");
                     break;
+                case "solved-part":
+                    changePage("cube-select-page");
                 default:
                     console.log("ERROR");
             }

@@ -883,7 +883,7 @@ class Cube {
     /* NOTE: APPLIES COLOR TO CUBE */
     
     /* COLORS TO ALL EDGES */
-    // this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
+    this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
     
   }
   
@@ -1261,7 +1261,7 @@ class Controls {
 
     this.game.world.scene.add( this.edges );
 
-    this.onSolved = () => {};
+    this.onSolved = () => { console.log("SOLVED!");};
     this.onMove = () => {};
 
     this.momentum = [];
@@ -1411,9 +1411,9 @@ class Controls {
 
     };
 
-    function rotate() {
-      console.log("ROTATING");
-    }
+    // function rotate() {
+    //   console.log("ROTATING");
+    // }
 
     // function onDragEnd() {
     //   console.log("TEST HEHEHE");
@@ -1473,7 +1473,7 @@ class Controls {
   }
 
   rotateLayer( rotation, scramble, callback ) {
-    console.log(rotation, scramble);
+    // console.log(rotation, scramble);
     const config = scramble ? 0 : this.flipConfig;
 
     const easing = this.flipEasings[ config ];
@@ -1617,7 +1617,7 @@ class Controls {
 
     } );
 
-    console.log(layer);
+    // console.log(layer);
     return layer;
 
   }
@@ -1670,7 +1670,7 @@ class Controls {
     }
 
     const converted = this.scramble.converted;
-    console.log(converted);
+    // console.log(converted);
     const move = converted[ 0 ];
     const layer = this.getLayer( move.position );
 
@@ -1800,14 +1800,18 @@ class Controls {
 
     } );
 
-    Object.keys( sides ).forEach( side => {
+    // console.log(this.game.cube.edges);
 
-      if ( ! sides[ side ].every( value => value === sides[ side ][ 0 ] ) ) solved = false;
+
+    Object.keys( sides ).forEach( side => {
+      
+      if ( ! sides[ side ].every( value => value === sides[ side ][ 0 ] ) ) {
+        solved = false;
+      }
 
     } );
 
     if ( solved ) this.onSolved();
-
   }
 
 }
@@ -2634,12 +2638,12 @@ class Themes {
     // NOTE: CHANGE COLOR HERE
     this.defaults = {
       cube: {
-        U: 0xfff7ff, // white
-        D: 0x000000, // yellow
-        F: 0xfff7ff, // red
-        R: 0xd1d5db, // blue
-        B: 0xfff7ff, // orange
-        L: 0xfff7ff, // green
+        U: 0xb2b6c1, // white
+        D: 0xb2b6c1, // yellow
+        F: 0xb2b6c1, // red
+        R: 0xb2b6c1, // blue
+        B: 0xb2b6c1, // orange
+        L: 0xb2b6c1, // green
         P: 0x08101a, // piece
         G: 0xd1d5db, // background
       }
