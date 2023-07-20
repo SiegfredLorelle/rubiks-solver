@@ -268,7 +268,31 @@ function onSelectColor(event) {
     // ]
     // console.log(window.game.controls.draggable.onDragEnd());
     // window.game.controls.draggable.onDragStart();
+    // window.game.controls.rotateLayer(1.5707963267948966);
+    // window.game.controls.selectLayer({x: 0, y: 0, z: -1});
+    // console.log(move.position);
+    // const layer =  window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+
+    // window.game.controls.flipAxis = new THREE.Vector3();
+    // window.game.controls.lipAxis[ move.axis ] = 1;
+
+    // console.log(layer, move.angle, true);
+    // window.game.controls.selectLayer( layer );
+    // window.game.controls.getLayer(false);
+    // window.game.controls.rotateLayer();
     // window.game.controls.draggable.dispatchEvent("onDragEnd");
+
+    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+
+    // console.log(layer, move.angle, true);
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+
+
+    // wind
 
     // document.dispatchEvent("onDragEnd");
     
