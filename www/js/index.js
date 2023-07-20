@@ -501,7 +501,7 @@ function onSwipeLeft() {
         case "settings-page":
             changePage("cube-select-page");
             break;
-    }
+    }   
 }
 
 

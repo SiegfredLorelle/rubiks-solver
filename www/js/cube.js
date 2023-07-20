@@ -883,7 +883,7 @@ class Cube {
     /* NOTE: APPLIES COLOR TO CUBE */
     
     /* COLORS TO ALL EDGES */
-    // this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
+    this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
     
   }
   
@@ -2638,12 +2638,12 @@ class Themes {
     // NOTE: CHANGE COLOR HERE
     this.defaults = {
       cube: {
-        U: 0xfff7ff, // white
-        D: 0x000000, // yellow
-        F: 0xfff7ff, // red
-        R: 0xd1d5db, // blue
-        B: 0xfff7ff, // orange
-        L: 0xfff7ff, // green
+        U: 0xb2b6c1, // white
+        D: 0xb2b6c1, // yellow
+        F: 0xb2b6c1, // red
+        R: 0xb2b6c1, // blue
+        B: 0xb2b6c1, // orange
+        L: 0xb2b6c1, // green
         P: 0x08101a, // piece
         G: 0xd1d5db, // background
       }
