@@ -341,6 +341,7 @@ function checkIsCubeSolved() {
 
 function onCubeSolved() {
     console.log("CONGRATS CUBE IS SOLVED");
+    changePartOfPage("solved-part");
 }
 
 function checkCubeValidity() {
@@ -383,6 +384,7 @@ function listenToBtnTap(btn) {
 
 function onSolveBtnTap() {
     changePartOfPage("solver-part");
+    checkIsCubeSolved();
 }
 
 function onNextMoveBtnTap() {
@@ -508,7 +510,7 @@ function changePartOfPage(partOfPageToActivate) {
     partOfPageToActivate.classList.add("active");
     findActivePart();
     console.log(activePart);
-    checkIsCubeSolved();
+    // checkIsCubeSolved();
 
 }
 

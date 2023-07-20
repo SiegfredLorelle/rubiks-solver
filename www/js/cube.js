@@ -1411,9 +1411,9 @@ class Controls {
 
     };
 
-    function rotate() {
-      console.log("ROTATING");
-    }
+    // function rotate() {
+    //   console.log("ROTATING");
+    // }
 
     // function onDragEnd() {
     //   console.log("TEST HEHEHE");
@@ -1617,7 +1617,7 @@ class Controls {
 
     } );
 
-    console.log(layer);
+    // console.log(layer);
     return layer;
 
   }
@@ -1670,7 +1670,7 @@ class Controls {
     }
 
     const converted = this.scramble.converted;
-    console.log(converted);
+    // console.log(converted);
     const move = converted[ 0 ];
     const layer = this.getLayer( move.position );
 
