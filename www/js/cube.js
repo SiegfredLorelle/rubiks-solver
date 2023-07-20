@@ -2618,7 +2618,7 @@ class Storage {
 
       this.game.themes.setTheme( 'cube' );
 
-      this.savePreferences();
+      // this.savePreferences();
 
       return false;
 

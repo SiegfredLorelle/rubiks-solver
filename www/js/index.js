@@ -177,7 +177,7 @@ function onColorAssignPage() {
     listenToBtnTap(tryAgainBtn);
     window.version = '0.99.2';
     window.game = new Game();
-    colorCount = new Map();
+    colorCount.clear();
     // window.game.cube.size = 2;
 }
 
@@ -300,6 +300,8 @@ function onSelectColor(event) {
             // checkIsCubeSolved();
 
         }
+        // reset3Dcube();
+
     }
 
     else {
@@ -413,11 +415,12 @@ function onTryAgainBtnTap() {
 function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
-    reset3Dcube();
+    // reset3Dcube();
 }
 
 
 function reset3Dcube() {
+    window.version = null;
     window.game = null;
     gameCanvas = document.querySelector(".ui__game");
     for (const canvas of gameCanvas.children) {
@@ -509,6 +512,7 @@ function changePage(pageToActivate) {
     pageToActivate = mapPages.get(pageToActivate);
     activePage.classList.remove("active");
     pageToActivate.classList.add("active");
+    reset3Dcube();
     findActivePage();
     console.log(activePageName);
 
