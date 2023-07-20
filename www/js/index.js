@@ -194,7 +194,7 @@ function unlistenToCubeSelectBntClick() {
 
 function onCubeSelectBtnClick(event) {
     selectedCube = event.target.value;
-    console.log(selectedCube);
+    // console.log(selectedCube);
     changePage("color-assign-page");
 }
 
@@ -203,7 +203,7 @@ function listenToSettingsBtnClick() {
 }
 
 function onSettingsBtnClick() {
-    console.log(settingsBtn);
+    // console.log(settingsBtn);
     changePage("settings-page");
 }
 
@@ -266,7 +266,11 @@ function onSelectColor(event) {
     //     7, 19, 10, 22,
     //     4, 16, 1, 13,
     // ]
+    // console.log(window.game.controls.draggable.onDragEnd());
+    // window.game.controls.draggable.onDragStart();
+    // window.game.controls.draggable.dispatchEvent("onDragEnd");
 
+    // document.dispatchEvent("onDragEnd");
     
     if (!edgeIndex || edgeIndex >= indices.length) {
         edgeIndex = 0;

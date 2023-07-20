@@ -1300,15 +1300,15 @@ class Controls {
       this.gettingDrag = this.state === ANIMATING;
 
       const edgeIntersect = this.getIntersect( position.current, this.edges, false );
-
+      
       if ( edgeIntersect !== false ) {
-
+        
         this.dragIntersect = this.getIntersect( position.current, this.game.cube.cubes, true );
-
+        
       }
-
       if ( edgeIntersect !== false && this.dragIntersect !== false ) {
-
+        // console.log(edgeIntersect);
+        
         this.dragNormal = edgeIntersect.face.normal.round();
         this.flipType = 'layer';
 
@@ -1357,6 +1357,7 @@ class Controls {
       this.dragCurrent = point;
       this.addMomentumPoint( this.dragDelta );
 
+      console.log(this.state);
       if ( this.state === PREPARING && this.dragTotal.length() > 0.05 ) {
 
         this.dragDirection = this.getMainAxis( this.dragTotal );
@@ -1393,8 +1394,9 @@ class Controls {
 
         if ( this.flipType === 'layer' ) { 
 
-          this.group.rotateOnAxis( this.flipAxis, rotation );
-          this.flipAngle += rotation;
+          // NOTE: ROTATES LAYERS
+          // this.group.rotateOnAxis( this.flipAxis, rotation );
+          // this.flipAngle += rotation;
 
         } else {
 
@@ -1407,6 +1409,11 @@ class Controls {
       }
 
     };
+
+    // function onDragEnd() {
+    //   console.log("TEST HEHEHE");
+    // }
+    // this.draggable.onDragEnd = abc => onDragEnd();
 
     this.draggable.onDragEnd = position => {
 
@@ -1429,12 +1436,14 @@ class Controls {
         : this.roundAngle( this.flipAngle );
 
       const delta = angle - this.flipAngle;
+      // console.log(this.flipType);
+      
 
       if ( this.flipType === 'layer' ) {
 
         this.rotateLayer( delta, false, layer => {
 
-          this.game.storage.saveGame();
+          // this.game.storage.saveGame();
           
           this.state = this.gettingDrag ? PREPARING : STILL;
           this.gettingDrag = false;
@@ -1607,43 +1616,43 @@ class Controls {
 
   }
 
-  keyboardMove( type, move, callback ) {
+  // keyboardMove( type, move, callback ) {
 
-    if ( this.state !== STILL ) return;
-    if ( this.enabled !== true ) return;
+  //   if ( this.state !== STILL ) return;
+  //   if ( this.enabled !== true ) return;
 
-    if ( type === 'LAYER' ) {
+  //   if ( type === 'LAYER' ) {
 
-      const layer = this.getLayer( move.position );
+  //     const layer = this.getLayer( move.position );
 
-      this.flipAxis = new THREE.Vector3();
-      this.flipAxis[ move.axis ] = 1;
-      this.state = ROTATING;
+  //     this.flipAxis = new THREE.Vector3();
+  //     this.flipAxis[ move.axis ] = 1;
+  //     this.state = ROTATING;
 
-      this.selectLayer( layer );
-      this.rotateLayer( move.angle, false, layer => {
+  //     this.selectLayer( layer );
+  //     this.rotateLayer( move.angle, false, layer => {
 
-        this.game.storage.saveGame();
-        this.state = STILL;
-        this.checkIsSolved();
+  //       this.game.storage.saveGame();
+  //       this.state = STILL;
+  //       this.checkIsSolved();
 
-      } );
+  //     } );
 
-    } else if ( type === 'CUBE' ) {
+  //   } else if ( type === 'CUBE' ) {
 
-      this.flipAxis = new THREE.Vector3();
-      this.flipAxis[ move.axis ] = 1;
-      this.state = ROTATING;
+  //     this.flipAxis = new THREE.Vector3();
+  //     this.flipAxis[ move.axis ] = 1;
+  //     this.state = ROTATING;
 
-      this.rotateCube( move.angle, () => {
+  //     this.rotateCube( move.angle, () => {
 
-        this.state = STILL;
+  //       this.state = STILL;
 
-      } );
+  //     } );
 
-    }
+  //   }
 
-  }
+  // }
 
   scrambleCube() {
 
