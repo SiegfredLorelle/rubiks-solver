@@ -178,6 +178,7 @@ function onColorAssignPage() {
     window.version = '0.99.2';
     window.game = new Game();
     colorCount.clear();
+    edgeIndex = 0;
     // window.game.cube.size = 2;
 }
 
@@ -292,7 +293,7 @@ function onSelectColor(event) {
         colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
 
         if (checkCubeValidity()) {
-            console.log("VALID");
+            // console.log("VALID");
             listenToBtnTap(solveBtn);
             listenToBtnTap(nextMoveBtn);
             solveBtn.disabled = false;
@@ -319,13 +320,13 @@ function onSelectColor(event) {
 
 
 function checkIsCubeSolved() {
-    // console.log(edgeIndexToColor);
-    console.log("CHECKING IF CUBE IS SOLVED ...");
+    console.log(edgeIndexToColor);
+    // console.log("CHECKING IF CUBE IS SOLVED ...");
     let currentColor;
     let index = 0;
 
     for (const color of edgeIndexToColor.values()) {
-        console.log(index, color);
+        // console.log(index, color);
         if (!currentColor) {
             currentColor = color;
         }
