@@ -245,9 +245,15 @@ input[type="color"]::-webkit-color-swatch {
     width: 100%;
     height: 100%;
     justify-content: start;
-    background-color: #979191;
+    background-image: linear-gradient(to bottom, #ffffff, #868282);
 }
 
+.color-assign-page img {
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    background-image: linear-gradient(to bottom, #ffffff00, #ffffff00);
+}
 
 .color-assign-page>nav {
     flex-direction: row;
@@ -366,14 +372,12 @@ input[type="color"]::-webkit-color-swatch {
 
 /* animated rubiks */
 
-/* Set the initial size of the cube */
 .rubiks-container {
-    width: 200px;
-    height: 200px;
+    width: 100px; /* Adjust the width to make the container smaller */
+    height: 100px; /* Adjust the height to make the container smaller */
     position: absolute;
-    perspective: 700px;
-    top: calc(50% - 100px);
-    left: calc(50% - 100px);
+    perspective: 500px; /* Adjust the perspective to match the smaller size */
+    transform: translate(100%, 60%); /* Center the cube */
 }
 
 /* Make the cube fill the container */
@@ -401,46 +405,46 @@ input[type="color"]::-webkit-color-swatch {
 /* Adjust the size of the cube squares */
 .cube-side .cube-side-square {
     display: inline-block;
-    border: 5px solid;
-    width: 33%;
-    height: 33%;
-    border-radius: 5px;
+    border: 3px solid; /* Adjust the border size to fit the smaller cube */
+    width: 33.33%; /* Adjust the width to fit the smaller cube */
+    height: 33.33%; /* Adjust the height to fit the smaller cube */
+    border-radius: 3px; /* Adjust the border-radius to fit the smaller cube */
     border-color: #020202;
 }
 
-
+/* Adjust the gap between each side */
 .cube-side.side-front {
-    transform: translateZ(100px);
+    transform: translateZ(50px); /* Adjust the translateZ value for gap */
     background-color: #ffffff;
 }
 
 .cube-side.side-back {
-    transform: rotateX(-180deg) translateZ(100px);
-    background-color: #cc1919;
+    transform: rotateX(-180deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    background-color: #a81414;
 }
 
 .cube-side.side-right {
-    transform: rotateY(90deg) translateZ(100px);
+    transform: rotateY(90deg) translateZ(50px); /* Adjust the translateZ value for gap */
     background-color: #f5e504;
 }
 
 .cube-side.side-left {
-    transform: rotateY(-90deg) translateZ(100px);
+    transform: rotateY(-90deg) translateZ(50px); /* Adjust the translateZ value for gap */
     background-color: #f58504;
 }
 
 .cube-side.side-top {
-    transform: rotateX(90deg) translateZ(100px);
+    transform: rotateX(90deg) translateZ(50px); /* Adjust the translateZ value for gap */
     background-color: #0481f5;
 }
 
 .cube-side.side-bottom {
-    transform: rotateX(-90deg) translateZ(100px);
+    transform: rotateX(-90deg) translateZ(50px); /* Adjust the translateZ value for gap */
     background-color: rgb(4, 131, 4);
 }
 
 .rubiks-cube {
-    animation: rubiksCubeRotate 20s linear infinite both alternate;
+    animation: rubiksCubeRotate 5s linear infinite both alternate;
 }
 
 @keyframes rubiksCubeRotate {
@@ -473,19 +477,68 @@ input[type="color"]::-webkit-color-swatch {
     }
 }
 
+/* Common styles for the settings page */
+.settings-page {
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+}
+
+/* Styles for the container of settings buttons */
+.settings-container {
+    list-style: none;
+    padding: 0;
+}
+
+/* Styles for each settings button */
+.settings-container button {
+    background-color: #747070;
+    width: 100%;
+    max-width: 300px; /* Adjust the max-width as needed */
+    padding: 1rem;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    gap: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 1rem auto; /* Center the buttons vertically */
+}
+
+
+.settings-container button:hover {
+    background-color: #b9b6b6;
+}
+
+.settings-container > li > button {
+        font-size: 1.25rem;
+}
+
+
+/* Additional styles for the menu logo */
+.menu-responsive {
+    padding-top: 20%;
+    padding-bottom: 10%;
+    width: auto;
+    height: 15%;
+}
+
+
+
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
 
     .event {
         border-radius: 4px;
-        color: #FFFFFF;
+        color: #232222;
         font-size: 12px;
         margin: 0px 30px;
         padding: 2px 0px;
     }
 
     .event.listening {
-        background-color: #333333;
+        background-color: #403f3f;
         display: block;
     }
 
@@ -523,8 +576,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
-@media screen and (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: light) {
     body {
-        background-image: linear-gradient(to bottom, #808080 0%, rgb(66, 65, 65) 51%);
+        background-image: linear-gradient(to bottom, #c2bebe 0%, rgb(66, 65, 65) 51%);
     }
 }
