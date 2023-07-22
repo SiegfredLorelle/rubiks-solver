@@ -82,6 +82,8 @@ const indices = [ ...edgeIndexToColor.keys() ];
 let colorCount = new Map();
 
 
+let moveNotationMap = new Map();
+
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -114,6 +116,18 @@ function onStart() {
     findActivePage();
     findActivePart();
 
+    moveNotationMap.set("U", moveU);
+    moveNotationMap.set("U'", moveUPrime);
+    moveNotationMap.set("D", moveD);
+    moveNotationMap.set("D'", moveDPrime);
+    moveNotationMap.set("R", moveR);
+    moveNotationMap.set("R''", moveRPrime);
+    moveNotationMap.set("L", moveL);
+    moveNotationMap.set("L'", moveLPrime);
+    moveNotationMap.set("F", moveF);
+    moveNotationMap.set("F'", moveFPrime);
+    moveNotationMap.set("B", moveB);
+    moveNotationMap.set("B'", moveBPrime);
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -395,18 +409,145 @@ function onSolveBtnTap() {
     checkIsCubeSolved();
 }
 
+let i = 0;
 function onNextMoveBtnTap() {
-    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
-
-    window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
-
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
-
-    // window.game.controls.checkIsSolved();
+    moveKeys = [ ...moveNotationMap.keys() ]
+    if (i === moveKeys.length) {
+        i = 0;
+    }
+    console.log(moveKeys[i]);
+    moveNotationMap.get(moveKeys[i])();
+    i++;
     checkIsCubeSolved();
 }
+
+
+// function 
+function moveU() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+function moveUPrime() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+
+function moveD() {
+    const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+function moveDPrime() {
+    const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+function moveB() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+function moveBPrime() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+function moveF() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+function moveFPrime() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+
+
+function moveL() {
+    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+function moveLPrime() {
+    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+function moveRPrime() {
+    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+}
+
+function moveR() {
+    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+}
+
+
+
 
 function onTryAgainBtnTap() {
     changePage("cube-select-page");
@@ -416,7 +557,6 @@ function onTryAgainBtnTap() {
 function offListeners() {
     unlistenToSwipes();
     unlistenToCubeSelectBntClick();
-    // reset3Dcube();
 }
 
 
