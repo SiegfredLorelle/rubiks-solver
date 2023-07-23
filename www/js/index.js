@@ -419,7 +419,7 @@ function onNextMoveBtnTap() {
     // moveNotationMap.get(moveKeys[i])();
     // i++;
     
-    performMove("U");
+    performMove("D'");
     
     checkIsCubeSolved();
 }
@@ -432,7 +432,6 @@ function performMove(moveNotation) {
 }
 
 
-// function 
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 function moveU() {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
@@ -446,7 +445,6 @@ function moveU() {
     updateColors(indicesInMoveU, false);
 
 }
-
 function moveUPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
     
@@ -457,10 +455,10 @@ function moveUPrime() {
     window.game.controls.rotateLayer( 1.6, false);
 
     updateColors(indicesInMoveU, true);
-
 }
 
 
+const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 function moveD() {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
     
@@ -469,8 +467,9 @@ function moveD() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
-}
 
+    updateColors(indicesInMoveD, false);
+}
 function moveDPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
     
@@ -479,6 +478,8 @@ function moveDPrime() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    updateColors(indicesInMoveD, true);
 }
 
 function moveB() {
