@@ -567,7 +567,8 @@ function updateColors(indicesToSwap, isReversed) {
     let colorValues = [];
 
     if (isReversed) {
-        indicesToSwap = indicesToSwap.reverse();
+        indicesToSwap = indicesToSwap.toReversed();
+        console.log("REVERSING", indicesToSwap);
     }
     console.log(indicesToSwap);
     for (const i of indicesToSwap) {
