@@ -120,6 +120,15 @@ h2 {
     text-align: center;
 }
 
+h3 {
+    color: #020202;
+    font-size: 2rem;
+    font-weight: bolder;
+    overflow: visible;
+    padding: 1rem;
+    text-align: center;
+}
+
 
 .center {
     margin: 0 auto 0 auto;
@@ -492,10 +501,10 @@ input[type="color"]::-webkit-color-swatch {
 
 /* Styles for each settings button */
 .settings-container button {
-    background-color: #747070;
+    background-color: #6d6a6a ;
     width: 100%;
     max-width: 300px; /* Adjust the max-width as needed */
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 10px;
     align-items: center;
     display: flex;
@@ -503,7 +512,7 @@ input[type="color"]::-webkit-color-swatch {
     gap: 1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    margin: 1rem auto; /* Center the buttons vertically */
+    margin: 2rem auto; /* Center the buttons vertically */
 }
 
 
@@ -578,6 +587,6 @@ input[type="color"]::-webkit-color-swatch {
 
 @media screen and (prefers-color-scheme: light) {
     body {
-        background-image: linear-gradient(to bottom, #c2bebe 0%, rgb(66, 65, 65) 51%);
+        background-image: linear-gradient(to bottom, #c2bebe 0%, #424141 51%);
     }
 }
