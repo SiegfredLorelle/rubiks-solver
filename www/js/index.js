@@ -411,14 +411,24 @@ function onSolveBtnTap() {
 
 let i = 0;
 function onNextMoveBtnTap() {
-    moveKeys = [ ...moveNotationMap.keys() ]
-    if (i === moveKeys.length) {
-        i = 0;
-    }
-    console.log(moveKeys[i]);
-    moveNotationMap.get(moveKeys[i])();
-    i++;
+    /* NOTE: FOR TESTING ALL MOVES */
+    // if (i === moveKeys.length) {
+        //     i = 0;
+        // }
+    // // console.log(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    // i++;
+    
+    performMove("U");
+    
     checkIsCubeSolved();
+}
+
+
+
+function performMove(moveNotation) {
+    // moveKeys = [ ...moveNotationMap.keys() ]
+    moveNotationMap.get(moveNotation)();
 }
 
 
@@ -431,6 +441,25 @@ function moveU() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    let indicesToSwap = [6, 9, 20, 8, 21, 18, 11, 23];
+    let values = [];
+
+    for (const i of indicesToSwap) {
+        // console.log(i);
+        values.push(edgeIndexToColor.get(i));
+    }
+    console.log(values, "DITO VAL E");
+    // let B1 = edgeIndexToColor.get(6);
+    // let B2 = edgeIndexToColor.get(9);
+    // let R1 = edgeIndexToColor.get(20);
+    // let R2 = edgeIndexToColor.get(8);
+    // let F1 = edgeIndexToColor.get(21);
+    // let F2 = edgeIndexToColor.get(18);
+    // let L1 = edgeIndexToColor.get(11);
+    // let L2 = edgeIndexToColor.get(23);
+
+
 }
 
 function moveUPrime() {
