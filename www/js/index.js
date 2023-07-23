@@ -88,6 +88,8 @@ const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
+// const indicesInMoveF = [10, 22, 21, 15, 4, 16, 9, 3];
+const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 
 
 let touchStartX = 0;
@@ -427,7 +429,7 @@ function onNextMoveBtnTap() {
     // moveNotationMap.get(moveKeys[i])();
     // i++;
     
-    performMove("L");
+    performMove("F'");
     
     checkIsCubeSolved();
 }
@@ -548,6 +550,9 @@ function moveF() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    updateColors(indicesInMoveF, false);
+    
 }
 
 function moveFPrime() {
@@ -558,6 +563,8 @@ function moveFPrime() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
+    
+    updateColors(indicesInMoveF, true);
 }
 
 function moveB() {
@@ -596,7 +603,7 @@ function updateColors(indicesToSwap, isReversed) {
     for (let i = 0; i < colorValues.length - 3; i += 2) {
         [colorValues[i], colorValues[i + 2]] = [colorValues[i + 2], colorValues[i]];
         [colorValues[i + 1], colorValues[i + 3]] = [colorValues[i + 3], colorValues[i + 1]];
-        // console.log(values, "SWAPPING");
+        console.log(colorValues, "SWAPPING");
     }
     // console.log(values, "NOW");
     for (const [i, color] of colorValues.entries()) {
