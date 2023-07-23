@@ -433,6 +433,7 @@ function performMove(moveNotation) {
 
 
 // function 
+const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 function moveU() {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
     
@@ -442,38 +443,7 @@ function moveU() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    let indicesToSwap = [6, 9, 11, 23, 21, 18, 20, 8];
-    let colorValues = [];
-
-    for (const i of indicesToSwap) {
-        // console.log(i);
-        colorValues.push(edgeIndexToColor.get(i));
-    }
-    console.log(colorValues, "AT START");
-    for (let i = 0; i < colorValues.length - 3; i += 2) {
-        [colorValues[i], colorValues[i + 2]] = [colorValues[i + 2], colorValues[i]];
-        [colorValues[i + 1], colorValues[i + 3]] = [colorValues[i + 3], colorValues[i + 1]];
-        // console.log(values, "SWAPPING");
-    }
-    // console.log(values, "NOW");
-    for (const [i, color] of colorValues.entries()) {
-        // console.log(indicesToSwap[i], color);
-        edgeIndexToColor.set(indicesToSwap[i], color);
-        // indicesToSwap[i] = color;
-        console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
-    }
-
-
-    // console.log(values, "DITO VAL E");   
-    // let B1 = edgeIndexToColor.get(6);
-    // let B2 = edgeIndexToColor.get(9);
-    // let R1 = edgeIndexToColor.get(20);
-    // let R2 = edgeIndexToColor.get(8);
-    // let F1 = edgeIndexToColor.get(21);
-    // let F2 = edgeIndexToColor.get(18);
-    // let L1 = edgeIndexToColor.get(11);
-    // let L2 = edgeIndexToColor.get(23);
-
+    updateColors(indicesInMoveU, false);
 
 }
 
@@ -485,6 +455,9 @@ function moveUPrime() {
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
+
+    updateColors(indicesInMoveU, true);
+
 }
 
 
@@ -590,6 +563,31 @@ function moveR() {
     window.game.controls.rotateLayer( -1.6, false);
 }
 
+function updateColors(indicesToSwap, isReversed) {
+    let colorValues = [];
+
+    if (isReversed) {
+        indicesToSwap = indicesToSwap.reverse();
+    }
+    console.log(indicesToSwap);
+    for (const i of indicesToSwap) {
+        // console.log(i);
+        colorValues.push(edgeIndexToColor.get(i));
+    }
+    console.log(colorValues, "AT START");
+    for (let i = 0; i < colorValues.length - 3; i += 2) {
+        [colorValues[i], colorValues[i + 2]] = [colorValues[i + 2], colorValues[i]];
+        [colorValues[i + 1], colorValues[i + 3]] = [colorValues[i + 3], colorValues[i + 1]];
+        // console.log(values, "SWAPPING");
+    }
+    // console.log(values, "NOW");
+    for (const [i, color] of colorValues.entries()) {
+        // console.log(indicesToSwap[i], color);
+        edgeIndexToColor.set(indicesToSwap[i], color);
+        // indicesToSwap[i] = color;
+        console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
+    }
+}
 
 
 
