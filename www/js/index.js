@@ -32,7 +32,6 @@ function onDeviceReady() {
 
 }
 
-
 let activePage;
 let activePageName;
 let mapPages = new Map();
@@ -84,6 +83,13 @@ let colorCount = new Map();
 
 let moveNotationMap = new Map();
 
+
+const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
+const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
+const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
+const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
+
+
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -121,7 +127,7 @@ function onStart() {
     moveNotationMap.set("D", moveD);
     moveNotationMap.set("D'", moveDPrime);
     moveNotationMap.set("R", moveR);
-    moveNotationMap.set("R''", moveRPrime);
+    moveNotationMap.set("R'", moveRPrime);
     moveNotationMap.set("L", moveL);
     moveNotationMap.set("L'", moveLPrime);
     moveNotationMap.set("F", moveF);
@@ -338,7 +344,7 @@ function checkIsCubeSolved() {
     // console.log("CHECKING IF CUBE IS SOLVED ...");
     let currentColor;
     let index = 0;
-
+    
     for (const color of edgeIndexToColor.values()) {
         // console.log(index, color);
         if (!currentColor) {
@@ -355,11 +361,13 @@ function checkIsCubeSolved() {
         }
         index++;
     }
+
     onCubeSolved();
 }
 
 function onCubeSolved() {
-    console.log("CONGRATS CUBE IS SOLVED");
+    // console.log("CONGRATS CUBE IS SOLVED");
+
     changePartOfPage("solved-part");
 }
 
@@ -371,7 +379,7 @@ function checkCubeValidity() {
     }
 
     for (let count of clrCounts) {
-        console.log(count);
+        // console.log(count);
         if (count < 4) {
             return false;
         }
@@ -387,7 +395,7 @@ function listenToValueChange() {
 
 function onColorChange(event) {
     selectedColor = event.target.value;
-    console.log(selectedColor);
+    // console.log(selectedColor);
 }
 
 function listenToBtnTap(btn) {
@@ -419,7 +427,7 @@ function onNextMoveBtnTap() {
     // moveNotationMap.get(moveKeys[i])();
     // i++;
     
-    performMove("D'");
+    performMove("L");
     
     checkIsCubeSolved();
 }
@@ -432,7 +440,8 @@ function performMove(moveNotation) {
 }
 
 
-const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
+
+
 function moveU() {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
     
@@ -458,7 +467,6 @@ function moveUPrime() {
 }
 
 
-const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 function moveD() {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
     
@@ -482,25 +490,55 @@ function moveDPrime() {
     updateColors(indicesInMoveD, true);
 }
 
-function moveB() {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+function moveR() {
+    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
-}
-
-function moveBPrime() {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
-    
-    window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.flipAxis[ "x" ] = 1;
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    updateColors(indicesInMoveR, false);
 }
+function moveRPrime() {
+    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+
+    updateColors(indicesInMoveR, true);
+}
+
+
+function moveL() {
+    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( 1.6, false);
+
+    updateColors(indicesInMoveL, false);
+
+}
+
+function moveLPrime() {
+    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+    
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    
+    window.game.controls.selectLayer( layer );
+    window.game.controls.rotateLayer( -1.6, false);
+
+    updateColors(indicesInMoveL, true);
+}
+
 
 function moveF() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
@@ -522,43 +560,21 @@ function moveFPrime() {
     window.game.controls.rotateLayer( 1.6, false);
 }
 
-
-
-function moveL() {
-    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+function moveB() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis[ "z" ] = 1;
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 }
 
-function moveLPrime() {
-    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+function moveBPrime() {
+    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
-}
-
-function moveRPrime() {
-    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
-    
-    window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
-}
-
-function moveR() {
-    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
-    
-    window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis[ "z" ] = 1;
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
@@ -723,7 +739,7 @@ function onBackButton() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            console.log(activePartName);
+            // console.log(activePartName);
             switch(activePartName) {
                 case "color-assign-part":
                     // changePartOfPage("solver-part");
@@ -734,6 +750,7 @@ function onBackButton() {
                     break;
                 case "solved-part":
                     changePage("cube-select-page");
+                    break;
                 default:
                     console.log("ERROR");
             }
