@@ -88,8 +88,8 @@ const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
-// const indicesInMoveF = [10, 22, 21, 15, 4, 16, 9, 3];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
+const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 
 
 let touchStartX = 0;
@@ -281,58 +281,30 @@ function listenToColorTap() {
 
 function onSelectColor(event) {
     selectedColor = event.target.value;
-    // const indices = [
-    //     11, 23, 5, 17,
-    //     21, 18, 15, 12,
-    //     20, 8, 14, 2,
-    //     6, 9, 0, 3,
-    //     7, 19, 10, 22,
-    //     4, 16, 1, 13,
-    // ]
 
-
-    // const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
-
-    // window.game.controls.flipAxis = new THREE.Vector3();
-    // window.game.controls.flipAxis[ "y" ] = 1;
-
-    // window.game.controls.selectLayer( layer );
-    // window.game.controls.rotateLayer( -1.6, false);
-
-
-    
     if (!edgeIndex || edgeIndex >= indices.length) {
         edgeIndex = 0;
     }
     
-    // console.log([ ...colorCount.values() ], selectedColor);
     if ([ ...colorCount.keys() ].includes(selectedColor)) {
         if (colorCount.get(selectedColor) >= 4) {
-            // console.log("4 COLORS ALREADY");
             return;
         }
         
         colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
 
         if (checkCubeValidity()) {
-            // console.log("VALID");
             listenToBtnTap(solveBtn);
             listenToBtnTap(nextMoveBtn);
             solveBtn.disabled = false;
-            // window.game.controls.checkIsSolved();
             // checkIsCubeSolved();
 
         }
-        // reset3Dcube();
-
     }
-
     else {
         colorCount.set(selectedColor, 1);
     }
-    
-    
-    // const indices = [ ...edgeIndexToColor.keys() ];
+
     window.game.cube.updateEdgesColors(indices[edgeIndex], selectedColor);
     edgeIndexToColor.set(indices[edgeIndex], selectedColor);
     edgeIndex++;
@@ -429,7 +401,7 @@ function onNextMoveBtnTap() {
     // moveNotationMap.get(moveKeys[i])();
     // i++;
     
-    performMove("F'");
+    performMove("B'");
     
     checkIsCubeSolved();
 }
@@ -518,23 +490,21 @@ function moveRPrime() {
 
 function moveL() {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "x" ] = 1;
-    
+
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
     updateColors(indicesInMoveL, false);
-
 }
-
 function moveLPrime() {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "x" ] = 1;
-    
+
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
@@ -544,7 +514,7 @@ function moveLPrime() {
 
 function moveF() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     
@@ -552,39 +522,40 @@ function moveF() {
     window.game.controls.rotateLayer( -1.6, false);
 
     updateColors(indicesInMoveF, false);
-    
 }
-
 function moveFPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
-    
+
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
-    
+
     updateColors(indicesInMoveF, true);
 }
 
 function moveB() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
-}
 
+    updateColors(indicesInMoveB, false);
+}
 function moveBPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
+
+    updateColors(indicesInMoveB, true);
 }
 
 function updateColors(indicesToSwap, isReversed) {
