@@ -442,14 +442,29 @@ function moveU() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    let indicesToSwap = [6, 9, 20, 8, 21, 18, 11, 23];
-    let values = [];
+    let indicesToSwap = [6, 9, 11, 23, 21, 18, 20, 8];
+    let colorValues = [];
 
     for (const i of indicesToSwap) {
         // console.log(i);
-        values.push(edgeIndexToColor.get(i));
+        colorValues.push(edgeIndexToColor.get(i));
     }
-    console.log(values, "DITO VAL E");
+    console.log(colorValues, "AT START");
+    for (let i = 0; i < colorValues.length - 3; i += 2) {
+        [colorValues[i], colorValues[i + 2]] = [colorValues[i + 2], colorValues[i]];
+        [colorValues[i + 1], colorValues[i + 3]] = [colorValues[i + 3], colorValues[i + 1]];
+        // console.log(values, "SWAPPING");
+    }
+    // console.log(values, "NOW");
+    for (const [i, color] of colorValues.entries()) {
+        // console.log(indicesToSwap[i], color);
+        edgeIndexToColor.set(indicesToSwap[i], color);
+        // indicesToSwap[i] = color;
+        console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
+    }
+
+
+    // console.log(values, "DITO VAL E");   
     // let B1 = edgeIndexToColor.get(6);
     // let B2 = edgeIndexToColor.get(9);
     // let R1 = edgeIndexToColor.get(20);
