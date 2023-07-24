@@ -100,8 +100,18 @@ const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 
-const topEdges = [[9, 10, 11], [6, 7, 8], [22, 22, 23], [18, 19, 20]];
-const bottomEdges = [[0, 1, 2], [3, 4, 5], [12, 13, 14], [15, 16, 17]];
+const topEdges = [
+    [9, 10, 11], 
+    [6, 7, 8], 
+    [21, 22, 23], 
+    [18, 19, 20]
+];
+const bottomEdges = [
+    [0, 1, 2], 
+    [3, 4, 5], 
+    [12, 13, 14], 
+    [15, 16, 17]
+];
 
 
 let touchStartX = 0;
@@ -443,6 +453,7 @@ function isFirstLayerSolved() {
     let currentColor;
     let index = 0;
     let counter = 0;
+    let sideIndex = 0;
     
     for (const color of edgeIndexToColor.values()) {
         if (!currentColor) {
@@ -458,13 +469,14 @@ function isFirstLayerSolved() {
         if (index === 4) {
             console.log(counter);
             if (counter === 4) {
-                if (isFirstLayerEdgesSolved()) {
+                if (isFirstLayerEdgesSolved(sides[sideIndex])) {
                     return true;
                 }
             }
             index = 0;
             counter = 0;
             currentColor = null;
+            sideIndex++;
         }
 
     }
@@ -472,9 +484,27 @@ function isFirstLayerSolved() {
 }
 
 
-function isFirstLayerEdgesSolved() {
+function isFirstLayerEdgesSolved(side) {
     console.log("CHECKING EDGES");
     // CHECK EDGES HERE
+    
+    let edgesArray = topEdges.concat(bottomEdges);
+    let edgesOfFirstLayer = [];
+
+    for (const arr of edgesArray) {
+        for (edge of arr) {
+            if (side.includes(edge)) {
+                edgesOfFirstLayer = edgesOfFirstLayer.concat(arr);
+                break;
+            }
+        }
+    }
+
+    edgesOfFirstLayer = edgesOfFirstLayer.filter((edge) => {
+        return !side.includes(edge);
+    });
+
+    console.log(edgesOfFirstLayer);
     return false;
 }
 
