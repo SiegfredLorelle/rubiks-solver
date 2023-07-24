@@ -328,10 +328,8 @@ function checkIsCubeSolved() {
             index = 0;
             currentColor = color;
         }
-        else {
-            if (currentColor !== color) {
-                return;
-            }
+        else if (currentColor !== color) {
+            return;
         }
         index++;
     }
@@ -397,14 +395,64 @@ function onNextMoveBtnTap() {
     // if (i === moveKeys.length) {
         //     i = 0;
         // }
-    // // console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    // i++;
-    
-    performMove("B'");
-    
+        // // console.log(moveKeys[i]);
+        // moveNotationMap.get(moveKeys[i])();
+        // i++;
+        
+        
+    /* NOTE: FOR TESTING move at a time */
+    // performMove("R");
+
+    solveCube();
+
     checkIsCubeSolved();
 }
+
+
+function solveCube() {
+    if (!isFirstLayerSolved()) {
+        console.log("FIRST LAYER NOT SOLVED!");
+    }
+    else {
+        console.log("FIRST LAYER IS SOLVED!");
+    }
+}
+
+function isFirstLayerSolved() {
+    // console.log("CHECKING IF FIRST LAYER IS SOLVED");
+    console.log(edgeIndexToColor);
+    // console.log("CHECKING IF CUBE IS SOLVED ...");
+    let currentColor;
+    let index = 0;
+    let counter = 0;
+    
+    for (const color of edgeIndexToColor.values()) {
+        if (!currentColor) {
+            currentColor = color;
+        }
+        console.log(currentColor, color);
+        if (currentColor === color) {
+            counter++;
+        }
+
+        index++;
+
+        if (index === 4) {
+            console.log(counter);
+            if (counter === 4) {
+                return true;
+            }
+            index = 0;
+            counter = 0;
+            currentColor = null;
+        }
+
+    }
+
+    return false;
+}
+
+
 
 
 
