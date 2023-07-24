@@ -84,12 +84,34 @@ let colorCount = new Map();
 let moveNotationMap = new Map();
 
 
+const sides = [
+    [11, 23, 5, 17],    // Left
+    [21, 18, 15, 12],   // Front
+    [20, 8, 14, 2],     // Right
+    [6, 9, 0, 3],       // Rear
+    [7, 19, 10, 22],    // Top
+    [4, 16, 1, 13],     // Bottom
+]
+
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
+
+const topEdges = [
+    [9, 10, 11], 
+    [6, 7, 8], 
+    [21, 22, 23], 
+    [18, 19, 20]
+];
+const bottomEdges = [
+    [0, 1, 2], 
+    [3, 4, 5], 
+    [12, 13, 14], 
+    [15, 16, 17]
+];
 
 
 let touchStartX = 0;
@@ -309,6 +331,12 @@ function onSelectColor(event) {
     edgeIndexToColor.set(indices[edgeIndex], selectedColor);
     edgeIndex++;
 
+    /* FOR TESTING ONLY */
+    // let test = [15, 16, 17];
+    // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
+    // edgeIndexToColor.set(test[edgeIndex], selectedColor);
+    // edgeIndex++;
+
 
 }
 
@@ -328,10 +356,8 @@ function checkIsCubeSolved() {
             index = 0;
             currentColor = color;
         }
-        else {
-            if (currentColor !== color) {
-                return;
-            }
+        else if (currentColor !== color) {
+            return;
         }
         index++;
     }
@@ -397,19 +423,121 @@ function onNextMoveBtnTap() {
     // if (i === moveKeys.length) {
         //     i = 0;
         // }
-    // // console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    // i++;
-    
-    performMove("B'");
-    
+        // // console.log(moveKeys[i]);
+        // moveNotationMap.get(moveKeys[i])();
+        // i++;
+        
+        
+    /* NOTE: FOR TESTING move at a time */
+    // performMove("R");
+
+    solveCube();
+
     checkIsCubeSolved();
 }
 
 
+function solveCube() {
+    if (!isFirstLayerSolved()) {
+        console.log("FIRST LAYER NOT SOLVED!");
+    }
+    else {
+        console.log("FIRST LAYER IS SOLVED!");
+    }
+}
+
+function isFirstLayerSolved() {
+    // console.log("CHECKING IF FIRST LAYER IS SOLVED");
+    console.log(edgeIndexToColor);
+    // console.log("CHECKING IF CUBE IS SOLVED ...");
+    let currentColor;
+    let index = 0;
+    let counter = 0;
+    let sideIndex = 0;
+    
+    for (const color of edgeIndexToColor.values()) {
+        if (!currentColor) {
+            currentColor = color;
+        }
+        console.log(currentColor, color);
+        if (currentColor === color) {
+            counter++;
+        }
+
+        index++;
+
+        if (index === 4) {
+            console.log(counter);
+            if (counter === 4) {
+                if (isFirstLayerEdgesSolved(sides[sideIndex])) {
+                    return true;
+                }
+            }
+            index = 0;
+            counter = 0;
+            currentColor = null;
+            sideIndex++;
+        }
+
+    }
+    return false;
+}
+
+
+function isFirstLayerEdgesSolved(side) {
+    console.log("CHECKING EDGES");
+    // CHECK EDGES HERE
+    // let edgesArray = topEdges.concat(bottomEdges);
+
+    // GET ALL EDGES OF THE FIRST LAYER
+    let edgesOfFirstLayer = [];
+
+    for (const arr of topEdges.concat(bottomEdges)) {
+        for (edge of arr) {
+            if (side.includes(edge)) {
+                edgesOfFirstLayer = edgesOfFirstLayer.concat(arr);
+                break;
+            }
+        }
+    }
+
+    edgesOfFirstLayer = edgesOfFirstLayer.filter((edge) => {
+        return !side.includes(edge);
+    });
+
+    console.log(edgesOfFirstLayer);
+
+    // CHECK IF EDGES ARE CORRECT
+    while (edgesOfFirstLayer.length > 0) {
+        const edge = edgesOfFirstLayer.shift();
+
+        for (const sideL of sides) {
+            if (sideL === side) {
+                continue;
+            }
+
+            if (sideL.includes(edge)) {
+                for (const otherEdge of edgesOfFirstLayer) {
+                    if (sideL.includes(otherEdge)) {
+                        edgesOfFirstLayer.splice(edgesOfFirstLayer.indexOf(otherEdge), 1);
+
+                        console.log(edge, edgeIndexToColor.get(edge), otherEdge, edgeIndexToColor.get(otherEdge));
+                        if (edgeIndexToColor.get(edge) !== edgeIndexToColor.get(otherEdge)) {
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+    return true;
+}
+
+
+
 
 function performMove(moveNotation) {
-    // moveKeys = [ ...moveNotationMap.keys() ]
     moveNotationMap.get(moveNotation)();
 }
 
