@@ -439,11 +439,43 @@ function onNextMoveBtnTap() {
 
 function solveCube() {
     if (!isFirstLayerSolved()) {
-        console.log("FIRST LAYER NOT SOLVED!");
+        solveFirstLayer();
     }
     else {
         console.log("FIRST LAYER IS SOLVED!");
     }
+}
+
+function solveFirstLayer() {
+    console.log("SOLVING FIRST LAYER");
+    /* FIND THE SIDE FOR FIRST LAYER */
+    let colorCount = new Map(); // color : count
+    let maxColor = [null, 0]; // side, count
+
+    for (side of sides) {
+        colorCount.clear();
+        for (edge of side) {
+            const color = edgeIndexToColor.get(edge);
+            if (!colorCount.has(color)) {
+                colorCount.set(color, 1);
+            }
+            else {
+                colorCount.set(color, colorCount.get(color)+1);
+            }
+        }
+        max = Math.max(...colorCount.values());
+        if (max > maxColor[1]) {
+            maxColor = [side, max];
+        }
+    }
+    console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
+
+    // ROTATE SIDE TO BOTTOM
+
+    // FIND SAME COLOR OPPOSITE SIDE
+
+    // ALLIGN MISSING PIECE
+
 }
 
 function isFirstLayerSolved() {
@@ -686,6 +718,10 @@ function moveBPrime() {
     updateColors(indicesInMoveB, true);
 }
 
+// function moveX() {
+
+// }
+
 function updateColors(indicesToSwap, isReversed) {
     let colorValues = [];
 
@@ -712,6 +748,7 @@ function updateColors(indicesToSwap, isReversed) {
         console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
     }
 }
+
 
 
 
