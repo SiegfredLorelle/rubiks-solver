@@ -487,11 +487,12 @@ function isFirstLayerSolved() {
 function isFirstLayerEdgesSolved(side) {
     console.log("CHECKING EDGES");
     // CHECK EDGES HERE
-    
-    let edgesArray = topEdges.concat(bottomEdges);
+    // let edgesArray = topEdges.concat(bottomEdges);
+
+    // GET ALL EDGES OF THE FIRST LAYER
     let edgesOfFirstLayer = [];
 
-    for (const arr of edgesArray) {
+    for (const arr of topEdges.concat(bottomEdges)) {
         for (edge of arr) {
             if (side.includes(edge)) {
                 edgesOfFirstLayer = edgesOfFirstLayer.concat(arr);
@@ -505,14 +506,38 @@ function isFirstLayerEdgesSolved(side) {
     });
 
     console.log(edgesOfFirstLayer);
-    return false;
+
+    // CHECK IF EDGES ARE CORRECT
+    while (edgesOfFirstLayer.length > 0) {
+        const edge = edgesOfFirstLayer.shift();
+
+        for (const sideL of sides) {
+            if (sideL === side) {
+                continue;
+            }
+
+            if (sideL.includes(edge)) {
+                for (const otherEdge of edgesOfFirstLayer) {
+                    if (sideL.includes(otherEdge)) {
+                        edgesOfFirstLayer.splice(edgesOfFirstLayer.indexOf(otherEdge), 1);
+
+                        console.log(edge, edgeIndexToColor.get(edge), otherEdge, edgeIndexToColor.get(otherEdge));
+                        if (edgeIndexToColor.get(edge) !== edgeIndexToColor.get(otherEdge)) {
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+    return true;
 }
 
 
 
 
 function performMove(moveNotation) {
-    // moveKeys = [ ...moveNotationMap.keys() ]
     moveNotationMap.get(moveNotation)();
 }
 
