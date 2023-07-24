@@ -84,12 +84,24 @@ let colorCount = new Map();
 let moveNotationMap = new Map();
 
 
+const sides = [
+    [11, 23, 5, 17],    // Left
+    [21, 18, 15, 12],   // Front
+    [20, 8, 14, 2],     // Right
+    [6, 9, 0, 3],       // Rear
+    [7, 19, 10, 22],    // Top
+    [4, 16, 1, 13],     // Bottom
+]
+
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
 const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
+
+const topEdges = [[9, 10, 11], [6, 7, 8], [22, 22, 23], [18, 19, 20]];
+const bottomEdges = [[0, 1, 2], [3, 4, 5], [12, 13, 14], [15, 16, 17]];
 
 
 let touchStartX = 0;
@@ -309,6 +321,12 @@ function onSelectColor(event) {
     edgeIndexToColor.set(indices[edgeIndex], selectedColor);
     edgeIndex++;
 
+    /* FOR TESTING ONLY */
+    // let test = [15, 16, 17];
+    // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
+    // edgeIndexToColor.set(test[edgeIndex], selectedColor);
+    // edgeIndex++;
+
 
 }
 
@@ -440,7 +458,9 @@ function isFirstLayerSolved() {
         if (index === 4) {
             console.log(counter);
             if (counter === 4) {
-                return true;
+                if (isFirstLayerEdgesSolved()) {
+                    return true;
+                }
             }
             index = 0;
             counter = 0;
@@ -448,10 +468,15 @@ function isFirstLayerSolved() {
         }
 
     }
-
     return false;
 }
 
+
+function isFirstLayerEdgesSolved() {
+    console.log("CHECKING EDGES");
+    // CHECK EDGES HERE
+    return false;
+}
 
 
 
