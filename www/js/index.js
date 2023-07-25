@@ -95,9 +95,9 @@ const sides = [
 
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
-const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
-const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
-const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
+const indicesInMoveR = [16, 13, 14, 20, 19, 22, 23, 17];
+const indicesInMoveL = [5, 11, 10, 7, 8, 2, 1, 4];
+const indicesInMoveF = [9, 3, 4, 16, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
@@ -345,6 +345,8 @@ function onSelectColor(event) {
 
     /* FOR TESTING ONLY */
     // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
+    // test = [20, 8, 2, 14];
+    // // test = [10, 7, 19, 22];
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -432,22 +434,23 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    if (i === moveKeys.length) {
-            i = 0;
-        }
-    console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    performMove(moveKeys[i]);
+    // let moveKeys = [...moveNotationMap.keys()]
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // moveKeys = ["Y", "R"];
+    // if (i === moveKeys.length) {
+    //         i = 0;
+    //     }
+    // console.log(moveKeys[i]);
+    // // moveNotationMap.get(moveKeys[i])();
+    // performMove(moveKeys[i]);
 
-    i++;
+    // i++;
         
         
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    // performMove("Z");
+    performMove("B'");
     // moveZPrime();
 
 
@@ -611,19 +614,19 @@ function moveU() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveU, false);
+    updateColors(indicesInMoveU, false, [22, 19, 7, 10]);
 
 }
 function moveUPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
-    
+
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "y" ] = 1;
-    
+
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveU, true);
+    updateColors(indicesInMoveU, true, [22, 19, 7, 10]);
 }
 
 
@@ -636,7 +639,7 @@ function moveD() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveD, false);
+    updateColors(indicesInMoveD, false, [4, 1, 13, 16]);
 }
 function moveDPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
@@ -647,7 +650,7 @@ function moveDPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveD, true);
+    updateColors(indicesInMoveD, true, [4, 1, 13, 16]);
 }
 
 function moveR() {
@@ -659,7 +662,7 @@ function moveR() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveR, false);
+    updateColors(indicesInMoveR, false, [12, 18, 21, 15]);
 }
 function moveRPrime() {
     const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
@@ -670,7 +673,7 @@ function moveRPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveR, true);
+    updateColors(indicesInMoveR, true, [12, 18, 21, 15]);
 }
 
 
@@ -683,7 +686,7 @@ function moveL() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveL, false);
+    updateColors(indicesInMoveL, false, [0, 3, 9, 6]);
 }
 function moveLPrime() {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
@@ -694,7 +697,7 @@ function moveLPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveL, true);
+    updateColors(indicesInMoveL, true, [0, 3, 9, 6]);
 }
 
 
@@ -707,7 +710,8 @@ function moveF() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveF, false);
+    // updateColors(indicesInMoveF, false, [11, 23, 17, 5]);
+    updateColors(indicesInMoveF, false, [5, 17, 23, 11]);
 }
 function moveFPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
@@ -718,7 +722,7 @@ function moveFPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveF, true);
+    updateColors(indicesInMoveF, true, [5, 17, 23, 11]);
 }
 
 function moveB() {
@@ -730,7 +734,8 @@ function moveB() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveB, false);
+    // updateColors(indicesInMoveB, false, [20, 8, 2, 14]);
+    updateColors(indicesInMoveB, false, [14, 2, 8, 20]);
 }
 function moveBPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
@@ -741,7 +746,7 @@ function moveBPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveB, true);
+    updateColors(indicesInMoveB, true, [14, 2, 8, 20]);
 }
 
 function moveX() {
@@ -826,11 +831,13 @@ function moveZPrime() {
 
 
 
-function updateColors(indicesToSwap, isReversed) {
+function updateColors(indicesToSwap, isReversed, edgesToSwap) {
+    // UPDATE COLORS OF ROTATING LAYER
     let colorValues = [];
 
     if (isReversed) {
         indicesToSwap = indicesToSwap.toReversed();
+        edgesToSwap = edgesToSwap.toReversed();
         console.log("REVERSING", indicesToSwap);
     }
     console.log(indicesToSwap);
@@ -851,6 +858,19 @@ function updateColors(indicesToSwap, isReversed) {
         // indicesToSwap[i] = color;
         console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
     }
+    // if (edgesToSwap === undefined) {
+    //     return;
+    // }
+
+    // UPDATE COLORS OF THE EDGE OF THE ROTATING LAYER
+    console.log(edgesToSwap);
+    for (let i = 0; i < edgesToSwap.length - 1; i++) {
+        console.log(edgeIndexToColor.get(edgesToSwap[i]), edgeIndexToColor.get(edgesToSwap[i+1]) );
+        let tmp = edgeIndexToColor.get(edgesToSwap[i]);
+        edgeIndexToColor.set(edgesToSwap[i], edgeIndexToColor.get(edgesToSwap[i+1]));
+        edgeIndexToColor.set(edgesToSwap[i+1], tmp);
+    }
+
 }
 
 // const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
@@ -896,6 +916,7 @@ function updateMoveNotation(movesToShuffle, reversed) {
         moveNotationMap.set(movesPrime[i+1], tmp);
     }
 }
+
 
 function onTryAgainBtnTap() {
     changePage("cube-select-page");
