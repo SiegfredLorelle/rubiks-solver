@@ -426,13 +426,13 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    const moveKeys = [...moveNotationMap.keys()]
-    if (i === moveKeys.length) {
-            i = 0;
-        }
-        console.log(moveKeys[i]);
-    moveNotationMap.get(moveKeys[i])();
-    i++;
+    // const moveKeys = [...moveNotationMap.keys()]
+    // if (i === moveKeys.length) {
+    //         i = 0;
+    //     }
+    //     console.log(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    // i++;
         
         
     /* NOTE: FOR TESTING move at a time */
@@ -460,9 +460,9 @@ function solveFirstLayer() {
     let colorCount = new Map(); // color : count
     let maxColor = [null, 0]; // side, count
 
-    for (side of sides) {
+    for (let side of sides) {
         colorCount.clear();
-        for (edge of side) {
+        for (let edge of side) {
             const color = edgeIndexToColor.get(edge);
             if (!colorCount.has(color)) {
                 colorCount.set(color, 1);
@@ -476,9 +476,16 @@ function solveFirstLayer() {
             maxColor = [side, max];
         }
     }
-    console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
-
+    // console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
+    firstLayerSide = maxColor[0];
     // ROTATE SIDE TO BOTTOM
+    console.log(firstLayerSide);
+    if (firstLayerSide !== sides[sides.length - 1]) {
+        console.log("ROTATE IT TO THE BOTTOM");
+    }
+    else {
+        console.log("ALREADY AT THE BOTTOM");
+    }
 
     // FIND SAME COLOR OPPOSITE SIDE
 
