@@ -430,6 +430,7 @@ function onNextMoveBtnTap() {
         
     /* NOTE: FOR TESTING move at a time */
     // performMove("R");
+    moveZPrime();
 
     solveCube();
 
@@ -718,9 +719,76 @@ function moveBPrime() {
     updateColors(indicesInMoveB, true);
 }
 
-// function moveX() {
+function moveX() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.state = ROTATING;
 
-// }
+    window.game.controls.rotateCube( -1.6, () => {
+
+    window.game.controls.state = STILL;
+
+    } );
+}
+
+function moveXPrime() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.state = ROTATING;
+
+    window.game.controls.rotateCube( 1.6, () => {
+
+    window.game.controls.state = STILL;
+    } );
+}
+
+function moveY() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    window.game.controls.state = ROTATING;
+
+    window.game.controls.rotateCube( -1.6, () => {
+
+    window.game.controls.state = STILL;
+
+    } );
+}
+
+function moveYPrime() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "y" ] = 1;
+    window.game.controls.state = ROTATING;
+
+    window.game.controls.rotateCube( 1.6, () => {
+
+    window.game.controls.state = STILL;
+    } );
+}
+
+function moveZ() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.state = ROTATING;
+
+    window.game.controls.rotateCube( -1.6, () => {
+
+    window.game.controls.state = STILL;
+
+    } );
+}
+
+function moveZPrime() {
+    window.game.controls.flipAxis = new THREE.Vector3();
+    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.state = ROTATING;
+
+    window.game.controls.rotateCube( 1.6, () => {
+
+    window.game.controls.state = STILL;
+    } );
+}
+
+
 
 function updateColors(indicesToSwap, isReversed) {
     let colorValues = [];
