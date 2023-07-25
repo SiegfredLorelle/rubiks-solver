@@ -90,6 +90,8 @@ const sides = [
     // [20, 8, 14, 2],     // Right
     [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
+    // [3, 0, 9, 6],       // Rear
+    // [3, 0, 9, 6],       // Rear
     [7, 19, 10, 22],    // Top
     [4, 16, 1, 13],     // Bottom
 ]
@@ -100,6 +102,9 @@ const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
+const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
+const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
+
 
 const topEdges = [
     [9, 10, 11], 
@@ -339,7 +344,7 @@ function onSelectColor(event) {
     edgeIndex++;
 
     /* FOR TESTING ONLY */
-    // let test = sides[0].concat(sides[4]).concat(sides[2]).concat(sides[5]);
+    // let test = sides[0].concat(sides[1]).concat(sides[2].toReversed()).concat(sides[3]);
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -439,7 +444,7 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("X'");
+    performMove("Y'");
     // moveZPrime();
 
 
@@ -766,10 +771,10 @@ function moveY() {
     window.game.controls.state = ROTATING;
 
     window.game.controls.rotateCube( -1.6, () => {
-
-    window.game.controls.state = STILL;
-
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveY, false);
+
 }
 
 function moveYPrime() {
@@ -781,6 +786,8 @@ function moveYPrime() {
 
     window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveY, true);
+
 }
 
 function moveZ() {
@@ -836,7 +843,6 @@ function updateColors(indicesToSwap, isReversed) {
 }
 
 // const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
-const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 function updateSides(sidesToSwap, reversed) {
 
     if (reversed) {
