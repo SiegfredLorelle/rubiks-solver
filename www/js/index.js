@@ -103,6 +103,7 @@ const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
 const sidesInMoveZ = [sides[1], [10, 7, 22, 19], [3, 0, 9, 6], [16, 13, 4, 1]];
 const movesInMoveY = [["L", "F", "R", "B"], ["L'", "F'", "R'", "B'"]];
+const movesInMoveX = [["U", "F", "D", "B"], ["U'", "F'", "D'", "B'"]];
 
 const topEdges = [
     [9, 10, 11], 
@@ -431,7 +432,7 @@ let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Y'"];
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "X'"];
     if (i === moveKeys.length) {
             i = 0;
         }
@@ -752,6 +753,8 @@ function moveX() {
     });
 
     updateSides(sidesInMoveX, false);
+    updateMoveNotation(movesInMoveX, false);
+    
 }
 
 function moveXPrime() {
@@ -764,6 +767,7 @@ function moveXPrime() {
         window.game.controls.state = STILL;
     } );
     updateSides(sidesInMoveX, true);
+    updateMoveNotation(movesInMoveX, true);
 }
 
 function moveY() {
@@ -774,8 +778,8 @@ function moveY() {
     window.game.controls.rotateCube( -1.6, () => {
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveY, false);
 
+    updateSides(sidesInMoveY, false);
     updateMoveNotation(movesInMoveY, false);
 }
 
@@ -787,6 +791,7 @@ function moveYPrime() {
     window.game.controls.rotateCube( 1.6, () => {
         window.game.controls.state = STILL;
     } );
+
     updateSides(sidesInMoveY, true);
     updateMoveNotation(movesInMoveY, true);
     
