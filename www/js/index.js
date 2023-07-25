@@ -87,11 +87,8 @@ let moveNotationMap = new Map();
 const sides = [
     [11, 23, 5, 17],    // Left
     [21, 18, 15, 12],   // Front
-    // [20, 8, 14, 2],     // Right
     [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
-    // [3, 0, 9, 6],       // Rear
-    // [3, 0, 9, 6],       // Rear
     [7, 19, 10, 22],    // Top
     [4, 16, 1, 13],     // Bottom
 ]
@@ -104,6 +101,7 @@ const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
+const sidesInMoveZ = [sides[1], [10, 7, 22, 19], [3, 0, 9, 6], [16, 13, 4, 1]];
 
 
 const topEdges = [
@@ -344,7 +342,7 @@ function onSelectColor(event) {
     edgeIndex++;
 
     /* FOR TESTING ONLY */
-    // let test = sides[0].concat(sides[1]).concat(sides[2].toReversed()).concat(sides[3]);
+    // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -444,7 +442,7 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("Y'");
+    performMove("Z");
     // moveZPrime();
 
 
@@ -783,8 +781,7 @@ function moveYPrime() {
     window.game.controls.state = ROTATING;
 
     window.game.controls.rotateCube( 1.6, () => {
-
-    window.game.controls.state = STILL;
+        window.game.controls.state = STILL;
     } );
     updateSides(sidesInMoveY, true);
 
@@ -798,19 +795,20 @@ function moveZ() {
     window.game.controls.rotateCube( -1.6, () => {
 
     window.game.controls.state = STILL;
-
     } );
+    updateSides(sidesInMoveZ, false);
+    
 }
 
 function moveZPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     window.game.controls.state = ROTATING;
-
+    
     window.game.controls.rotateCube( 1.6, () => {
-
-    window.game.controls.state = STILL;
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveZ, true);
 }
 
 
