@@ -432,22 +432,23 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    if (i === moveKeys.length) {
-            i = 0;
-        }
-    console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    performMove(moveKeys[i]);
+    // let moveKeys = [...moveNotationMap.keys()]
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // moveKeys = ["Y", "R"];
+    // if (i === moveKeys.length) {
+    //         i = 0;
+    //     }
+    // console.log(moveKeys[i]);
+    // // moveNotationMap.get(moveKeys[i])();
+    // performMove(moveKeys[i]);
 
-    i++;
+    // i++;
         
         
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    // performMove("Z");
+    performMove("R");
     // moveZPrime();
 
 
@@ -659,7 +660,7 @@ function moveR() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveR, false);
+    updateColors(indicesInMoveR, false, [12, 18, 21, 15]);
 }
 function moveRPrime() {
     const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
@@ -826,7 +827,8 @@ function moveZPrime() {
 
 
 
-function updateColors(indicesToSwap, isReversed) {
+function updateColors(indicesToSwap, isReversed, edgesToSwap) {
+    // UPDATE COLORS OF ROTATING LAYER
     let colorValues = [];
 
     if (isReversed) {
@@ -851,6 +853,20 @@ function updateColors(indicesToSwap, isReversed) {
         // indicesToSwap[i] = color;
         console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
     }
+    // if (edgesToSwap === undefined) {
+    //     return;
+    // }
+
+    // UPDATE COLORS OF THE EDGE OF THE ROTATING LAYER
+    // edgesToSwap
+    console.log(edgesToSwap);
+    for (let i = 0; i < edgesToSwap.length - 1; i++) {
+        console.log(edgeIndexToColor.get(edgesToSwap[i]), edgeIndexToColor.get(edgesToSwap[i+1]) );
+        let tmp = edgeIndexToColor.get(edgesToSwap[i]);
+        edgeIndexToColor.set(edgesToSwap[i], edgeIndexToColor.get(edgesToSwap[i+1]));
+        edgeIndexToColor.set(edgesToSwap[i+1], tmp);
+    }
+
 }
 
 // const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
@@ -896,6 +912,7 @@ function updateMoveNotation(movesToShuffle, reversed) {
         moveNotationMap.set(movesPrime[i+1], tmp);
     }
 }
+
 
 function onTryAgainBtnTap() {
     changePage("cube-select-page");
