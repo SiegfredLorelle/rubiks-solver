@@ -87,7 +87,8 @@ let moveNotationMap = new Map();
 const sides = [
     [11, 23, 5, 17],    // Left
     [21, 18, 15, 12],   // Front
-    [20, 8, 14, 2],     // Right
+    // [20, 8, 14, 2],     // Right
+    [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
     [7, 19, 10, 22],    // Top
     [4, 16, 1, 13],     // Bottom
@@ -338,7 +339,7 @@ function onSelectColor(event) {
     edgeIndex++;
 
     /* FOR TESTING ONLY */
-    // let test = [15, 16, 17];
+    // let test = sides[0].concat(sides[4]).concat(sides[2]).concat(sides[5]);
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -436,11 +437,13 @@ function onNextMoveBtnTap() {
         
         
     /* NOTE: FOR TESTING move at a time */
-    // performMove("Z");
+    // checkIsCubeSolved();
+
+    performMove("X");
     // moveZPrime();
 
-    solveCube();
 
+    // solveCube();
     checkIsCubeSolved();
 }
 
@@ -742,6 +745,8 @@ function moveX() {
 
     window.game.controls.state = STILL;
 
+    updateSides(sidesInMoveX, false);
+
     } );
 }
 
@@ -831,7 +836,29 @@ function updateColors(indicesToSwap, isReversed) {
     }
 }
 
+// const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
+const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
+function updateSides(sidesToSwap, reversed) {
 
+    if (reversed) {
+        sidesToSwap = sidesToSwap.toReversed();
+    }
+
+
+for (let i = 0; i < sidesToSwap.length - 1; i++) {
+    console.log(edgeIndexToColor);
+    console.log(sidesToSwap[i]);
+    for (let j = 0; j < sidesToSwap[i].length; j++) {
+        // console.log(i,j);
+        console.log(sidesToSwap[i][j], sidesToSwap[i+1][j]);
+        let tmp = edgeIndexToColor.get(sidesToSwap[i][j]);
+        edgeIndexToColor.set(sidesToSwap[i][j], edgeIndexToColor.get(sidesToSwap[i+1][j]));
+        edgeIndexToColor.set(sidesToSwap[i+1][j], tmp);
+        }
+
+        console.log(edgeIndexToColor);
+    }
+}
 
 
 function onTryAgainBtnTap() {
