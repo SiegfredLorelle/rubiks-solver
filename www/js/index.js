@@ -95,9 +95,9 @@ const sides = [
 
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
 const indicesInMoveD = [2, 14, 12, 15, 17, 5, 3, 0];
-const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
-const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
-const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
+const indicesInMoveR = [16, 13, 14, 20, 19, 22, 23, 17];
+const indicesInMoveL = [5, 11, 10, 7, 8, 2, 1, 4];
+const indicesInMoveF = [9, 3, 4, 16, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
@@ -345,6 +345,7 @@ function onSelectColor(event) {
 
     /* FOR TESTING ONLY */
     // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
+    // test = [7, 19, 18, 12, 13, 1, 0, 6];
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -671,7 +672,7 @@ function moveRPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveR, true);
+    updateColors(indicesInMoveR, true, [12, 18, 21, 15]);
 }
 
 
@@ -684,7 +685,7 @@ function moveL() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveL, false);
+    updateColors(indicesInMoveL, false, [0, 3, 9, 6]);
 }
 function moveLPrime() {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
@@ -695,7 +696,7 @@ function moveLPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveL, true);
+    updateColors(indicesInMoveL, true, [0, 3, 9, 6]);
 }
 
 
@@ -833,6 +834,7 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
 
     if (isReversed) {
         indicesToSwap = indicesToSwap.toReversed();
+        edgesToSwap = edgesToSwap.toReversed();
         console.log("REVERSING", indicesToSwap);
     }
     console.log(indicesToSwap);
@@ -858,7 +860,6 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
     // }
 
     // UPDATE COLORS OF THE EDGE OF THE ROTATING LAYER
-    // edgesToSwap
     console.log(edgesToSwap);
     for (let i = 0; i < edgesToSwap.length - 1; i++) {
         console.log(edgeIndexToColor.get(edgesToSwap[i]), edgeIndexToColor.get(edgesToSwap[i+1]) );
