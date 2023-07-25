@@ -87,7 +87,7 @@ let moveNotationMap = new Map();
 const sides = [
     [11, 23, 5, 17],    // Left
     [21, 18, 15, 12],   // Front
-    [20, 8, 14, 2],     // Right
+    [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
     [7, 19, 10, 22],    // Top
     [4, 16, 1, 13],     // Bottom
@@ -99,6 +99,10 @@ const indicesInMoveR = [13, 16, 14, 20, 19, 22, 23, 17];
 const indicesInMoveL = [5, 11, 10, 7, 8, 2, 4, 1];
 const indicesInMoveF = [3, 9, 16, 4, 15, 21, 22, 10];
 const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
+const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
+const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
+const sidesInMoveZ = [sides[1], [10, 7, 22, 19], [3, 0, 9, 6], [16, 13, 4, 1]];
+
 
 const topEdges = [
     [9, 10, 11], 
@@ -158,6 +162,12 @@ function onStart() {
     moveNotationMap.set("F'", moveFPrime);
     moveNotationMap.set("B", moveB);
     moveNotationMap.set("B'", moveBPrime);
+    moveNotationMap.set("X", moveX);
+    moveNotationMap.set("X'", moveXPrime);
+    moveNotationMap.set("Y", moveY);
+    moveNotationMap.set("Y'", moveYPrime);
+    moveNotationMap.set("Z", moveZ);
+    moveNotationMap.set("Z'", moveZPrime);
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -332,7 +342,7 @@ function onSelectColor(event) {
     edgeIndex++;
 
     /* FOR TESTING ONLY */
-    // let test = [15, 16, 17];
+    // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -420,20 +430,23 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
+    // const moveKeys = [...moveNotationMap.keys()]
     // if (i === moveKeys.length) {
-        //     i = 0;
-        // }
-        // // console.log(moveKeys[i]);
-        // moveNotationMap.get(moveKeys[i])();
-        // i++;
+    //         i = 0;
+    //     }
+    //     console.log(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    // i++;
         
         
     /* NOTE: FOR TESTING move at a time */
-    // performMove("R");
-    moveZPrime();
+    // checkIsCubeSolved();
 
-    solveCube();
+    performMove("Z");
+    // moveZPrime();
 
+
+    // solveCube();
     checkIsCubeSolved();
 }
 
@@ -453,9 +466,9 @@ function solveFirstLayer() {
     let colorCount = new Map(); // color : count
     let maxColor = [null, 0]; // side, count
 
-    for (side of sides) {
+    for (let side of sides) {
         colorCount.clear();
-        for (edge of side) {
+        for (let edge of side) {
             const color = edgeIndexToColor.get(edge);
             if (!colorCount.has(color)) {
                 colorCount.set(color, 1);
@@ -469,9 +482,16 @@ function solveFirstLayer() {
             maxColor = [side, max];
         }
     }
-    console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
-
+    // console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
+    firstLayerSide = maxColor[0];
     // ROTATE SIDE TO BOTTOM
+    console.log(firstLayerSide);
+    if (firstLayerSide !== sides[sides.length - 1]) {
+        console.log("ROTATE IT TO THE BOTTOM");
+    }
+    else {
+        console.log("ALREADY AT THE BOTTOM");
+    }
 
     // FIND SAME COLOR OPPOSITE SIDE
 
@@ -725,21 +745,22 @@ function moveX() {
     window.game.controls.state = ROTATING;
 
     window.game.controls.rotateCube( -1.6, () => {
+        window.game.controls.state = STILL;
+    });
 
-    window.game.controls.state = STILL;
-
-    } );
+    updateSides(sidesInMoveX, false);
 }
 
 function moveXPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "x" ] = 1;
     window.game.controls.state = ROTATING;
-
+    
     window.game.controls.rotateCube( 1.6, () => {
-
-    window.game.controls.state = STILL;
+        
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveX, true);
 }
 
 function moveY() {
@@ -748,10 +769,10 @@ function moveY() {
     window.game.controls.state = ROTATING;
 
     window.game.controls.rotateCube( -1.6, () => {
-
-    window.game.controls.state = STILL;
-
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveY, false);
+
 }
 
 function moveYPrime() {
@@ -760,9 +781,10 @@ function moveYPrime() {
     window.game.controls.state = ROTATING;
 
     window.game.controls.rotateCube( 1.6, () => {
-
-    window.game.controls.state = STILL;
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveY, true);
+
 }
 
 function moveZ() {
@@ -773,19 +795,20 @@ function moveZ() {
     window.game.controls.rotateCube( -1.6, () => {
 
     window.game.controls.state = STILL;
-
     } );
+    updateSides(sidesInMoveZ, false);
+    
 }
 
 function moveZPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     window.game.controls.state = ROTATING;
-
+    
     window.game.controls.rotateCube( 1.6, () => {
-
-    window.game.controls.state = STILL;
+        window.game.controls.state = STILL;
     } );
+    updateSides(sidesInMoveZ, true);
 }
 
 
@@ -817,7 +840,28 @@ function updateColors(indicesToSwap, isReversed) {
     }
 }
 
+// const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
+function updateSides(sidesToSwap, reversed) {
 
+    if (reversed) {
+        sidesToSwap = sidesToSwap.toReversed();
+    }
+
+
+for (let i = 0; i < sidesToSwap.length - 1; i++) {
+    console.log(edgeIndexToColor);
+    console.log(sidesToSwap[i]);
+    for (let j = 0; j < sidesToSwap[i].length; j++) {
+        // console.log(i,j);
+        console.log(sidesToSwap[i][j], sidesToSwap[i+1][j]);
+        let tmp = edgeIndexToColor.get(sidesToSwap[i][j]);
+        edgeIndexToColor.set(sidesToSwap[i][j], edgeIndexToColor.get(sidesToSwap[i+1][j]));
+        edgeIndexToColor.set(sidesToSwap[i+1][j], tmp);
+        }
+
+        console.log(edgeIndexToColor);
+    }
+}
 
 
 function onTryAgainBtnTap() {
