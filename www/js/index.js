@@ -102,7 +102,7 @@ const indicesInMoveB = [7, 19, 18, 12, 13, 1, 0, 6];
 const sidesInMoveX = [sides[5], sides[2], sides[4], sides[0]];
 const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
 const sidesInMoveZ = [sides[1], [10, 7, 22, 19], [3, 0, 9, 6], [16, 13, 4, 1]];
-
+const movesInMoveY = [["L", "F", "R", "B"], ["L'", "F'", "R'", "B'"]];
 
 const topEdges = [
     [9, 10, 11], 
@@ -431,7 +431,7 @@ let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Y"];
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Y'"];
     if (i === moveKeys.length) {
             i = 0;
         }
@@ -776,31 +776,20 @@ function moveY() {
     } );
     updateSides(sidesInMoveY, false);
 
-    let movesToShuffle = ["L", "F", "R", "B"];
-    let movesToShufflePrime = ["L'", "F'", "R'", "B'"];
-    // movesToShuffle = ["B", "R", "F", "L"];
-    for (let i = 0; i < movesToShuffle.length - 1; i++) {
-        // console.log(moveNotationMap);
-        let tmp = moveNotationMap.get(movesToShuffle[i]);
-        moveNotationMap.set(movesToShuffle[i], moveNotationMap.get(movesToShuffle[i+1]));
-        moveNotationMap.set(movesToShuffle[i+1], tmp);
-        
-        tmp = moveNotationMap.get(movesToShufflePrime[i]);
-        moveNotationMap.set(movesToShufflePrime[i], moveNotationMap.get(movesToShufflePrime[i+1]));
-        moveNotationMap.set(movesToShufflePrime[i+1], tmp);
-    }
+    updateMoveNotation(movesInMoveY, false);
 }
 
 function moveYPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "y" ] = 1;
     window.game.controls.state = ROTATING;
-
+    
     window.game.controls.rotateCube( 1.6, () => {
         window.game.controls.state = STILL;
     } );
     updateSides(sidesInMoveY, true);
-
+    updateMoveNotation(movesInMoveY, true);
+    
 }
 
 function moveZ() {
@@ -858,17 +847,14 @@ function updateColors(indicesToSwap, isReversed) {
 
 // const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
 function updateSides(sidesToSwap, reversed) {
-
     if (reversed) {
         sidesToSwap = sidesToSwap.toReversed();
     }
-
 
 for (let i = 0; i < sidesToSwap.length - 1; i++) {
     console.log(edgeIndexToColor);
     console.log(sidesToSwap[i]);
     for (let j = 0; j < sidesToSwap[i].length; j++) {
-        // console.log(i,j);
         console.log(sidesToSwap[i][j], sidesToSwap[i+1][j]);
         let tmp = edgeIndexToColor.get(sidesToSwap[i][j]);
         edgeIndexToColor.set(sidesToSwap[i][j], edgeIndexToColor.get(sidesToSwap[i+1][j]));
@@ -879,6 +865,29 @@ for (let i = 0; i < sidesToSwap.length - 1; i++) {
     }
 }
 
+
+function updateMoveNotation(movesToShuffle, reversed) {
+    let movesNonPrime = movesToShuffle[0];
+    let movesPrime = movesToShuffle[1];
+    
+    if (reversed) {
+        movesNonPrime = movesNonPrime.toReversed();
+        movesPrime = movesPrime.toReversed();
+    }
+    console.log(movesNonPrime);
+    console.log(movesPrime);
+
+    for (let i = 0; i < movesNonPrime.length - 1; i++) {
+
+        let tmp = moveNotationMap.get(movesNonPrime[i]);
+        moveNotationMap.set(movesNonPrime[i], moveNotationMap.get(movesNonPrime[i+1]));
+        moveNotationMap.set(movesNonPrime[i+1], tmp);
+        
+        tmp = moveNotationMap.get(movesPrime[i]);
+        moveNotationMap.set(movesPrime[i], moveNotationMap.get(movesPrime[i+1]));
+        moveNotationMap.set(movesPrime[i+1], tmp);
+    }
+}
 
 function onTryAgainBtnTap() {
     changePage("cube-select-page");
