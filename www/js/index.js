@@ -345,7 +345,7 @@ function onSelectColor(event) {
 
     /* FOR TESTING ONLY */
     // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
-    // test = [16, 13, 1, 4];
+    // test = [11, 23, 5, 17];
     // // test = [10, 7, 19, 22];
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
@@ -450,7 +450,7 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("D'");
+    performMove("F'");
     // moveZPrime();
 
 
@@ -710,7 +710,8 @@ function moveF() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveF, false);
+    // updateColors(indicesInMoveF, false, [11, 23, 17, 5]);
+    updateColors(indicesInMoveF, false, [5, 17, 23, 11]);
 }
 function moveFPrime() {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
@@ -721,7 +722,7 @@ function moveFPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveF, true);
+    updateColors(indicesInMoveF, true, [5, 17, 23, 11]);
 }
 
 function moveB() {
