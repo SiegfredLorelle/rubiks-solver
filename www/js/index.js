@@ -158,6 +158,12 @@ function onStart() {
     moveNotationMap.set("F'", moveFPrime);
     moveNotationMap.set("B", moveB);
     moveNotationMap.set("B'", moveBPrime);
+    moveNotationMap.set("X", moveX);
+    moveNotationMap.set("X'", moveXPrime);
+    moveNotationMap.set("Y", moveY);
+    moveNotationMap.set("Y'", moveYPrime);
+    moveNotationMap.set("Z", moveZ);
+    moveNotationMap.set("Z'", moveZPrime);
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
@@ -420,17 +426,18 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    // if (i === moveKeys.length) {
-        //     i = 0;
-        // }
-        // // console.log(moveKeys[i]);
-        // moveNotationMap.get(moveKeys[i])();
-        // i++;
+    const moveKeys = [...moveNotationMap.keys()]
+    if (i === moveKeys.length) {
+            i = 0;
+        }
+        console.log(moveKeys[i]);
+    moveNotationMap.get(moveKeys[i])();
+    i++;
         
         
     /* NOTE: FOR TESTING move at a time */
-    // performMove("R");
-    moveZPrime();
+    // performMove("Z");
+    // moveZPrime();
 
     solveCube();
 
