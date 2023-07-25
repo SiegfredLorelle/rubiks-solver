@@ -104,6 +104,7 @@ const sidesInMoveY = [sides[0], sides[1], sides[2].toReversed(), sides[3]];
 const sidesInMoveZ = [sides[1], [10, 7, 22, 19], [3, 0, 9, 6], [16, 13, 4, 1]];
 const movesInMoveY = [["L", "F", "R", "B"], ["L'", "F'", "R'", "B'"]];
 const movesInMoveX = [["U", "F", "D", "B"], ["U'", "F'", "D'", "B'"]];
+const movesInMoveZ = [["R", "U", "L", "D"], ["R'", "U'", "L'", "D'"]];
 
 const topEdges = [
     [9, 10, 11], 
@@ -432,7 +433,7 @@ let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "X'"];
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
     if (i === moveKeys.length) {
             i = 0;
         }
@@ -801,12 +802,13 @@ function moveZ() {
     window.game.controls.flipAxis = new THREE.Vector3();
     window.game.controls.flipAxis[ "z" ] = 1;
     window.game.controls.state = ROTATING;
-
+    
     window.game.controls.rotateCube( -1.6, () => {
-
-    window.game.controls.state = STILL;
+        
+        window.game.controls.state = STILL;
     } );
     updateSides(sidesInMoveZ, false);
+    updateMoveNotation(movesInMoveZ, false);
     
 }
 
@@ -819,6 +821,7 @@ function moveZPrime() {
         window.game.controls.state = STILL;
     } );
     updateSides(sidesInMoveZ, true);
+    updateMoveNotation(movesInMoveZ, true);
 }
 
 
