@@ -430,19 +430,22 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    // const moveKeys = [...moveNotationMap.keys()]
-    // if (i === moveKeys.length) {
-    //         i = 0;
-    //     }
-    //     console.log(moveKeys[i]);
+    let moveKeys = [...moveNotationMap.keys()]
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Y"];
+    if (i === moveKeys.length) {
+            i = 0;
+        }
+    console.log(moveKeys[i]);
     // moveNotationMap.get(moveKeys[i])();
-    // i++;
+    performMove(moveKeys[i]);
+
+    i++;
         
         
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("Z");
+    // performMove("Z");
     // moveZPrime();
 
 
@@ -594,7 +597,7 @@ function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)();
 }
 
-
+let layer = {x: 0, y: 1, z: 0};
 
 
 function moveU() {
@@ -773,6 +776,19 @@ function moveY() {
     } );
     updateSides(sidesInMoveY, false);
 
+    let movesToShuffle = ["L", "F", "R", "B"];
+    let movesToShufflePrime = ["L'", "F'", "R'", "B'"];
+    // movesToShuffle = ["B", "R", "F", "L"];
+    for (let i = 0; i < movesToShuffle.length - 1; i++) {
+        // console.log(moveNotationMap);
+        let tmp = moveNotationMap.get(movesToShuffle[i]);
+        moveNotationMap.set(movesToShuffle[i], moveNotationMap.get(movesToShuffle[i+1]));
+        moveNotationMap.set(movesToShuffle[i+1], tmp);
+        
+        tmp = moveNotationMap.get(movesToShufflePrime[i]);
+        moveNotationMap.set(movesToShufflePrime[i], moveNotationMap.get(movesToShufflePrime[i+1]));
+        moveNotationMap.set(movesToShufflePrime[i+1], tmp);
+    }
 }
 
 function moveYPrime() {
