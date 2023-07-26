@@ -345,8 +345,8 @@ function onSelectColor(event) {
 
     /* FOR TESTING ONLY */
     // let test = sides[1].concat([10, 7, 22, 19]).concat([3, 0, 9, 6]).concat([16, 13, 4, 1]);
-    // test = [20, 8, 2, 14];
-    // // test = [10, 7, 19, 22];
+    // // test = [20, 8, 2, 14];
+    // test = [10, 7, 19, 22];
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
@@ -434,23 +434,23 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    // let moveKeys = [...moveNotationMap.keys()]
-    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    let moveKeys = [...moveNotationMap.keys()]
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
     // moveKeys = ["Y", "R"];
-    // if (i === moveKeys.length) {
-    //         i = 0;
-    //     }
+    if (i === moveKeys.length) {
+            i = 0;
+        }
     // console.log(moveKeys[i]);
-    // // moveNotationMap.get(moveKeys[i])();
-    // performMove(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    performMove(moveKeys[i]);
 
-    // i++;
+    i++;
         
         
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("B'");
+    // performMove("Z'");
     // moveZPrime();
 
 
@@ -758,7 +758,7 @@ function moveX() {
         window.game.controls.state = STILL;
     });
 
-    updateSides(sidesInMoveX, false);
+    updateSides(sidesInMoveX, false, [0, 3, 9, 6], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, false);
     
 }
@@ -772,7 +772,8 @@ function moveXPrime() {
         
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveX, true);
+
+    updateSides(sidesInMoveX, true, [0, 3, 9, 6], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, true);
 }
 
@@ -785,7 +786,7 @@ function moveY() {
         window.game.controls.state = STILL;
     } );
 
-    updateSides(sidesInMoveY, false);
+    updateSides(sidesInMoveY, false, [22, 19, 7, 10], [1, 4, 16, 13]);
     updateMoveNotation(movesInMoveY, false);
 }
 
@@ -798,7 +799,7 @@ function moveYPrime() {
         window.game.controls.state = STILL;
     } );
 
-    updateSides(sidesInMoveY, true);
+    updateSides(sidesInMoveY, true, [22, 19, 7, 10], [1, 4, 16, 13]);
     updateMoveNotation(movesInMoveY, true);
     
 }
@@ -812,7 +813,7 @@ function moveZ() {
         
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveZ, false);
+    updateSides(sidesInMoveZ, false, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, false);
     
 }
@@ -825,7 +826,7 @@ function moveZPrime() {
     window.game.controls.rotateCube( 1.6, () => {
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveZ, true);
+    updateSides(sidesInMoveZ, true, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, true);
 }
 
@@ -842,7 +843,6 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
     }
     console.log(indicesToSwap);
     for (const i of indicesToSwap) {
-        // console.log(i);
         colorValues.push(edgeIndexToColor.get(i));
     }
     console.log(colorValues, "AT START");
@@ -851,16 +851,11 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
         [colorValues[i + 1], colorValues[i + 3]] = [colorValues[i + 3], colorValues[i + 1]];
         console.log(colorValues, "SWAPPING");
     }
-    // console.log(values, "NOW");
+
     for (const [i, color] of colorValues.entries()) {
-        // console.log(indicesToSwap[i], color);
         edgeIndexToColor.set(indicesToSwap[i], color);
-        // indicesToSwap[i] = color;
         console.log(indicesToSwap[i], edgeIndexToColor.get(indicesToSwap[i]));
     }
-    // if (edgesToSwap === undefined) {
-    //     return;
-    // }
 
     // UPDATE COLORS OF THE EDGE OF THE ROTATING LAYER
     console.log(edgesToSwap);
@@ -870,13 +865,14 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
         edgeIndexToColor.set(edgesToSwap[i], edgeIndexToColor.get(edgesToSwap[i+1]));
         edgeIndexToColor.set(edgesToSwap[i+1], tmp);
     }
-
 }
 
 // const sidesInMoveX = [sides[0], sides[4], sides[2], sides[5]];
-function updateSides(sidesToSwap, reversed) {
+function updateSides(sidesToSwap, reversed, edge1ToSwap, edge2ToSwap) {
     if (reversed) {
         sidesToSwap = sidesToSwap.toReversed();
+        edge1ToSwap = edge1ToSwap.toReversed();
+        edge2ToSwap = edge2ToSwap.toReversed();
     }
 
 for (let i = 0; i < sidesToSwap.length - 1; i++) {
@@ -890,6 +886,19 @@ for (let i = 0; i < sidesToSwap.length - 1; i++) {
         }
 
         console.log(edgeIndexToColor);
+    }
+
+// console.log("ADJUSTING EDGES");
+// console.log(edge1ToSwap);
+    for (let i = 0; i < edge1ToSwap.length - 1; i++) {
+        console.log(edgeIndexToColor.get(edge1ToSwap[i]), edgeIndexToColor.get(edge1ToSwap[i+1]) );
+        let tmp = edgeIndexToColor.get(edge1ToSwap[i]);
+        edgeIndexToColor.set(edge1ToSwap[i], edgeIndexToColor.get(edge1ToSwap[i+1]));
+        edgeIndexToColor.set(edge1ToSwap[i+1], tmp);
+        
+        tmp = edgeIndexToColor.get(edge2ToSwap[i]);
+        edgeIndexToColor.set(edge2ToSwap[i], edgeIndexToColor.get(edge2ToSwap[i+1]));
+        edgeIndexToColor.set(edge2ToSwap[i+1], tmp);
     }
 }
 
@@ -1032,11 +1041,20 @@ function changePage(pageToActivate) {
 }
 
 function changePartOfPage(partOfPageToActivate) {
+    // NOTE: ENABLE THIS WHEN DONE TESTING
+    // if (partOfPageToActivate === "solver-part") {
+    //     window.game.controls.disable();
+    // }
+
     partOfPageToActivate = mapParts.get(partOfPageToActivate);
     activePart.classList.remove("active");
     partOfPageToActivate.classList.add("active");
     findActivePart();
     console.log(activePart);
+
+    // else {
+    //     window.game.controls.enable();
+    // }
 }
 
 function onBackButton() {
