@@ -50,6 +50,7 @@ let solveBtn;
 let nextMoveBtn;
 let backMoveBtn;
 let tryAgainBtn;
+let feedbackBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -142,8 +143,8 @@ function onStart() {
     solveBtn = document.querySelector(".color-assign-page > .color-assign-part > .solve-reset-container > .solve-btn");
     nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
     tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
-
-    // console.log(tryAgainBtn);
+    feedbackBtn = document.querySelector(".settings-page li > button[value=Feedback]");
+    // console.log(feedbackBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
         mapParts.set(part.classList[0], part);
@@ -211,6 +212,9 @@ function manageActivePage() {
     else if (activePageName === "settings-page") {
         onSettingsPage();
     }
+    else if (activePageName === "feedback-page") {
+        onFeedbackPage();
+    }
 }
 
 
@@ -239,6 +243,11 @@ function onColorAssignPage() {
 }
 
 function onSettingsPage() {
+    listenToSwipes();
+    listenToBtnTap(feedbackBtn);
+}
+
+function onFeedbackPage() {
     listenToSwipes();
 }
 
@@ -423,6 +432,8 @@ function listenToBtnTap(btn) {
         case tryAgainBtn:
             tryAgainBtn.addEventListener("click", onTryAgainBtnTap);
             break;
+        case feedbackBtn:
+            feedbackBtn.addEventListener("click", onFeedbackBtnTap);
     }
 }
 
@@ -435,7 +446,7 @@ let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
-    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
     // moveKeys = ["Y", "R"];
     if (i === moveKeys.length) {
             i = 0;
@@ -445,8 +456,8 @@ function onNextMoveBtnTap() {
     performMove(moveKeys[i]);
 
     i++;
-        
-        
+
+
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
@@ -931,6 +942,9 @@ function onTryAgainBtnTap() {
     changePage("cube-select-page");
 }
 
+function onFeedbackBtnTap() {
+    changePage("feedback-page");
+}
 
 function offListeners() {
     unlistenToSwipes();
@@ -1023,6 +1037,11 @@ function onSwipeLeft() {
         case "settings-page":
             changePage("cube-select-page");
             break;
+        case "feedback-page":
+            changePage("settings-page");
+            break;
+        default:
+            console.log("NO PG TO REDITECT!");
     }   
 }
 
@@ -1066,7 +1085,7 @@ function onBackButton() {
             changePage("home-page");
             break;
         case "color-assign-page":
-            // console.log(activePartName);
+            console.log(activePartName);
             switch(activePartName) {
                 case "color-assign-part":
                     // changePartOfPage("solver-part");
@@ -1077,7 +1096,6 @@ function onBackButton() {
                     break;
                 case "solved-part":
                     changePage("cube-select-page");
-                    break;
                 default:
                     console.log("ERROR");
             }
@@ -1085,7 +1103,12 @@ function onBackButton() {
         case "settings-page":
             changePage("cube-select-page");
             break;
-    }
+        case "feedback-page":
+            changePage("settings-page");
+            break;
+        default:
+            console.log("NO PG TO REDITECT!");
+    }   
 }
 
 
