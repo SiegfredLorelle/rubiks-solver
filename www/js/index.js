@@ -434,23 +434,23 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    // let moveKeys = [...moveNotationMap.keys()]
-    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    let moveKeys = [...moveNotationMap.keys()]
+    moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
     // moveKeys = ["Y", "R"];
-    // if (i === moveKeys.length) {
-    //         i = 0;
-    //     }
+    if (i === moveKeys.length) {
+            i = 0;
+        }
     // console.log(moveKeys[i]);
-    // // moveNotationMap.get(moveKeys[i])();
-    // performMove(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    performMove(moveKeys[i]);
 
-    // i++;
+    i++;
         
         
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("X'");
+    // performMove("Z'");
     // moveZPrime();
 
 
@@ -813,7 +813,7 @@ function moveZ() {
         
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveZ, false);
+    updateSides(sidesInMoveZ, false, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, false);
     
 }
@@ -826,7 +826,7 @@ function moveZPrime() {
     window.game.controls.rotateCube( 1.6, () => {
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveZ, true);
+    updateSides(sidesInMoveZ, true, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, true);
 }
 
