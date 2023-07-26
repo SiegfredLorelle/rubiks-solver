@@ -450,7 +450,7 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING move at a time */
     // checkIsCubeSolved();
 
-    performMove("Y'");
+    performMove("X'");
     // moveZPrime();
 
 
@@ -758,7 +758,7 @@ function moveX() {
         window.game.controls.state = STILL;
     });
 
-    updateSides(sidesInMoveX, false);
+    updateSides(sidesInMoveX, false, [0, 3, 9, 6], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, false);
     
 }
@@ -772,7 +772,8 @@ function moveXPrime() {
         
         window.game.controls.state = STILL;
     } );
-    updateSides(sidesInMoveX, true);
+
+    updateSides(sidesInMoveX, true, [0, 3, 9, 6], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, true);
 }
 
@@ -785,7 +786,6 @@ function moveY() {
         window.game.controls.state = STILL;
     } );
 
-    // updateSides(sidesInMoveY, false, [22, 19, 7, 10], [16, 13, 4, 1]);
     updateSides(sidesInMoveY, false, [22, 19, 7, 10], [1, 4, 16, 13]);
     updateMoveNotation(movesInMoveY, false);
 }
