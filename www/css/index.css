@@ -533,6 +533,107 @@ input[type="color"]::-webkit-color-swatch {
     height: 15%;
 }
 
+/* =============== CONTACT ================= */
+.contact__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    column-gap: 4rem;
+  }
+  
+  .contact__description,
+  .contact__input {
+    font-weight: var(--weight-400);
+  }
+  
+  .contact__description {
+    margin-bottom: 3rem;
+  }
+  
+  .contact__description a {
+    color: var(--title-color);
+    font-weight: var(--weight-500);
+  }
+  
+  .contact__form {
+    position: relative;
+  }
+  
+  .contact__input {
+    border: 2px solid var(--border-color);
+    padding: 0.8rem 1.25rem;
+    width: 100%;
+    border-radius: var(--radius);
+    font-size: var(--smaller-font-size);
+    margin-bottom: 1.25rem;
+    border-radius: 0.5rem;
+  }
+  
+  .textarea {
+    height: 120px;
+    resize: none;
+    border-radius: 0.5rem;
+  }
+  
+  .error__message {
+    position: absolute;
+    bottom: -12%;
+    left: 0;
+    font-size: var(--small-font-size);
+    font-weight: var(--weight-400);
+  }
+  
+  .color-first {
+    color: var(--first-color);
+  }
+
+  .contact__container {
+    column-gap: 2rem;
+  }
+
+  .contact__container {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+
+  .contact__content {
+    order: 1;
+  }
+
+  .contact__description {
+    margin-bottom: 2rem;
+  }
+
+  .contact__container > .btn {
+    margin: auto;
+    border-radius: 1rem;
+  }
+
+  /* CSS */
+/* Styles for the button */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #303130; /* Green background color for the button */
+  color: white; /* White text color for the button */
+  border: none; /* Remove the default button border */
+  border-radius: 4px; /* Rounded corners for the button */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition on hover */
+}
+
+/* Hover effect for the button */
+.btn:hover {
+  background-color: #878987; /* Darker green color on hover */
+}
+
+/* Styles for the error message */
+.error__message {
+  color: #FF0000; /* Red color for the error message */
+  font-size: 14px;
+  margin-top: 10px; /* Add some spacing between the button and error message */
+}
+
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */
