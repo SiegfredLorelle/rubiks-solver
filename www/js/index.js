@@ -155,16 +155,34 @@ function onStart() {
 
     moveNotationMap.set("U", moveU);
     moveNotationMap.set("U'", moveUPrime);
+    moveNotationMap.set("U-indices", [6, 9, 11, 23, 21, 18, 20, 8]);
+    moveNotationMap.set("U-edges", [22, 19, 7, 10]);
+
     moveNotationMap.set("D", moveD);
     moveNotationMap.set("D'", moveDPrime);
+    moveNotationMap.set("D-indices", [2, 14, 12, 15, 17, 5, 3, 0]);
+    moveNotationMap.set("D-edges", [4, 1, 13, 16]);
+
     moveNotationMap.set("R", moveR);
     moveNotationMap.set("R'", moveRPrime);
+    moveNotationMap.set("R-indices", [16, 13, 14, 20, 19, 22, 23, 17]);
+    moveNotationMap.set("R-edges", [12, 18, 21, 15]);
+
     moveNotationMap.set("L", moveL);
     moveNotationMap.set("L'", moveLPrime);
+    moveNotationMap.set("L-indices", [5, 11, 10, 7, 8, 2, 1, 4]);
+    moveNotationMap.set("L-edges", [0, 3, 9, 6]);
+
     moveNotationMap.set("F", moveF);
     moveNotationMap.set("F'", moveFPrime);
+    moveNotationMap.set("F-indices", [9, 3, 4, 16, 15, 21, 22, 10]);
+    moveNotationMap.set("F-edges", [5, 17, 23, 11]);
+
     moveNotationMap.set("B", moveB);
     moveNotationMap.set("B'", moveBPrime);
+    moveNotationMap.set("B-indices", [7, 19, 18, 12, 13, 1, 0, 6]);
+    moveNotationMap.set("B-edges", [14, 2, 8, 20]);
+
     moveNotationMap.set("X", moveX);
     moveNotationMap.set("X'", moveXPrime);
     moveNotationMap.set("Y", moveY);
@@ -447,7 +465,8 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
     // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    // moveKeys = ["Y", "R"];
+    moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
+    // moveKeys = ["R", "R'", "Y"];
     if (i === moveKeys.length) {
             i = 0;
         }
@@ -610,13 +629,13 @@ function isFirstLayerEdgesSolved(side) {
 
 
 function performMove(moveNotation) {
-    moveNotationMap.get(moveNotation)();
+    moveNotationMap.get(moveNotation)(moveNotation);
 }
 
 let layer = {x: 0, y: 1, z: 0};
 
 
-function moveU() {
+function moveU(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -625,10 +644,10 @@ function moveU() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveU, false, [22, 19, 7, 10]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 
 }
-function moveUPrime() {
+function moveUPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -637,11 +656,11 @@ function moveUPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveU, true, [22, 19, 7, 10]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveD() {
+function moveD(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -650,9 +669,9 @@ function moveD() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveD, false, [4, 1, 13, 16]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveDPrime() {
+function moveDPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -661,10 +680,11 @@ function moveDPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveD, true, [4, 1, 13, 16]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
+
 }
 
-function moveR() {
+function moveR(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -673,9 +693,9 @@ function moveR() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveR, false, [12, 18, 21, 15]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveRPrime() {
+function moveRPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
     
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -684,11 +704,11 @@ function moveRPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveR, true, [12, 18, 21, 15]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveL() {
+function moveL(moveNotation) {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -697,9 +717,9 @@ function moveL() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveL, false, [0, 3, 9, 6]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveLPrime() {
+function moveLPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -708,11 +728,11 @@ function moveLPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveL, true, [0, 3, 9, 6]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveF() {
+function moveF(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -721,10 +741,9 @@ function moveF() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    // updateColors(indicesInMoveF, false, [11, 23, 17, 5]);
-    updateColors(indicesInMoveF, false, [5, 17, 23, 11]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveFPrime() {
+function moveFPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -733,10 +752,10 @@ function moveFPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    updateColors(indicesInMoveF, true, [5, 17, 23, 11]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
-function moveB() {
+function moveB(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -745,10 +764,9 @@ function moveB() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( 1.6, false);
 
-    // updateColors(indicesInMoveB, false, [20, 8, 2, 14]);
-    updateColors(indicesInMoveB, false, [14, 2, 8, 20]);
+    updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveBPrime() {
+function moveBPrime(moveNotation) {
     const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
 
     window.game.controls.flipAxis = new THREE.Vector3();
@@ -757,7 +775,7 @@ function moveBPrime() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveB, true, [14, 2, 8, 20]);
+    updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 function moveX() {
@@ -927,10 +945,23 @@ function updateMoveNotation(movesToShuffle, reversed) {
 
     for (let i = 0; i < movesNonPrime.length - 1; i++) {
 
+        // Swap non prime moves
         let tmp = moveNotationMap.get(movesNonPrime[i]);
         moveNotationMap.set(movesNonPrime[i], moveNotationMap.get(movesNonPrime[i+1]));
         moveNotationMap.set(movesNonPrime[i+1], tmp);
+        console.log(moveNotationMap.get(`${movesNonPrime[i]}-indices`), moveNotationMap.get(`${movesNonPrime[i+1]}-indices`));
         
+        // // Swap the indices used for the moves
+        // tmp = moveNotationMap.get(`${movesNonPrime[i]}-indices`);
+        // moveNotationMap.set(`${movesNonPrime[i]}-indices`, moveNotationMap.get(`${movesNonPrime[i+1]}-indices`));
+        // moveNotationMap.set(`${movesNonPrime[i+1]}-indices`, tmp);
+        
+        // // Swap the edges used for the moves
+        // tmp = moveNotationMap.get(`${movesNonPrime[i]}-edges`);
+        // moveNotationMap.set(`${movesNonPrime[i]}-edges`, moveNotationMap.get(`${movesNonPrime[i+1]}-edges`));
+        // moveNotationMap.set(`${movesNonPrime[i+1]}-edges`, tmp);
+        
+        // Swap prime moves
         tmp = moveNotationMap.get(movesPrime[i]);
         moveNotationMap.set(movesPrime[i], moveNotationMap.get(movesPrime[i+1]));
         moveNotationMap.set(movesPrime[i+1], tmp);
