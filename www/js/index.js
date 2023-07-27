@@ -574,6 +574,7 @@ function isFirstLayerSolved() {
                     }
                     else {
                         console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+                        moveFirstLayerAtBottomSide(sides[sideIndex]);
                     }
                 }
             }
@@ -594,6 +595,16 @@ function isFirstLayerAtBottomSide(side) {
     else {
         return true;
         console.log("ALREADY AT THE BOTTOM");
+    }
+}
+
+function moveFirstLayerAtBottomSide(firstLayer) {
+    if (firstLayer === sides[4]) {
+        performMove("Z");
+        performMove("Z");
+    }
+    else {
+        
     }
 }
 
