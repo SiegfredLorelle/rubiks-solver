@@ -533,6 +533,73 @@ input[type="color"]::-webkit-color-swatch {
     height: 15%;
 }
 
+/* =============== CONTACT ================= */
+.contact__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    column-gap: 4rem;
+  }
+  
+  .contact__description,
+  .contact__input {
+    font-weight: var(--weight-400);
+  }
+  
+  .contact__description {
+    margin-bottom: 3rem;
+  }
+  
+  .contact__description a {
+    color: var(--title-color);
+    font-weight: var(--weight-500);
+  }
+  
+  .contact__form {
+    position: relative;
+  }
+  
+  .contact__input {
+    border: 2px solid var(--border-color);
+    padding: 0.8rem 1.25rem;
+    width: 100%;
+    border-radius: var(--radius);
+    font-size: var(--smaller-font-size);
+    margin-bottom: 1.25rem;
+  }
+  
+  .textarea {
+    height: 120px;
+    resize: none;
+  }
+  
+  .error__message {
+    position: absolute;
+    bottom: -12%;
+    left: 0;
+    font-size: var(--small-font-size);
+    font-weight: var(--weight-400);
+  }
+  
+  .color-first {
+    color: var(--first-color);
+  }
+
+  .contact__container {
+    column-gap: 2rem;
+  }
+
+  .contact__container {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+
+  .contact__content {
+    order: 1;
+  }
+
+  .contact__description {
+    margin-bottom: 2rem;
+  }
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */

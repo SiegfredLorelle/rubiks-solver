@@ -223,13 +223,13 @@
                         <h3>SETTINGS</h3>
                         <ul class="settings-container">
                             <li><button class="settings-container" value="Dashboard">
-                                <i class="fa-solid fa-ranking-star"></i>
+                                    <i class="fa-solid fa-ranking-star"></i>
                                     Dashboard </button></li>
                             <li><button class="settings-container" value="Animation Speed">
-                                <i class="fa-regular fa-clock"></i>
+                                    <i class="fa-regular fa-clock"></i>
                                     Animation Speed</button></li>
                             <li><button class="settings-container" value="Feedback">
-                                <i class="fa-regular fa-face-smile"></i>
+                                    <i class="fa-regular fa-face-smile"></i>
                                     Feedback</button></li>
                         </ul>
                     </div>
@@ -241,30 +241,53 @@
             <div class="feedback-page">
                 <div class="settings-page flex">
                     <div>
-                        <!-- <img src="img/menu-logo.png" class="menu-responsive" alt="EDIT THIS! Temporary Image for Cube"> -->
-                        <h3>FEEDBACK PG TODO</h3>
-                        <!-- <ul class="settings-container">
-                            <li><button class="settings-container" value="Dashboard">
-                                <i class="fa-solid fa-ranking-star"></i>
-                                    Dashboard </button></li>
-                            <li><button class="settings-container" value="Animation Speed">
-                                <i class="fa-regular fa-clock"></i>
-                                    Animation Speed</button></li>
-                            <li><button class="settings-container" value="Feedback">
-                                <i class="fa-regular fa-face-smile"></i>
-                                    Feedback</button></li> -->
-                        </ul>
-                    </div>
-                </div>
+                        <img src="img/menu-logo.png" class="menu-responsive" alt="EDIT THIS! Temporary Image for Cube">
+                        <h3>FEEDBACK</h3>
+                        <section class="contact section" id="contact">
+                            <div class="contact__container container grid">
+                                <div class="contact__content">
+                                    <form class="contact__form" id="contact-form">
+                                        <div class="contact__form-input">
+                                            <input type="text" name="name" placeholder="Your Name *"
+                                                class="contact__input" id="contact-name" />
+                                        </div>
 
-            </div>
+                                        <div class="contact__form-input">
+                                            <input type="email" name="email" placeholder="Your e-mail"
+                                                class="contact__input" id="contact-email" />
+                                        </div>
 
+                                        <div class="contact__form-input">
+                                            <input type="text" name="subject" placeholder="Write a Subject"
+                                                class="contact__input" id="contact-subject" />
+                                        </div>
 
+                                        <div class="contact__form-input">
+                                            <textarea name="message" id="contact-message"
+                                                class="contact__input textarea" placeholder="Your Message"></textarea>
+                                        </div>
+
+                                        <input type="submit" value="Submit" class="btn" />
+
+                                        <p class="error__message" id="error-message"></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
         </main>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+        </ul>
+    </div>
+    </div>
+
+    </div>
 
 
-        <!-- NOTE: FROM CORDOVA DEFAULT -->
-        <!-- <div id="deviceready" class="blink">
+    </main>
+
+
+    <!-- NOTE: FROM CORDOVA DEFAULT -->
+    <!-- <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div> -->
