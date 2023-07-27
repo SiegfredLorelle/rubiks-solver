@@ -120,6 +120,7 @@ const bottomEdges = [
     [15, 16, 17]
 ];
 
+let pendingMoves = [];
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -463,29 +464,35 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    let moveKeys = [...moveNotationMap.keys()]
-    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
-    // moveKeys = ["R", "R'", "Y"];
-    if (i === moveKeys.length) {
-            i = 0;
-        }
-    // console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    performMove(moveKeys[i]);
+    // // let moveKeys = [...moveNotationMap.keys()]
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "X", "X'", "Y", "Y'", "Z", "Z'"];
+    // // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // // moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
+    // // moveKeys = ["R", "R'", "Y"];
+    // moveKeys = ["X"];
+    // if (i === moveKeys.length) {
+    //         i = 0;
+    //     }
+    // // console.log(moveKeys[i]);
+    // // moveNotationMap.get(moveKeys[i])();
+    // performMove(moveKeys[i]);
 
-    i++;
-
-
-    /* NOTE: FOR TESTING move at a time */
-    // checkIsCubeSolved();
-
-    // performMove("Z'");
-    // moveZPrime();
+    // i++;
 
 
-    // solveCube();
-    checkIsCubeSolved();
+
+
+    /* ACTUAL CODE */
+    if (!pendingMoves.length) {
+        checkIsCubeSolved();
+        solveCube();
+    }
+    if (pendingMoves.length) {
+        performMove(pendingMoves.shift());
+    }
+    
+
+
 }
 
 
@@ -516,7 +523,7 @@ function solveFirstLayer() {
             }
         }
         max = Math.max(...colorCount.values());
-        if (max > maxColor[1]) {
+        if (max >= maxColor[1]) {
             maxColor = [side, max];
         }
     }
@@ -524,11 +531,18 @@ function solveFirstLayer() {
     firstLayerSide = maxColor[0];
     // ROTATE SIDE TO BOTTOM
     console.log(firstLayerSide);
-    if (firstLayerSide !== sides[sides.length - 1]) {
-        console.log("ROTATE IT TO THE BOTTOM");
+    // if (firstLayerSide !== sides[sides.length - 1]) {
+    //     console.log("ROTATE IT TO THE BOTTOM");
+    // }
+    // else {
+    //     console.log("ALREADY AT THE BOTTOM");
+    // }
+
+    if (isFirstLayerAtBottomSide(firstLayerSide)) {
+        console.log("ALREADY AT BOTTOM PROCEED WITH SOLVING");
     }
     else {
-        console.log("ALREADY AT THE BOTTOM");
+        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
     }
 
     // FIND SAME COLOR OPPOSITE SIDE
@@ -538,42 +552,99 @@ function solveFirstLayer() {
 }
 
 function isFirstLayerSolved() {
-    // console.log("CHECKING IF FIRST LAYER IS SOLVED");
-    console.log(edgeIndexToColor);
-    // console.log("CHECKING IF CUBE IS SOLVED ...");
-    let currentColor;
-    let index = 0;
-    let counter = 0;
-    let sideIndex = 0;
+    // // console.log("CHECKING IF FIRST LAYER IS SOLVED");
+    // console.log(edgeIndexToColor);
+    // // console.log("CHECKING IF CUBE IS SOLVED ...");
+    // let currentColor;
+    // let index = 0;
+    // let counter = 0;
+    // let sideIndex = 0;
     
-    for (const color of edgeIndexToColor.values()) {
-        if (!currentColor) {
-            currentColor = color;
-        }
-        console.log(currentColor, color);
-        if (currentColor === color) {
-            counter++;
-        }
+    // for (const color of edgeIndexToColor.values()) {
+    //     if (!currentColor) {
+    //         currentColor = color;
+    //     }
+    //     console.log(currentColor, color);
+    //     if (currentColor === color) {
+    //         counter++;
+    //     }
 
-        index++;
+    //     index++;
 
-        if (index === 4) {
-            console.log(counter);
-            if (counter === 4) {
-                if (isFirstLayerEdgesSolved(sides[sideIndex])) {
-                    return true;
-                }
+    //     if (index === 4) {
+    //         console.log(counter);
+    //         if (counter === 4) {
+    //             if (isFirstLayerEdgesSolved(sides[sideIndex])) {
+    //                 if (!isFirstLayerAtBottomSide(sides[sideIndex])) {
+    //                     moveFirstLayerAtBottomSide(sides[sideIndex]);
+    //                 }
+    //                 return true;
+    //             }
+    //         }
+    //         index = 0;
+    //         counter = 0;
+    //         currentColor = null;
+    //         sideIndex++;
+    //     }
+    // }
+    // return false;
+
+
+    for (const side of sides) {
+        let color = edgeIndexToColor.get(side[0]); 
+        let counter = 0;
+        for (const edge of side) {
+            if (edgeIndexToColor.get(edge) !== color) {
+                break;
             }
-            index = 0;
-            counter = 0;
-            currentColor = null;
-            sideIndex++;
+            else {
+                counter++;
+            }
         }
+        console.log(side, counter);
 
+        if (counter === 4) {
+            if (isFirstLayerEdgesSolved(side)) {
+                if (!isFirstLayerAtBottomSide(side)) {
+                    moveFirstLayerAtBottomSide(side);
+                }
+                return true;
+            }
+        }
     }
+
     return false;
 }
 
+function isFirstLayerAtBottomSide(side) {
+    if (side !== sides[sides.length - 1]) {
+        return false;
+        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+    }
+    else {
+        return true;
+        console.log("ALREADY AT THE BOTTOM");
+    }
+}
+
+function moveFirstLayerAtBottomSide(firstLayer) {
+    if (firstLayer === sides[4]) {
+        pendingMoves.push("Z");
+        pendingMoves.push("Z");
+    }
+    else if (firstLayer === sides[0]) {
+        pendingMoves.push("X'");
+    }
+    else if (firstLayer === sides[1]) {
+        pendingMoves.push("Z");
+    }
+    else if (firstLayer === sides[2]) {
+        pendingMoves.push("X");
+    }
+    else if (firstLayer === sides[3]) {
+        pendingMoves.push("Z'");
+    }
+}
 
 function isFirstLayerEdgesSolved(side) {
     console.log("CHECKING EDGES");
@@ -596,9 +667,10 @@ function isFirstLayerEdgesSolved(side) {
         return !side.includes(edge);
     });
 
-    console.log(edgesOfFirstLayer);
+    console.log(edgesOfFirstLayer, "EDGES OF FIRST");
 
     // CHECK IF EDGES ARE CORRECT
+    
     while (edgesOfFirstLayer.length > 0) {
         const edge = edgesOfFirstLayer.shift();
 
@@ -627,12 +699,11 @@ function isFirstLayerEdgesSolved(side) {
 
 
 
-
 function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)(moveNotation);
 }
 
-let layer = {x: 0, y: 1, z: 0};
+// let layer = {x: 0, y: 1, z: 0};`
 
 
 function moveU(moveNotation) {
@@ -787,7 +858,7 @@ function moveX() {
         window.game.controls.state = STILL;
     });
 
-    updateSides(sidesInMoveX, false, [0, 3, 9, 6], [15, 12, 18, 21]);
+    updateSides(sidesInMoveX, false, [6, 9, 3, 0], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, false);
     
 }
@@ -802,7 +873,7 @@ function moveXPrime() {
         window.game.controls.state = STILL;
     } );
 
-    updateSides(sidesInMoveX, true, [0, 3, 9, 6], [15, 12, 18, 21]);
+    updateSides(sidesInMoveX, true, [6, 9, 3, 0], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, true);
 }
 
