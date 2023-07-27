@@ -565,11 +565,13 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: var(--radius);
     font-size: var(--smaller-font-size);
     margin-bottom: 1.25rem;
+    border-radius: 0.5rem;
   }
   
   .textarea {
     height: 120px;
     resize: none;
+    border-radius: 0.5rem;
   }
   
   .error__message {
@@ -600,6 +602,38 @@ input[type="color"]::-webkit-color-swatch {
   .contact__description {
     margin-bottom: 2rem;
   }
+
+  .contact__container > .btn {
+    margin: auto;
+    border-radius: 1rem;
+  }
+
+  /* CSS */
+/* Styles for the button */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #303130; /* Green background color for the button */
+  color: white; /* White text color for the button */
+  border: none; /* Remove the default button border */
+  border-radius: 4px; /* Rounded corners for the button */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition on hover */
+}
+
+/* Hover effect for the button */
+.btn:hover {
+  background-color: #878987; /* Darker green color on hover */
+}
+
+/* Styles for the error message */
+.error__message {
+  color: #FF0000; /* Red color for the error message */
+  font-size: 14px;
+  margin-top: 10px; /* Add some spacing between the button and error message */
+}
+
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */
