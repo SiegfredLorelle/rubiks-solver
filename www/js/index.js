@@ -531,6 +531,8 @@ function solveFirstLayer() {
     firstLayerSide = maxColor[0];
     // ROTATE SIDE TO BOTTOM
     console.log(firstLayerSide);
+    moveFirstLayerAtBottomSide(firstLayerSide);
+
     // if (firstLayerSide !== sides[sides.length - 1]) {
     //     console.log("ROTATE IT TO THE BOTTOM");
     // }
