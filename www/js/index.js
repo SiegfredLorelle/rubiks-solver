@@ -155,16 +155,34 @@ function onStart() {
 
     moveNotationMap.set("U", moveU);
     moveNotationMap.set("U'", moveUPrime);
+    moveNotationMap.set("U-indices", [6, 9, 11, 23, 21, 18, 20, 8]);
+    moveNotationMap.set("U-edges", [22, 19, 7, 10]);
+
     moveNotationMap.set("D", moveD);
     moveNotationMap.set("D'", moveDPrime);
+    moveNotationMap.set("D-indices", [2, 14, 12, 15, 17, 5, 3, 0]);
+    moveNotationMap.set("D-edges", [4, 1, 13, 16]);
+
     moveNotationMap.set("R", moveR);
     moveNotationMap.set("R'", moveRPrime);
+    moveNotationMap.set("R-indices", [16, 13, 14, 20, 19, 22, 23, 17]);
+    moveNotationMap.set("R-edges", [12, 18, 21, 15]);
+
     moveNotationMap.set("L", moveL);
     moveNotationMap.set("L'", moveLPrime);
+    moveNotationMap.set("L-indices", [5, 11, 10, 7, 8, 2, 1, 4]);
+    moveNotationMap.set("L-edges", [0, 3, 9, 6]);
+
     moveNotationMap.set("F", moveF);
     moveNotationMap.set("F'", moveFPrime);
+    moveNotationMap.set("F-indices", [9, 3, 4, 16, 15, 21, 22, 10]);
+    moveNotationMap.set("F-edges", [5, 17, 23, 11]);
+
     moveNotationMap.set("B", moveB);
     moveNotationMap.set("B'", moveBPrime);
+    moveNotationMap.set("B-indices", [7, 19, 18, 12, 13, 1, 0, 6]``);
+    moveNotationMap.set("B-edges", [14, 2, 8, 20]);
+
     moveNotationMap.set("X", moveX);
     moveNotationMap.set("X'", moveXPrime);
     moveNotationMap.set("Y", moveY);
@@ -447,7 +465,7 @@ function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
     let moveKeys = [...moveNotationMap.keys()]
     // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    // moveKeys = ["Y", "R"];
+    moveKeys = ["R", "R'", "Y", "R'", "Y", "L"];
     if (i === moveKeys.length) {
             i = 0;
         }
@@ -625,7 +643,7 @@ function moveU() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    updateColors(indicesInMoveU, false, [22, 19, 7, 10]);
+    updateColors(moveNotationMap.get("U-indices"), false, moveNotationMap.get("U-edges"));
 
 }
 function moveUPrime() {
@@ -721,7 +739,6 @@ function moveF() {
     window.game.controls.selectLayer( layer );
     window.game.controls.rotateLayer( -1.6, false);
 
-    // updateColors(indicesInMoveF, false, [11, 23, 17, 5]);
     updateColors(indicesInMoveF, false, [5, 17, 23, 11]);
 }
 function moveFPrime() {
