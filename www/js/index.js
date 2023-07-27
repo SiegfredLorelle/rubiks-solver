@@ -463,18 +463,19 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    let moveKeys = [...moveNotationMap.keys()]
-    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
-    // moveKeys = ["R", "R'", "Y"];
-    if (i === moveKeys.length) {
-            i = 0;
-        }
-    // console.log(moveKeys[i]);
-    // moveNotationMap.get(moveKeys[i])();
-    performMove(moveKeys[i]);
+    // let moveKeys = [...moveNotationMap.keys()]
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "X", "X'", "Y", "Y'", "Z", "Z'"];
+    // // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // // moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
+    // // moveKeys = ["R", "R'", "Y"];
+    // if (i === moveKeys.length) {
+    //         i = 0;
+    //     }
+    // // console.log(moveKeys[i]);
+    // // moveNotationMap.get(moveKeys[i])();
+    // performMove(moveKeys[i]);
 
-    i++;
+    // i++;
 
 
     /* NOTE: FOR TESTING move at a time */
@@ -484,8 +485,8 @@ function onNextMoveBtnTap() {
     // moveZPrime();
 
 
-    // solveCube();
     checkIsCubeSolved();
+    solveCube();
 }
 
 
@@ -516,7 +517,7 @@ function solveFirstLayer() {
             }
         }
         max = Math.max(...colorCount.values());
-        if (max > maxColor[1]) {
+        if (max >= maxColor[1]) {
             maxColor = [side, max];
         }
     }
@@ -524,11 +525,18 @@ function solveFirstLayer() {
     firstLayerSide = maxColor[0];
     // ROTATE SIDE TO BOTTOM
     console.log(firstLayerSide);
-    if (firstLayerSide !== sides[sides.length - 1]) {
-        console.log("ROTATE IT TO THE BOTTOM");
+    // if (firstLayerSide !== sides[sides.length - 1]) {
+    //     console.log("ROTATE IT TO THE BOTTOM");
+    // }
+    // else {
+    //     console.log("ALREADY AT THE BOTTOM");
+    // }
+
+    if (isFirstLayerAtBottomSide(firstLayerSide)) {
+        console.log("ALREADY AT BOTTOM PROCEED WITH SOLVING");
     }
     else {
-        console.log("ALREADY AT THE BOTTOM");
+        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
     }
 
     // FIND SAME COLOR OPPOSITE SIDE
@@ -561,7 +569,12 @@ function isFirstLayerSolved() {
             console.log(counter);
             if (counter === 4) {
                 if (isFirstLayerEdgesSolved(sides[sideIndex])) {
-                    return true;
+                    if (isFirstLayerAtBottomSide(sides[sideIndex])) {
+                        return true;
+                    }
+                    else {
+                        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+                    }
                 }
             }
             index = 0;
@@ -569,11 +582,20 @@ function isFirstLayerSolved() {
             currentColor = null;
             sideIndex++;
         }
-
     }
     return false;
 }
 
+function isFirstLayerAtBottomSide(side) {
+    if (side !== sides[sides.length - 1]) {
+        return false;
+        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+    }
+    else {
+        return true;
+        console.log("ALREADY AT THE BOTTOM");
+    }
+}
 
 function isFirstLayerEdgesSolved(side) {
     console.log("CHECKING EDGES");

@@ -571,7 +571,7 @@ input[type="color"]::-webkit-color-swatch {
   .textarea {
     height: 120px;
     resize: none;
-    border-radius: 0.5rem;
+        border-radius: 0.5rem;
   }
   
   .error__message {
