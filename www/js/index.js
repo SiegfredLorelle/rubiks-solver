@@ -120,6 +120,7 @@ const bottomEdges = [
     [15, 16, 17]
 ];
 
+let pendingMoves = [];
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -484,9 +485,14 @@ function onNextMoveBtnTap() {
     // performMove("Z'");
     // moveZPrime();
 
+    if (pendingMoves.length) {
+        performMove(pendingMoves.shift());
+    }
 
     checkIsCubeSolved();
     solveCube();
+
+
 }
 
 
@@ -600,8 +606,10 @@ function isFirstLayerAtBottomSide(side) {
 
 function moveFirstLayerAtBottomSide(firstLayer) {
     if (firstLayer === sides[4]) {
-        performMove("Z");
-        performMove("Z");
+        // performMove("Z");
+        // performMove("Z");
+        pendingMoves.push("Z");
+        pendingMoves.push("Z");
     }
     else {
         
@@ -660,12 +668,11 @@ function isFirstLayerEdgesSolved(side) {
 
 
 
-
 function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)(moveNotation);
 }
 
-let layer = {x: 0, y: 1, z: 0};
+// let layer = {x: 0, y: 1, z: 0};`
 
 
 function moveU(moveNotation) {
