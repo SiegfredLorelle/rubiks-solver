@@ -509,7 +509,7 @@ function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
     /* FIND THE SIDE FOR FIRST LAYER */
     let colorCount = new Map(); // color : count
-    let maxColor = [null, 0]; // side, count
+    let maxColor = [null, 0, null]; // side, count, color
 
     for (let side of sides) {
         colorCount.clear();
@@ -524,32 +524,64 @@ function solveFirstLayer() {
         }
         max = Math.max(...colorCount.values());
         if (max >= maxColor[1]) {
-            maxColor = [side, max];
+            for (const [clr, count] of colorCount.entries()) {
+                if (count === max) {
+                    maxColor = [side, max, clr];
+                }
+            } 
         }
+        // console.log("THIIIIS", maxColor[2]);
     }
     // console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
-    firstLayerSide = maxColor[0];
-    // ROTATE SIDE TO BOTTOM
-    console.log(firstLayerSide);
-    // if (firstLayerSide !== sides[sides.length - 1]) {
-    //     console.log("ROTATE IT TO THE BOTTOM");
-    // }
-    // else {
-    //     console.log("ALREADY AT THE BOTTOM");
-    // }
+    let firstLayerSide = maxColor[0];
+    let firstLayerClrCount = maxColor[1];
+    let firstLayerColor = maxColor[2];
 
-    if (isFirstLayerAtBottomSide(firstLayerSide)) {
-        console.log("ALREADY AT BOTTOM PROCEED WITH SOLVING");
+
+    console.log(firstLayerColor);
+
+
+    // let firstLayerColor = [...colorCount.values].indexOf(maxColor[1]); 
+    // ROTATE SIDE TO BOTTOM
+    if (!isFirstLayerAtBottomSide(firstLayerSide)) {
+        moveFirstLayerAtBottomSide(firstLayerSide);
+        return;
     }
-    else {
-        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+
+    // FIND CORRECT AND INCORRECT PIECES IN FIRST LAYER
+    if (firstLayerClrCount > 1) {
+        let btmLayer = [1, 4, 16, 13];
+
+        for (let i = 0; i < btmLayer.length; i++) {
+            console.log(btmLayer[0], btmLayer[1]);
+            // CHECK IF THEIR EDGES ARE CORRECT
+
+
+            btmLayer.push(btmLayer.shift());
+        }
     }
+        // IF COUNT IS > 2
+            // FIND PIECES THAT ARE BESIDE EACH OTHER
+                // CHECK IF THEIR EDGES ARE CORRECT
+
+        // NO EDGES, PICK ONE TO BE CORRECT
+
 
     // FIND SAME COLOR OPPOSITE SIDE
+    // console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
+    // console.log(bottomEdges);
+    // for (const bottomEdge of bottomEdges) {
+    //     for (const edge of bottomEdge) {
+    //         console.log("A", edge, edgeIndexToColor.get(edge));
+
+    //     }
+    // }
+
+}
 
     // ALLIGN MISSING PIECE
 
-}
+// }
 
 function isFirstLayerSolved() {
     // // console.log("CHECKING IF FIRST LAYER IS SOLVED");
