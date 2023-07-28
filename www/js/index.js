@@ -596,24 +596,24 @@ function solveFirstLayer() {
                                 edges.splice(edges.indexOf(otherEdge), 1);
                                 if (edgeIndexToColor.get(edge) === edgeIndexToColor.get(otherEdge)) {
                                     console.log(`CORRECT EDGE: ${edge} and ${otherEdge}`);
-                                    let edgesLayer = [[0, 3], [5, 17], [15, 12], [14, 2]];
+                                    
+                                    const [leftSide, rightSide] = findLeftAndRight(edge, otherEdge);
 
-                                    for (let [i, edgeLayer] of edgesLayer.entries()) {
-                                        if (edgeLayer.includes(edge), edgeLayer.includes(otherEdge)) {
-                                            // console.log(edgeLayer);
-                                            if (i === 0) {
-                                                "FIRST INDEX"
-                                            }
-                                            
-                                            else if (i === 3) {
-                                                "LAST INDEX"
-                                            }
-                                            else {
-                                                console.log(edgesLayer[edgesLayer.indexOf(edgeLayer) - 1], 
-                                                            edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]);
+                                    // CHECK IF LEFT AND RIGHT IS CORRECT
+                                    console.log(leftSide, rightSide);
+                                    if (edgeIndexToColor.get(leftSide[0]) === edgeIndexToColor.get(leftSide[1])) {
+                                        // GO TO NEXT SIDE
+                                        console.log("GO TO NEXT SIDE");
+                                    }
+                                    else {
+                                        console.log("FIX LEFT SIDE");
+                                    }
 
-                                            }
-                                        }
+                                    if (rightSide[0] === rightSide[1]) {
+                                        console.log("GO TO NEXT SIDE");
+                                    }
+                                    else {
+                                        console.log("FIX RIGHT SIDE");
                                     }
                                     // console.log(edgesLayer);
                                 }
@@ -651,6 +651,32 @@ function solveFirstLayer() {
     // ALLIGN MISSING PIECE
 
 // }
+
+function findLeftAndRight(edge, otherEdge) {
+
+    let edgesLayer = [[0, 3], [5, 17], [15, 12], [14, 2]];
+
+    for (let [i, edgeLayer] of edgesLayer.entries()) {
+        if (edgeLayer.includes(edge), edgeLayer.includes(otherEdge)) {
+            // console.log(edgeLayer);
+            if (i === 0) {
+                leftSide = edgesLayer[3]
+                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]
+            }
+
+            else if (i === 3) {
+                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1]
+                rightSide = edgesLayer[0]
+            }
+            else {
+                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1]
+                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]
+            }
+        }
+    }
+    return [leftSide, rightSide];
+}
+
 
 function isFirstLayerSolved() {
     // // console.log("CHECKING IF FIRST LAYER IS SOLVED");
