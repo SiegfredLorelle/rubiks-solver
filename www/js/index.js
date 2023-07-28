@@ -511,7 +511,6 @@ function solveFirstLayer() {
     let colorCount = new Map(); // color : count
     let maxColor = [null, 0]; // side, count, color
     let color = null;
-    let maxCount;
     
     for (const sideF of sides) {
 
@@ -524,6 +523,7 @@ function solveFirstLayer() {
             // console.log(edgeIndexToColor.get(side[0]), edgeIndexToColor.get(side[0]));
             if (edgeIndexToColor.get(side[0]) === edgeIndexToColor.get(side[1])) {
                 count++;
+                color = edgeIndexToColor.get(side[0]);
                 // console.log("DURING", count);
             }
             
@@ -601,6 +601,8 @@ function solveFirstLayer() {
 
                                     // CHECK IF LEFT AND RIGHT IS CORRECT
                                     console.log(leftSide, rightSide);
+                                    // CHECK IF COLOR IS CORRECT
+                                    // console.log(btmLayer.at(-1), btmLayer.at(btmLayer.indexOf(otherEdge + 1)));
                                     if (edgeIndexToColor.get(leftSide[0]) === edgeIndexToColor.get(leftSide[1])) {
                                         // GO TO NEXT SIDE
                                         console.log("GO TO NEXT SIDE");
@@ -609,11 +611,12 @@ function solveFirstLayer() {
                                         console.log("FIX LEFT SIDE");
                                     }
 
-                                    if (rightSide[0] === rightSide[1]) {
+                                    if (edgeIndexToColor.get(rightSide[0]) === edgeIndexToColor.get(rightSide[1])) {
                                         console.log("GO TO NEXT SIDE");
                                     }
                                     else {
                                         console.log("FIX RIGHT SIDE");
+                                        insertEdge(edgeIndexToColor.get(rightSide[0]), rightSide[1], color);
                                     }
                                     // console.log(edgesLayer);
                                 }
@@ -629,28 +632,39 @@ function solveFirstLayer() {
             btmLayer.push(btmLayer.shift());
         }
     }
-        // IF COUNT IS > 2
-            // FIND PIECES THAT ARE BESIDE EACH OTHER
-                // CHECK IF THEIR EDGES ARE CORRECT
-
-        // NO EDGES, PICK ONE TO BE CORRECT
-
-
-    // FIND SAME COLOR OPPOSITE SIDE
-    // console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
-    // console.log(bottomEdges);
-    // for (const bottomEdge of bottomEdges) {
-    //     for (const edge of bottomEdge) {
-    //         console.log("A", edge, edgeIndexToColor.get(edge));
-
-    //     }
-    // }
-
+    
+    
+    
+    
 }
 
-    // ALLIGN MISSING PIECE
+// IF COUNT IS > 2
+    // FIND PIECES THAT ARE BESIDE EACH OTHER
+        // CHECK IF THEIR EDGES ARE CORRECT
+
+// NO EDGES, PICK ONE TO BE CORRECT
+// FIND SAME COLOR OPPOSITE SIDE
+// ALLIGN MISSING PIECE
+
 
 // }
+
+function insertEdge(edgeColor, whereToPlace, firstLayerColor) { 
+    console.log("FINDING", edgeColor, firstLayerColor, whereToPlace);
+    // console.log(topEdges);
+    for (const topEdge of topEdges) {
+        let reqColor = [edgeColor, firstLayerColor]
+        for (const edge of topEdge) {
+            if (reqColor.includes(edgeIndexToColor.get(edge))) {
+                reqColor.splice(reqColor.indexOf(edgeIndexToColor.get(edge)), 1);
+            }
+
+            if (!reqColor.length) {
+                console.log("EDGE IS FOUND!", edge);
+            }
+        }
+    }
+}
 
 function findLeftAndRight(edge, otherEdge) {
 
@@ -679,44 +693,6 @@ function findLeftAndRight(edge, otherEdge) {
 
 
 function isFirstLayerSolved() {
-    // // console.log("CHECKING IF FIRST LAYER IS SOLVED");
-    // console.log(edgeIndexToColor);
-    // // console.log("CHECKING IF CUBE IS SOLVED ...");
-    // let currentColor;
-    // let index = 0;
-    // let counter = 0;
-    // let sideIndex = 0;
-    
-    // for (const color of edgeIndexToColor.values()) {
-    //     if (!currentColor) {
-    //         currentColor = color;
-    //     }
-    //     console.log(currentColor, color);
-    //     if (currentColor === color) {
-    //         counter++;
-    //     }
-
-    //     index++;
-
-    //     if (index === 4) {
-    //         console.log(counter);
-    //         if (counter === 4) {
-    //             if (isFirstLayerEdgesSolved(sides[sideIndex])) {
-    //                 if (!isFirstLayerAtBottomSide(sides[sideIndex])) {
-    //                     moveFirstLayerAtBottomSide(sides[sideIndex]);
-    //                 }
-    //                 return true;
-    //             }
-    //         }
-    //         index = 0;
-    //         counter = 0;
-    //         currentColor = null;
-    //         sideIndex++;
-    //     }
-    // }
-    // return false;
-
-
     for (const side of sides) {
         let color = edgeIndexToColor.get(side[0]); 
         let counter = 0;
@@ -1335,7 +1311,5 @@ function onBackButton() {
             break;
         default:
             console.log("NO PG TO REDITECT!");
-    }   
+    }
 }
-
-
