@@ -596,6 +596,26 @@ function solveFirstLayer() {
                                 edges.splice(edges.indexOf(otherEdge), 1);
                                 if (edgeIndexToColor.get(edge) === edgeIndexToColor.get(otherEdge)) {
                                     console.log(`CORRECT EDGE: ${edge} and ${otherEdge}`);
+                                    let edgesLayer = [[0, 3], [5, 17], [15, 12], [14, 2]];
+
+                                    for (let [i, edgeLayer] of edgesLayer.entries()) {
+                                        if (edgeLayer.includes(edge), edgeLayer.includes(otherEdge)) {
+                                            // console.log(edgeLayer);
+                                            if (i === 0) {
+                                                "FIRST INDEX"
+                                            }
+                                            
+                                            else if (i === 3) {
+                                                "LAST INDEX"
+                                            }
+                                            else {
+                                                console.log(edgesLayer[edgesLayer.indexOf(edgeLayer) - 1], 
+                                                            edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]);
+
+                                            }
+                                        }
+                                    }
+                                    // console.log(edgesLayer);
                                 }
                             }
                         }
