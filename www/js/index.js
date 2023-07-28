@@ -506,43 +506,51 @@ function solveCube() {
     }
 }
 
+let isFirstLayerFound = false;
+let maxColor = [];
+let color = [];
+
 function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
-    /* FIND THE SIDE FOR FIRST LAYER */
-    let colorCount = new Map(); // color : count
-    let maxColor = [null, 0]; // side, count, color
-    let color = null;
-    
-    for (const sideF of sides) {
 
-        // FIND EDGE CLOSEST TO BEING SOLVED
-        const side = [...sideF];
-        [side[2], side[3]] = [side[3], side[2]];
-        // colorCount.clear();
-        let count = 0;
-        for (let i = 0; i < side.length; i++) {
-            // console.log(edgeIndexToColor.get(side[0]), edgeIndexToColor.get(side[0]));
-            if (edgeIndexToColor.get(side[0]) === edgeIndexToColor.get(side[1])) {
-                count++;
-                color = edgeIndexToColor.get(side[0]);
-                // console.log("DURING", count);
+    if (!isFirstLayerFound) {
+        /* FIND THE SIDE FOR FIRST LAYER */
+        // let colorCount = new Map(); // color : count
+        maxColor = [null, 0]; // side, count, color
+        color = null;
+        
+        for (const sideF of sides) {
+    
+            // FIND EDGE CLOSEST TO BEING SOLVED
+            const side = [...sideF];
+            [side[2], side[3]] = [side[3], side[2]];
+            // colorCount.clear();
+            let count = 0;
+            for (let i = 0; i < side.length; i++) {
+                // console.log(edgeIndexToColor.get(side[0]), edgeIndexToColor.get(side[0]));
+                if (edgeIndexToColor.get(side[0]) === edgeIndexToColor.get(side[1])) {
+                    count++;
+                    color = edgeIndexToColor.get(side[0]);
+                    console.log("DURING", count);
+                }
+                
+                side.push(side.shift());
             }
             
-            side.push(side.shift());
-        }
-        
-        // console.log("FINAL", count);
-        if (count >= maxColor[1]) {
-            maxColor = [side, count];
+            // console.log("FINAL", count);
+            if (count >= maxColor[1]) {
+                maxColor = [side, count];
+                // color = side;
+                // console.log("SIDE TOOO", side);
+            }
         }
     }
 
-    let firstLayerSide = maxColor[0];
     let firstLayerClrCount = maxColor[1];
-
+    let firstLayerSide = maxColor[0];
     console.log(firstLayerSide, firstLayerClrCount);
-    
-    // let firstLayerColor = [...colorCount.values].indexOf(maxColor[1]); 
+
+    // let firstLayerColor = [...colorCount.valu[es].indexOf(maxColor[1]); 
     // ROTATE SIDE TO BOTTOM
     console.log(!isFirstLayerAtBottomSide(firstLayerSide));
     if (!isFirstLayerAtBottomSide(firstLayerSide)) {
@@ -610,17 +618,18 @@ function solveFirstLayer() {
                                     }
                                     else {
                                         console.log("FIX LEFT SIDE");
-                                        insertEdge(edgeIndexToColor.get(leftSide[1]), leftSide[10], color);
+                                        insertEdge(edgeIndexToColor.get(leftSide[1]), leftSide[0], color);
                                     }
 
-                                    if (edgeIndexToColor.get(rightSide[0]) === edgeIndexToColor.get(rightSide[1])) {
-                                        console.log("GO TO NEXT SIDE");
-                                    }
-                                    else {
-                                        console.log("FIX RIGHT SIDE");
-                                        insertEdge(edgeIndexToColor.get(rightSide[0]), rightSide[1], color);
-                                    }
-                                    // console.log(edgesLayer);
+                                    // if (edgeIndexToColor.get(rightSide[0]) === edgeIndexToColor.get(rightSide[1])) {
+                                    //     console.log("GO TO NEXT SIDE");
+                                    // }
+                                    // else {
+                                    //     console.log("FIX RIGHT SIDE");
+                                    //     // insertEdge(edgeIndexToColor.get(rightSide[0]), rightSide[1], color);
+                                    // }
+                                    
+
                                 }
                             }
                         }
@@ -685,6 +694,13 @@ function insertEdge(edgeColor, whereToPlace, firstLayerColor) {
             }
         }
     }
+    // REPEAT UNTIL LAYER COLOR IS CORRECT AND EDGE COLOR IS CORRECT
+    pendingMoves.push("R");
+    pendingMoves.push("U");
+    pendingMoves.push("R'");
+    pendingMoves.push("U'");
+
+    console.log("DONEE!!");
 
     console.log("MOVES COMPLETE");
 
