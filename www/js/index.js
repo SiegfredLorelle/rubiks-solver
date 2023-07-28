@@ -509,38 +509,38 @@ function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
     /* FIND THE SIDE FOR FIRST LAYER */
     let colorCount = new Map(); // color : count
-    let maxColor = [null, 0, null]; // side, count, color
+    let maxColor = [null, 0]; // side, count, color
+    let color = null;
+    let maxCount;
+    
+    for (const sideF of sides) {
 
-    for (let side of sides) {
-        colorCount.clear();
-        for (let edge of side) {
-            const color = edgeIndexToColor.get(edge);
-            if (!colorCount.has(color)) {
-                colorCount.set(color, 1);
+        // FIND EDGE CLOSEST TO BEING SOLVED
+        const side = [...sideF];
+        [side[2], side[3]] = [side[3], side[2]];
+        // colorCount.clear();
+        let count = 0;
+        for (let i = 0; i < side.length; i++) {
+            // console.log(edgeIndexToColor.get(side[0]), edgeIndexToColor.get(side[0]));
+            if (edgeIndexToColor.get(side[0]) === edgeIndexToColor.get(side[1])) {
+                count++;
+                // console.log("DURING", count);
             }
-            else {
-                colorCount.set(color, colorCount.get(color)+1);
-            }
+            
+            side.push(side.shift());
         }
-        max = Math.max(...colorCount.values());
-        if (max >= maxColor[1]) {
-            for (const [clr, count] of colorCount.entries()) {
-                if (count === max) {
-                    maxColor = [side, max, clr];
-                }
-            } 
+        
+        // console.log("FINAL", count);
+        if (count >= maxColor[1]) {
+            maxColor = [side, count];
         }
-        // console.log("THIIIIS", maxColor[2]);
     }
-    // console.log(maxColor); // THIS IS THE SIDE TO USE FOR FIRST LAYER
+
     let firstLayerSide = maxColor[0];
     let firstLayerClrCount = maxColor[1];
-    let firstLayerColor = maxColor[2];
 
-
-    console.log(firstLayerColor);
-
-
+    console.log(firstLayerSide, firstLayerClrCount);
+    
     // let firstLayerColor = [...colorCount.values].indexOf(maxColor[1]); 
     // ROTATE SIDE TO BOTTOM
     if (!isFirstLayerAtBottomSide(firstLayerSide)) {
@@ -549,12 +549,42 @@ function solveFirstLayer() {
     }
 
     // FIND CORRECT AND INCORRECT PIECES IN FIRST LAYER
-    if (firstLayerClrCount > 1) {
+    if (firstLayerClrCount > 0) {
+        console.log("PUMASOK");
         let btmLayer = [1, 4, 16, 13];
 
         for (let i = 0; i < btmLayer.length; i++) {
-            console.log(btmLayer[0], btmLayer[1]);
+            // console.log(btmLayer[0], btmLayer[1]);
             // CHECK IF THEIR EDGES ARE CORRECT
+            if (edgeIndexToColor.get(btmLayer[0]) === edgeIndexToColor.get(btmLayer[1])) {
+                console.log(`SAME COLOR: ${btmLayer[0]}, ${btmLayer[1]}`);
+                
+                // FIND SIDE CONTAINING BOTH EDGES
+                let edges = []; 
+                for (const btmEdge of bottomEdges) {
+                    if (btmEdge.includes(btmLayer[0])) {
+                        edges.concat(btmEdge);
+                    }
+                    else if (btmEdge.includes(btmLayer[1])) {
+                        edges.concat(btmEdge);
+                    }
+
+                    if (edges.length >= 6) {
+                        break;
+                    }
+                }
+
+            console.log(`EDGES: ${edges}`);
+
+
+                // for (const side of sides) {
+                //     if (side.includes(btmLayer[0]) 
+                //         && side.includes(btmLayer[1])) {
+                        
+                //     }
+                // }
+                // console.log("");
+            }
 
 
             btmLayer.push(btmLayer.shift());
@@ -651,29 +681,27 @@ function isFirstLayerSolved() {
 function isFirstLayerAtBottomSide(side) {
     if (side !== sides[sides.length - 1]) {
         return false;
-        console.log("ROTATE FIRST LAYER TO BOTTOM FIRST");
     }
     else {
         return true;
-        console.log("ALREADY AT THE BOTTOM");
     }
 }
 
 function moveFirstLayerAtBottomSide(firstLayer) {
-    if (firstLayer === sides[4]) {
+    if (firstLayer[0] === sides[4][0]) {
         pendingMoves.push("Z");
         pendingMoves.push("Z");
     }
-    else if (firstLayer === sides[0]) {
+    else if (firstLayer[0] === sides[0][0]) {
         pendingMoves.push("X'");
     }
-    else if (firstLayer === sides[1]) {
+    else if (firstLayer[0] === sides[1][0]) {
         pendingMoves.push("Z");
     }
-    else if (firstLayer === sides[2]) {
+    else if (firstLayer[0] === sides[2][0]) {
         pendingMoves.push("X");
     }
-    else if (firstLayer === sides[3]) {
+    else if (firstLayer[0] === sides[3][0]) {
         pendingMoves.push("Z'");
     }
 }
