@@ -108,16 +108,16 @@ const movesInMoveX = [["U", "F", "D", "B"], ["U'", "F'", "D'", "B'"]];
 const movesInMoveZ = [["R", "U", "L", "D"], ["R'", "U'", "L'", "D'"]];
 
 const topEdges = [
+    [21, 22, 23], 
     [9, 10, 11], 
     [6, 7, 8], 
-    [21, 22, 23], 
-    [18, 19, 20]
+    [18, 19, 20], 
 ];
 const bottomEdges = [
-    [0, 1, 2], 
+    [15, 16, 17],
     [3, 4, 5], 
+    [0, 1, 2], 
     [12, 13, 14], 
-    [15, 16, 17]
 ];
 
 let pendingMoves = [];
@@ -490,6 +490,7 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
+    console.log(pendingMoves);
     
 
 
@@ -563,11 +564,11 @@ function solveFirstLayer() {
                 console.log(`SAME COLOR: ${btmLayer[0]}, ${btmLayer[1]}`);
                 
                 // FIND SIDE CONTAINING BOTH EDGES
-                for (const btnEdge of bottomEdges) {
-                    console.log();
-                    if (btnEdge.includes(btmLayer[0])
-                        || btnEdge.includes(btmLayer[1])) {
-                        edges = edges.concat(btnEdge);
+                for (const btmEdge of bottomEdges) {
+                    console.log(btmEdge);
+                    if (btmEdge.includes(btmLayer[0])
+                        || btmEdge.includes(btmLayer[1])) {
+                        edges = edges.concat(btmEdge);
                     }
 
                     if (edges.length >= 6) {
@@ -609,6 +610,7 @@ function solveFirstLayer() {
                                     }
                                     else {
                                         console.log("FIX LEFT SIDE");
+                                        insertEdge(edgeIndexToColor.get(leftSide[1]), leftSide[10], color);
                                     }
 
                                     if (edgeIndexToColor.get(rightSide[0]) === edgeIndexToColor.get(rightSide[1])) {
@@ -652,18 +654,40 @@ function solveFirstLayer() {
 function insertEdge(edgeColor, whereToPlace, firstLayerColor) { 
     console.log("FINDING", edgeColor, firstLayerColor, whereToPlace);
     // console.log(topEdges);
-    for (const topEdge of topEdges) {
-        let reqColor = [edgeColor, firstLayerColor]
-        for (const edge of topEdge) {
-            if (reqColor.includes(edgeIndexToColor.get(edge))) {
-                reqColor.splice(reqColor.indexOf(edgeIndexToColor.get(edge)), 1);
-            }
+    let edgeToMove;
+    loop1:
+        for (const topEdge of topEdges) {
+            let reqColor = [edgeColor, firstLayerColor]
+    loop2:
+            for (const edge of topEdge) {
+                if (reqColor.includes(edgeIndexToColor.get(edge))) {
+                    reqColor.splice(reqColor.indexOf(edgeIndexToColor.get(edge)), 1);
+                }
 
-            if (!reqColor.length) {
-                console.log("EDGE IS FOUND!", edge);
+                if (!reqColor.length) {
+                    console.log("EDGE IS FOUND!", edge);
+                    edgeToMove = edge;
+                    break loop1;
+                }
+            }
+        }
+    for (const [i, topEdgesF] of topEdges.entries()) {
+        if (topEdgesF.includes(edgeToMove)) {
+            for (let j = 0; j < i; j++) {
+                pendingMoves.push("U'");
             }
         }
     }
+    for (const [i, btmEdges] of bottomEdges.entries()) {
+        if (btmEdges.includes(whereToPlace)) {
+            for (let j = 0; j < i; j++) {
+                pendingMoves.push("D");
+            }
+        }
+    }
+
+    console.log("MOVES COMPLETE");
+
 }
 
 function findLeftAndRight(edge, otherEdge) {
