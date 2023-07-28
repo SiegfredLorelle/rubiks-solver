@@ -543,15 +543,18 @@ function solveFirstLayer() {
     
     // let firstLayerColor = [...colorCount.values].indexOf(maxColor[1]); 
     // ROTATE SIDE TO BOTTOM
+    console.log(!isFirstLayerAtBottomSide(firstLayerSide));
     if (!isFirstLayerAtBottomSide(firstLayerSide)) {
         moveFirstLayerAtBottomSide(firstLayerSide);
         return;
     }
 
     // FIND CORRECT AND INCORRECT PIECES IN FIRST LAYER
+    // console.log(firstLayerClrCount);
     if (firstLayerClrCount > 0) {
-        console.log("PUMASOK");
+        // console.log("PUMASOK");
         let btmLayer = [1, 4, 16, 13];
+        let edges = []; 
 
         for (let i = 0; i < btmLayer.length; i++) {
             // console.log(btmLayer[0], btmLayer[1]);
@@ -560,13 +563,11 @@ function solveFirstLayer() {
                 console.log(`SAME COLOR: ${btmLayer[0]}, ${btmLayer[1]}`);
                 
                 // FIND SIDE CONTAINING BOTH EDGES
-                let edges = []; 
-                for (const btmEdge of bottomEdges) {
-                    if (btmEdge.includes(btmLayer[0])) {
-                        edges.concat(btmEdge);
-                    }
-                    else if (btmEdge.includes(btmLayer[1])) {
-                        edges.concat(btmEdge);
+                for (const btnEdge of bottomEdges) {
+                    console.log();
+                    if (btnEdge.includes(btmLayer[0])
+                        || btnEdge.includes(btmLayer[1])) {
+                        edges = edges.concat(btnEdge);
                     }
 
                     if (edges.length >= 6) {
@@ -575,14 +576,32 @@ function solveFirstLayer() {
                 }
 
             console.log(`EDGES: ${edges}`);
+            edges = edges.filter((edge) => {
+                return !firstLayerSide.includes(edge);
+            })
+            console.log(`NEW EDGES: ${edges}`);
 
 
-                // for (const side of sides) {
-                //     if (side.includes(btmLayer[0]) 
-                //         && side.includes(btmLayer[1])) {
-                        
-                //     }
-                // }
+            while (edges.length > 0) {
+                const edge = edges.shift();
+        
+                for (const sideL of sides) {
+                    if (sideL === edges) {
+                        continue;
+                    }
+        
+                    if (sideL.includes(edge)) {
+                        for (const otherEdge of edges) {
+                            if (sideL.includes(otherEdge)) {
+                                edges.splice(edges.indexOf(otherEdge), 1);
+                                if (edgeIndexToColor.get(edge) === edgeIndexToColor.get(otherEdge)) {
+                                    console.log(`CORRECT EDGE: ${edge} and ${otherEdge}`);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
                 // console.log("");
             }
 
@@ -679,7 +698,7 @@ function isFirstLayerSolved() {
 }
 
 function isFirstLayerAtBottomSide(side) {
-    if (side !== sides[sides.length - 1]) {
+    if (side[0] !== sides[sides.length - 1][0   ]) {
         return false;
     }
     else {
