@@ -78,7 +78,7 @@ edgeIndexToColor.set(16, null);
 edgeIndexToColor.set(1, null);
 edgeIndexToColor.set(13, null);
 
-const indices = [ ...edgeIndexToColor.keys() ];
+const indices = [...edgeIndexToColor.keys()];
 let colorCount = new Map();
 
 
@@ -108,15 +108,15 @@ const movesInMoveX = [["U", "F", "D", "B"], ["U'", "F'", "D'", "B'"]];
 const movesInMoveZ = [["R", "U", "L", "D"], ["R'", "U'", "L'", "D'"]];
 
 const topEdges = [
-    [9, 10, 11], 
-    [6, 7, 8], 
-    [21, 22, 23], 
+    [9, 10, 11],
+    [6, 7, 8],
+    [21, 22, 23],
     [18, 19, 20]
 ];
 const bottomEdges = [
-    [0, 1, 2], 
-    [3, 4, 5], 
-    [12, 13, 14], 
+    [0, 1, 2],
+    [3, 4, 5],
+    [12, 13, 14],
     [15, 16, 17]
 ];
 
@@ -130,7 +130,7 @@ const MIN_TOUCH_DURATION = 300;
 
 
 function onStart() {
-    
+
     let pages = document.querySelectorAll("main > div");
     pages.forEach(page => {
         mapPages.set(page.classList[0], page);
@@ -203,7 +203,7 @@ function exitApp() {
 
 function findActivePage() {
     activePage = document.querySelector("main > div.active");
-    activePageName = activePage.classList[0]; 
+    activePageName = activePage.classList[0];
 
     offListeners();
     manageActivePage();
@@ -298,7 +298,7 @@ function onSettingsBtnClick() {
 }
 
 function listenToHold() {
-    
+
     colors.forEach(color => {
         color.addEventListener("touchstart", startHoldTimer);
         color.addEventListener("touchend", resetHoldTimer);
@@ -324,7 +324,7 @@ function onHold(heldColor) {
     // console.log("HOLD", heldColor);
     heldColor.disabled = false;
     heldColor.click();
-    
+
 }
 
 function disableColors() {
@@ -347,12 +347,12 @@ function onSelectColor(event) {
     if (!edgeIndex || edgeIndex >= indices.length) {
         edgeIndex = 0;
     }
-    
-    if ([ ...colorCount.keys() ].includes(selectedColor)) {
+
+    if ([...colorCount.keys()].includes(selectedColor)) {
         if (colorCount.get(selectedColor) >= 4) {
             return;
         }
-        
+
         colorCount.set(selectedColor, colorCount.get(selectedColor) + 1);
 
         if (checkCubeValidity()) {
@@ -388,7 +388,7 @@ function checkIsCubeSolved() {
     // console.log("CHECKING IF CUBE IS SOLVED ...");
     let currentColor;
     let index = 0;
-    
+
     for (const color of edgeIndexToColor.values()) {
         // console.log(index, color);
         if (!currentColor) {
@@ -414,7 +414,7 @@ function onCubeSolved() {
 }
 
 function checkCubeValidity() {
-    const clrCounts = [ ...colorCount.values() ];
+    const clrCounts = [...colorCount.values()];
 
     if (clrCounts.length < 6) {
         return false;
@@ -464,18 +464,15 @@ function onSolveBtnTap() {
 let i = 0;
 function onNextMoveBtnTap() {
     /* NOTE: FOR TESTING ALL MOVES */
-    // // let moveKeys = [...moveNotationMap.keys()]
-    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "X", "X'", "Y", "Y'", "Z", "Z'"];
-    // // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
-    // // moveKeys = ["R", "R'", "Y", "R'", "Y", "L'"];
-    // // moveKeys = ["R", "R'", "Y"];
-    // moveKeys = ["X"];
-    // if (i === moveKeys.length) {
-    //         i = 0;
-    //     }
-    // // console.log(moveKeys[i]);
-    // // moveNotationMap.get(moveKeys[i])();
-    // performMove(moveKeys[i]);
+    let moveKeys = [...moveNotationMap.keys()]
+    // moveKeys = ["R", "R'", "L", "L'", "U", "U'", "D", "D'", "B", "B'", "F", "F'", "Z'"];
+    // moveKeys = ["Y", "R"];
+    if (i === moveKeys.length) {
+        i = 0;
+    }
+    // console.log(moveKeys[i]);
+    // moveNotationMap.get(moveKeys[i])();
+    performMove(moveKeys[i]);
 
     // i++;
 
@@ -490,7 +487,7 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
-    
+
 
 
 }
@@ -519,7 +516,7 @@ function solveFirstLayer() {
                 colorCount.set(color, 1);
             }
             else {
-                colorCount.set(color, colorCount.get(color)+1);
+                colorCount.set(color, colorCount.get(color) + 1);
             }
         }
         max = Math.max(...colorCount.values());
@@ -528,7 +525,7 @@ function solveFirstLayer() {
                 if (count === max) {
                     maxColor = [side, max, clr];
                 }
-            } 
+            }
         }
         // console.log("THIIIIS", maxColor[2]);
     }
@@ -560,11 +557,11 @@ function solveFirstLayer() {
             btmLayer.push(btmLayer.shift());
         }
     }
-        // IF COUNT IS > 2
-            // FIND PIECES THAT ARE BESIDE EACH OTHER
-                // CHECK IF THEIR EDGES ARE CORRECT
+    // IF COUNT IS > 2
+    // FIND PIECES THAT ARE BESIDE EACH OTHER
+    // CHECK IF THEIR EDGES ARE CORRECT
 
-        // NO EDGES, PICK ONE TO BE CORRECT
+    // NO EDGES, PICK ONE TO BE CORRECT
 
 
     // FIND SAME COLOR OPPOSITE SIDE
@@ -579,61 +576,27 @@ function solveFirstLayer() {
 
 }
 
-    // ALLIGN MISSING PIECE
+// ALLIGN MISSING PIECE
 
 // }
 
 function isFirstLayerSolved() {
-    // // console.log("CHECKING IF FIRST LAYER IS SOLVED");
-    // console.log(edgeIndexToColor);
-    // // console.log("CHECKING IF CUBE IS SOLVED ...");
-    // let currentColor;
-    // let index = 0;
-    // let counter = 0;
-    // let sideIndex = 0;
-    
-    // for (const color of edgeIndexToColor.values()) {
-    //     if (!currentColor) {
-    //         currentColor = color;
-    //     }
-    //     console.log(currentColor, color);
-    //     if (currentColor === color) {
-    //         counter++;
-    //     }
+    // console.log("CHECKING IF FIRST LAYER IS SOLVED");
+    console.log(edgeIndexToColor);
+    // console.log("CHECKING IF CUBE IS SOLVED ...");
+    let currentColor;
+    let index = 0;
+    let counter = 0;
+    let sideIndex = 0;
 
-    //     index++;
-
-    //     if (index === 4) {
-    //         console.log(counter);
-    //         if (counter === 4) {
-    //             if (isFirstLayerEdgesSolved(sides[sideIndex])) {
-    //                 if (!isFirstLayerAtBottomSide(sides[sideIndex])) {
-    //                     moveFirstLayerAtBottomSide(sides[sideIndex]);
-    //                 }
-    //                 return true;
-    //             }
-    //         }
-    //         index = 0;
-    //         counter = 0;
-    //         currentColor = null;
-    //         sideIndex++;
-    //     }
-    // }
-    // return false;
-
-
-    for (const side of sides) {
-        let color = edgeIndexToColor.get(side[0]); 
-        let counter = 0;
-        for (const edge of side) {
-            if (edgeIndexToColor.get(edge) !== color) {
-                break;
-            }
-            else {
-                counter++;
-            }
+    for (const color of edgeIndexToColor.values()) {
+        if (!currentColor) {
+            currentColor = color;
         }
-        console.log(side, counter);
+        console.log(currentColor, color);
+        if (currentColor === color) {
+            counter++;
+        }
 
         if (counter === 4) {
             if (isFirstLayerEdgesSolved(side)) {
@@ -702,7 +665,7 @@ function isFirstLayerEdgesSolved(side) {
     console.log(edgesOfFirstLayer, "EDGES OF FIRST");
 
     // CHECK IF EDGES ARE CORRECT
-    
+
     while (edgesOfFirstLayer.length > 0) {
         const edge = edgesOfFirstLayer.shift();
 
@@ -735,175 +698,175 @@ function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)(moveNotation);
 }
 
-// let layer = {x: 0, y: 1, z: 0};`
+let layer = { x: 0, y: 1, z: 0 };
 
 
-function moveU(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
-    
+function moveU() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 1, z: 0 });
+
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.flipAxis["y"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 
 }
-function moveUPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 1, z: 0} );
+function moveUPrime() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 1, z: 0 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
+    window.game.controls.flipAxis["y"] = 1;
 
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveD(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
-    
+function moveD() {
+    const layer = window.game.controls.getLayer({ x: 0, y: -1, z: 0 });
+
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.flipAxis["y"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveDPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: -1, z: 0} );
-    
+function moveDPrime() {
+    const layer = window.game.controls.getLayer({ x: 0, y: -1, z: 0 });
+
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.flipAxis["y"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 
 }
 
-function moveR(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
-    
+function moveR() {
+    const layer = window.game.controls.getLayer({ x: 1, y: 0, z: 0 });
+
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.flipAxis["x"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveRPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 1, y: 0, z: 0} );
-    
+function moveRPrime() {
+    const layer = window.game.controls.getLayer({ x: 1, y: 0, z: 0 });
+
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.flipAxis["x"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveL(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+function moveL() {
+    const layer = window.game.controls.getLayer({ x: -1, y: 0, z: 0 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis["x"] = 1;
 
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveLPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: -1, y: 0, z: 0} );
+function moveLPrime() {
+    const layer = window.game.controls.getLayer({ x: -1, y: 0, z: 0 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis["x"] = 1;
 
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 
-function moveF(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
+function moveF() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 0, z: 1 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.flipAxis["z"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveFPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: 1} );
+function moveFPrime() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 0, z: 1 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.flipAxis["z"] = 1;
 
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
-function moveB(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+function moveB() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 0, z: -1 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( 1.6, false);
+    window.game.controls.flipAxis["z"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation}-indices`), false, moveNotationMap.get(`${moveNotation}-edges`));
 }
-function moveBPrime(moveNotation) {
-    const layer = window.game.controls.getLayer( {x: 0, y: 0, z: -1} );
+function moveBPrime() {
+    const layer = window.game.controls.getLayer({ x: 0, y: 0, z: -1 });
 
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
-    
-    window.game.controls.selectLayer( layer );
-    window.game.controls.rotateLayer( -1.6, false);
+    window.game.controls.flipAxis["z"] = 1;
+
+    window.game.controls.selectLayer(layer);
+    window.game.controls.rotateLayer(-1.6, false);
 
     updateColors(moveNotationMap.get(`${moveNotation.charAt(0)}-indices`), true, moveNotationMap.get(`${moveNotation.charAt(0)}-edges`));
 }
 
 function moveX() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis["x"] = 1;
     window.game.controls.state = ROTATING;
 
-    window.game.controls.rotateCube( -1.6, () => {
+    window.game.controls.rotateCube(-1.6, () => {
         window.game.controls.state = STILL;
     });
 
     updateSides(sidesInMoveX, false, [6, 9, 3, 0], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, false);
-    
+
 }
 
 function moveXPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "x" ] = 1;
+    window.game.controls.flipAxis["x"] = 1;
     window.game.controls.state = ROTATING;
-    
-    window.game.controls.rotateCube( 1.6, () => {
-        
+
+    window.game.controls.rotateCube(1.6, () => {
+
         window.game.controls.state = STILL;
-    } );
+    });
 
     updateSides(sidesInMoveX, true, [6, 9, 3, 0], [15, 12, 18, 21]);
     updateMoveNotation(movesInMoveX, true);
@@ -911,12 +874,12 @@ function moveXPrime() {
 
 function moveY() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
+    window.game.controls.flipAxis["y"] = 1;
     window.game.controls.state = ROTATING;
 
-    window.game.controls.rotateCube( -1.6, () => {
+    window.game.controls.rotateCube(-1.6, () => {
         window.game.controls.state = STILL;
-    } );
+    });
 
     updateSides(sidesInMoveY, false, [22, 19, 7, 10], [1, 4, 16, 13]);
     updateMoveNotation(movesInMoveY, false);
@@ -924,40 +887,40 @@ function moveY() {
 
 function moveYPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "y" ] = 1;
+    window.game.controls.flipAxis["y"] = 1;
     window.game.controls.state = ROTATING;
-    
-    window.game.controls.rotateCube( 1.6, () => {
+
+    window.game.controls.rotateCube(1.6, () => {
         window.game.controls.state = STILL;
-    } );
+    });
 
     updateSides(sidesInMoveY, true, [22, 19, 7, 10], [1, 4, 16, 13]);
     updateMoveNotation(movesInMoveY, true);
-    
+
 }
 
 function moveZ() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.flipAxis["z"] = 1;
     window.game.controls.state = ROTATING;
-    
-    window.game.controls.rotateCube( -1.6, () => {
-        
+
+    window.game.controls.rotateCube(-1.6, () => {
+
         window.game.controls.state = STILL;
-    } );
+    });
     updateSides(sidesInMoveZ, false, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, false);
-    
+
 }
 
 function moveZPrime() {
     window.game.controls.flipAxis = new THREE.Vector3();
-    window.game.controls.flipAxis[ "z" ] = 1;
+    window.game.controls.flipAxis["z"] = 1;
     window.game.controls.state = ROTATING;
-    
-    window.game.controls.rotateCube( 1.6, () => {
+
+    window.game.controls.rotateCube(1.6, () => {
         window.game.controls.state = STILL;
-    } );
+    });
     updateSides(sidesInMoveZ, true, [5, 17, 23, 11], [20, 8, 2, 14]);
     updateMoveNotation(movesInMoveZ, true);
 }
@@ -992,10 +955,10 @@ function updateColors(indicesToSwap, isReversed, edgesToSwap) {
     // UPDATE COLORS OF THE EDGE OF THE ROTATING LAYER
     console.log(edgesToSwap);
     for (let i = 0; i < edgesToSwap.length - 1; i++) {
-        console.log(edgeIndexToColor.get(edgesToSwap[i]), edgeIndexToColor.get(edgesToSwap[i+1]) );
+        console.log(edgeIndexToColor.get(edgesToSwap[i]), edgeIndexToColor.get(edgesToSwap[i + 1]));
         let tmp = edgeIndexToColor.get(edgesToSwap[i]);
-        edgeIndexToColor.set(edgesToSwap[i], edgeIndexToColor.get(edgesToSwap[i+1]));
-        edgeIndexToColor.set(edgesToSwap[i+1], tmp);
+        edgeIndexToColor.set(edgesToSwap[i], edgeIndexToColor.get(edgesToSwap[i + 1]));
+        edgeIndexToColor.set(edgesToSwap[i + 1], tmp);
     }
 }
 
@@ -1007,30 +970,30 @@ function updateSides(sidesToSwap, reversed, edge1ToSwap, edge2ToSwap) {
         edge2ToSwap = edge2ToSwap.toReversed();
     }
 
-for (let i = 0; i < sidesToSwap.length - 1; i++) {
-    console.log(edgeIndexToColor);
-    console.log(sidesToSwap[i]);
-    for (let j = 0; j < sidesToSwap[i].length; j++) {
-        console.log(sidesToSwap[i][j], sidesToSwap[i+1][j]);
-        let tmp = edgeIndexToColor.get(sidesToSwap[i][j]);
-        edgeIndexToColor.set(sidesToSwap[i][j], edgeIndexToColor.get(sidesToSwap[i+1][j]));
-        edgeIndexToColor.set(sidesToSwap[i+1][j], tmp);
+    for (let i = 0; i < sidesToSwap.length - 1; i++) {
+        console.log(edgeIndexToColor);
+        console.log(sidesToSwap[i]);
+        for (let j = 0; j < sidesToSwap[i].length; j++) {
+            console.log(sidesToSwap[i][j], sidesToSwap[i + 1][j]);
+            let tmp = edgeIndexToColor.get(sidesToSwap[i][j]);
+            edgeIndexToColor.set(sidesToSwap[i][j], edgeIndexToColor.get(sidesToSwap[i + 1][j]));
+            edgeIndexToColor.set(sidesToSwap[i + 1][j], tmp);
         }
 
         console.log(edgeIndexToColor);
     }
 
-// console.log("ADJUSTING EDGES");
-// console.log(edge1ToSwap);
+    // console.log("ADJUSTING EDGES");
+    // console.log(edge1ToSwap);
     for (let i = 0; i < edge1ToSwap.length - 1; i++) {
-        console.log(edgeIndexToColor.get(edge1ToSwap[i]), edgeIndexToColor.get(edge1ToSwap[i+1]) );
+        console.log(edgeIndexToColor.get(edge1ToSwap[i]), edgeIndexToColor.get(edge1ToSwap[i + 1]));
         let tmp = edgeIndexToColor.get(edge1ToSwap[i]);
-        edgeIndexToColor.set(edge1ToSwap[i], edgeIndexToColor.get(edge1ToSwap[i+1]));
-        edgeIndexToColor.set(edge1ToSwap[i+1], tmp);
-        
+        edgeIndexToColor.set(edge1ToSwap[i], edgeIndexToColor.get(edge1ToSwap[i + 1]));
+        edgeIndexToColor.set(edge1ToSwap[i + 1], tmp);
+
         tmp = edgeIndexToColor.get(edge2ToSwap[i]);
-        edgeIndexToColor.set(edge2ToSwap[i], edgeIndexToColor.get(edge2ToSwap[i+1]));
-        edgeIndexToColor.set(edge2ToSwap[i+1], tmp);
+        edgeIndexToColor.set(edge2ToSwap[i], edgeIndexToColor.get(edge2ToSwap[i + 1]));
+        edgeIndexToColor.set(edge2ToSwap[i + 1], tmp);
     }
 }
 
@@ -1038,7 +1001,7 @@ for (let i = 0; i < sidesToSwap.length - 1; i++) {
 function updateMoveNotation(movesToShuffle, reversed) {
     let movesNonPrime = movesToShuffle[0];
     let movesPrime = movesToShuffle[1];
-    
+
     if (reversed) {
         movesNonPrime = movesNonPrime.toReversed();
         movesPrime = movesPrime.toReversed();
@@ -1050,24 +1013,12 @@ function updateMoveNotation(movesToShuffle, reversed) {
 
         // Swap non prime moves
         let tmp = moveNotationMap.get(movesNonPrime[i]);
-        moveNotationMap.set(movesNonPrime[i], moveNotationMap.get(movesNonPrime[i+1]));
-        moveNotationMap.set(movesNonPrime[i+1], tmp);
-        console.log(moveNotationMap.get(`${movesNonPrime[i]}-indices`), moveNotationMap.get(`${movesNonPrime[i+1]}-indices`));
-        
-        // // Swap the indices used for the moves
-        // tmp = moveNotationMap.get(`${movesNonPrime[i]}-indices`);
-        // moveNotationMap.set(`${movesNonPrime[i]}-indices`, moveNotationMap.get(`${movesNonPrime[i+1]}-indices`));
-        // moveNotationMap.set(`${movesNonPrime[i+1]}-indices`, tmp);
-        
-        // // Swap the edges used for the moves
-        // tmp = moveNotationMap.get(`${movesNonPrime[i]}-edges`);
-        // moveNotationMap.set(`${movesNonPrime[i]}-edges`, moveNotationMap.get(`${movesNonPrime[i+1]}-edges`));
-        // moveNotationMap.set(`${movesNonPrime[i+1]}-edges`, tmp);
-        
-        // Swap prime moves
+        moveNotationMap.set(movesNonPrime[i], moveNotationMap.get(movesNonPrime[i + 1]));
+        moveNotationMap.set(movesNonPrime[i + 1], tmp);
+
         tmp = moveNotationMap.get(movesPrime[i]);
-        moveNotationMap.set(movesPrime[i], moveNotationMap.get(movesPrime[i+1]));
-        moveNotationMap.set(movesPrime[i+1], tmp);
+        moveNotationMap.set(movesPrime[i], moveNotationMap.get(movesPrime[i + 1]));
+        moveNotationMap.set(movesPrime[i + 1], tmp);
     }
 }
 
@@ -1145,7 +1096,7 @@ function onSwipeRight() {
 }
 
 function onSwipeLeft() {
-    switch(activePageName) {
+    switch (activePageName) {
         case "home-page":
             exitApp();
             break;
@@ -1154,7 +1105,7 @@ function onSwipeLeft() {
             break;
         case "color-assign-page":
             console.log(activePartName);
-            switch(activePartName) {
+            switch (activePartName) {
                 case "color-assign-part":
                     // changePartOfPage("solver-part");
                     changePage("cube-select-page");
@@ -1176,7 +1127,7 @@ function onSwipeLeft() {
             break;
         default:
             console.log("NO PG TO REDITECT!");
-    }   
+    }
 }
 
 
@@ -1211,7 +1162,7 @@ function changePartOfPage(partOfPageToActivate) {
 }
 
 function onBackButton() {
-    switch(activePageName) {
+    switch (activePageName) {
         case "home-page":
             exitApp();
             break;
@@ -1220,7 +1171,7 @@ function onBackButton() {
             break;
         case "color-assign-page":
             console.log(activePartName);
-            switch(activePartName) {
+            switch (activePartName) {
                 case "color-assign-part":
                     // changePartOfPage("solver-part");
                     changePage("cube-select-page");
@@ -1242,7 +1193,67 @@ function onBackButton() {
             break;
         default:
             console.log("NO PG TO REDITECT!");
-    }   
+    }
 }
 
+emailjs.init("o3tWIaBrjgDdAoT8d");
 
+const contactForm = document.getElementById('contact-form'),
+    contactName = document.getElementById('contact-name'),
+    contactEmail = document.getElementById('contact-email'),
+    contactSubject = document.getElementById('contact-subject'),
+    contactMessage = document.getElementById('contact-message'),
+    errorMessage = document.getElementById('error-message');
+
+const sendEmail = (e) => {
+    e.preventDefault();
+
+    // check if the field has a value
+    if (
+        contactName.value === '' ||
+        contactEmail.value === '' ||
+        contactSubject.value === '' ||
+        contactMessage.value === ''
+    ) {
+        // show message
+        errorMessage.textContent = 'Write all the input fields';
+    } else {
+        // serviceID - templateID - #form - userID (replace these with your actual values)
+        emailjs
+            .sendForm(
+                'service_sda6v3o',
+                'template_v51gr8c',
+                '#contact-form',
+                'o3tWIaBrjgDdAoT8d'
+            )
+            .then(
+                () => {
+                  // Show success message
+                  const notification = document.getElementById('notification');
+                  notification.classList.add('notification-show');
+                  notification.textContent = 'Message sent ✔';
+          
+                  // Hide the message after 5 seconds
+                  setTimeout(() => {
+                    notification.classList.remove('notification-show');
+                    notification.textContent = '';
+                  }, 5000);
+                },
+                (error) => {
+                  // Show error message
+                  alert('OOPs! SOMETHING WENT WRONG...', error);
+                }
+              );
+
+        // clear input fields
+        contactName.value = '';
+        contactEmail.value = '';
+        contactSubject.value = '';
+        contactMessage.value = '';
+    }
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', sendEmail);
+});
