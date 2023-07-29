@@ -311,35 +311,35 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
-.color-assign-page > .color-assign-part {
+.color-assign-page>.color-assign-part {
     width: 100%;
 }
 
-.color-assign-page> .color-assign-part > .color-container,
-.color-assign-page> .color-assign-part > .solve-reset-container {
+.color-assign-page>.color-assign-part>.color-container,
+.color-assign-page>.color-assign-part>.solve-reset-container {
     padding-bottom: 1.5rem;
 }
 
-.color-assign-page> .color-assign-part > .color-container>.flex-row {
+.color-assign-page>.color-assign-part>.color-container>.flex-row {
     justify-content: center;
 
 }
 
-.color-assign-page> .color-assign-part > .color-container>.flex-row>input[type="color"] {
+.color-assign-page>.color-assign-part>.color-container>.flex-row>input[type="color"] {
     margin: 0.5rem;
 
 }
 
-.color-assign-page > .color-assign-part > .solve-reset-container {
+.color-assign-page>.color-assign-part>.solve-reset-container {
     /* margin-bottom: 3rem; */
     width: 100%;
     /* height: 10%; */
     /* height: 5%; */
 }
 
-.color-assign-page > .color-assign-part > .solve-reset-container > button,
-.color-assign-page > .solver-part > div > button,
-.color-assign-page > .solved-part > div > button {
+.color-assign-page>.color-assign-part>.solve-reset-container>button,
+.color-assign-page>.solver-part>div>button,
+.color-assign-page>.solved-part>div>button {
     width: 33%;
     background-color: #020202;
     border-radius: 10px;
@@ -348,7 +348,7 @@ input[type="color"]::-webkit-color-swatch {
     color: #ffffff;
 }
 
-.color-assign-page > .color-assign-part > .solve-reset-container > button:disabled {
+.color-assign-page>.color-assign-part>.solve-reset-container>button:disabled {
     background-color: #00000080;
 }
 
@@ -356,8 +356,8 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: 7px 9px 0 black;
 } */
 
-.color-assign-page > .solver-part > div,
-.color-assign-page > .solved-part > div {
+.color-assign-page>.solver-part>div,
+.color-assign-page>.solved-part>div {
     margin: 1.5rem;
 }
 
@@ -382,11 +382,15 @@ input[type="color"]::-webkit-color-swatch {
 /* animated rubiks */
 
 .rubiks-container {
-    width: 100px; /* Adjust the width to make the container smaller */
-    height: 100px; /* Adjust the height to make the container smaller */
+    width: 100px;
+    /* Adjust the width to make the container smaller */
+    height: 100px;
+    /* Adjust the height to make the container smaller */
     position: absolute;
-    perspective: 500px; /* Adjust the perspective to match the smaller size */
-    transform: translate(100%, 60%); /* Center the cube */
+    perspective: 500px;
+    /* Adjust the perspective to match the smaller size */
+    transform: translate(100%, 60%);
+    /* Center the cube */
 }
 
 /* Make the cube fill the container */
@@ -414,41 +418,51 @@ input[type="color"]::-webkit-color-swatch {
 /* Adjust the size of the cube squares */
 .cube-side .cube-side-square {
     display: inline-block;
-    border: 3px solid; /* Adjust the border size to fit the smaller cube */
-    width: 33.33%; /* Adjust the width to fit the smaller cube */
-    height: 33.33%; /* Adjust the height to fit the smaller cube */
-    border-radius: 3px; /* Adjust the border-radius to fit the smaller cube */
+    border: 3px solid;
+    /* Adjust the border size to fit the smaller cube */
+    width: 33.33%;
+    /* Adjust the width to fit the smaller cube */
+    height: 33.33%;
+    /* Adjust the height to fit the smaller cube */
+    border-radius: 3px;
+    /* Adjust the border-radius to fit the smaller cube */
     border-color: #020202;
 }
 
 /* Adjust the gap between each side */
 .cube-side.side-front {
-    transform: translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: #ffffff;
 }
 
 .cube-side.side-back {
-    transform: rotateX(-180deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: rotateX(-180deg) translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: #a81414;
 }
 
 .cube-side.side-right {
-    transform: rotateY(90deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: rotateY(90deg) translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: #f5e504;
 }
 
 .cube-side.side-left {
-    transform: rotateY(-90deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: rotateY(-90deg) translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: #f58504;
 }
 
 .cube-side.side-top {
-    transform: rotateX(90deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: rotateX(90deg) translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: #0481f5;
 }
 
 .cube-side.side-bottom {
-    transform: rotateX(-90deg) translateZ(50px); /* Adjust the translateZ value for gap */
+    transform: rotateX(-90deg) translateZ(50px);
+    /* Adjust the translateZ value for gap */
     background-color: rgb(4, 131, 4);
 }
 
@@ -501,18 +515,21 @@ input[type="color"]::-webkit-color-swatch {
 
 /* Styles for each settings button */
 .settings-container button {
-    background-color: #6d6a6a ;
+    background-color: #6d6a6a;
     width: 100%;
-    max-width: 300px; /* Adjust the max-width as needed */
+    max-width: 300px;
+    /* Adjust the max-width as needed */
     padding: 1.5rem;
     border-radius: 10px;
     align-items: center;
     display: flex;
-    justify-content: center; /* Center the content horizontally */
+    justify-content: center;
+    /* Center the content horizontally */
     gap: 1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    margin: 2rem auto; /* Center the buttons vertically */
+    margin: 2rem auto;
+    /* Center the buttons vertically */
 }
 
 
@@ -520,8 +537,8 @@ input[type="color"]::-webkit-color-swatch {
     background-color: #b9b6b6;
 }
 
-.settings-container > li > button {
-        font-size: 1.25rem;
+.settings-container>li>button {
+    font-size: 1.25rem;
 }
 
 
@@ -533,107 +550,59 @@ input[type="color"]::-webkit-color-swatch {
     height: 15%;
 }
 
-/* =============== CONTACT ================= */
-.contact__container {
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    column-gap: 4rem;
-  }
-  
-  .contact__description,
-  .contact__input {
-    font-weight: var(--weight-400);
-  }
-  
-  .contact__description {
-    margin-bottom: 3rem;
-  }
-  
-  .contact__description a {
-    color: var(--title-color);
-    font-weight: var(--weight-500);
-  }
-  
-  .contact__form {
-    position: relative;
-  }
-  
-  .contact__input {
-    border: 2px solid var(--border-color);
-    padding: 0.8rem 1.25rem;
+/* =============== feedback ================= */
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff00;
+    border: 1px solid #cccccc00;
+    border-radius: 5px;
+}
+
+.container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.container input[type="text"],
+.container input[type="email"],
+.container textarea {
     width: 100%;
-    border-radius: var(--radius);
-    font-size: var(--smaller-font-size);
-    margin-bottom: 1.25rem;
-    border-radius: 0.5rem;
-  }
-  
-  .textarea {
-    height: 120px;
-    resize: none;
-        border-radius: 0.5rem;
-  }
-  
-  .error__message {
-    position: absolute;
-    bottom: -12%;
-    left: 0;
-    font-size: var(--small-font-size);
-    font-weight: var(--weight-400);
-  }
-  
-  .color-first {
-    color: var(--first-color);
-  }
-
-  .contact__container {
-    column-gap: 2rem;
-  }
-
-  .contact__container {
-    grid-template-columns: 1fr;
-    row-gap: 2rem;
-  }
-
-  .contact__content {
-    order: 1;
-  }
-
-  .contact__description {
-    margin-bottom: 2rem;
-  }
-
-  .contact__container > .btn {
-    margin: auto;
-    border-radius: 1rem;
-  }
-
-  /* CSS */
-/* Styles for the button */
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #303130; /* Green background color for the button */
-  color: white; /* White text color for the button */
-  border: none; /* Remove the default button border */
-  border-radius: 4px; /* Rounded corners for the button */
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s; /* Add a smooth transition on hover */
+    padding: 8px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
 }
 
-/* Hover effect for the button */
-.btn:hover {
-  background-color: #878987; /* Darker green color on hover */
+.container textarea {
+    resize: vertical;
 }
 
-/* Styles for the error message */
-.error__message {
-  color: #FF0000; /* Red color for the error message */
-  font-size: 14px;
-  margin-top: 10px; /* Add some spacing between the button and error message */
+.container button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+.container button:hover {
+    background-color: #0056b3;
+}
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */

@@ -1353,3 +1353,33 @@ function onBackButton() {
             console.log("NO PG TO REDITECT!");
     }
 }
+
+// ================= FEEDBACK FORM =================
+
+function sendEmail(subject, body, recipients, ccList, bccList) {
+    // Check if the plugin is available
+    if (window.plugins && window.plugins.emailComposer) {
+        window.plugins.emailComposer.showEmailComposerWithCallback(
+            function(result) {
+                if (result === 0) {
+                    console.log("Email sent successfully.");
+                } else {
+                    console.log("Email not sent.");
+                }
+            },
+            subject,
+            body,
+            recipients,
+            ccList,
+            bccList,
+            false, // isHTML (true: body is HTML, false: body is plain text)
+            null, // attachments (file paths or base64 data)
+            null, // attachment names
+            null, // attachment types
+        );
+    } else {
+        console.log("The 'emailComposer' plugin is not available.");
+    }
+}
+
+
