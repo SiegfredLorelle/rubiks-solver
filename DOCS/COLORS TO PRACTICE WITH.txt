@@ -1,0 +1,56 @@
+COLORS TO PRACTICE WITH:
+
+G = green
+Y = yellow
+V = violet
+R = red
+W = white
+B = blue
+---------------------------
+G Y Y R
+
+G R G Y
+
+B B R Y
+
+V V G V
+
+W W W V
+
+B W R B
+---------------------------
+B W W B
+
+G Y V Y
+
+G G R R
+
+W W Y R
+
+V V V R
+	
+B Y G B
+---------------------------
+W G B W
+
+W B R R 
+
+V Y Y G
+
+V B Y R
+
+B W R V
+
+Y G V G
+---------------------------
+G W W B
+
+G G Y V
+
+Y V G Y
+
+W V B R
+
+B R W R
+
+B R V Y
