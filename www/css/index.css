@@ -129,6 +129,9 @@ h3 {
     text-align: center;
 }
 
+p {
+    color: #020202;
+}
 
 .center {
     margin: 0 auto 0 auto;
@@ -361,6 +364,9 @@ input[type="color"]::-webkit-color-swatch {
     margin: 1.5rem;
 }
 
+.color-assign-page>.solved-part>hgroup {
+    padding-bottom: 3rem;
+}
 
 .home-logo-responsive {
     padding-top: 0;
