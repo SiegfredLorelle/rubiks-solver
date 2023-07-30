@@ -96,7 +96,7 @@ let beforeCount;
 let afterCount;
 
 // Used for timer
-let time = "00:00:00";
+let time = "00hr 00min 00s 00ms";
 let hr = 0;
 let min = 0;
 let sec = 0;
@@ -542,16 +542,35 @@ function updateTimer() {
     }
 
     if (min === 60) {
-        hour++;
+        hr++;
         min = 0;
         sec = 0;
     }
     time = `${hr}:${min}:${sec}:${ms}`;
-    console.log(time);
+    // console.log(time);
+    updateTimerInSolverPart();
     setTimeout(updateTimer, 10);
 
 }
 
+
+
+
+function updateTimerInSolverPart() {
+    let hrText = hr < 10 ? "0" + hr : hr;
+    let minText = min < 10 ? "0" + min : min;
+    let secText = sec < 10 ? "0" + sec : sec;
+    let msText = ms < 100 ? "0" + ms : ms + "";
+    msText = msText.substring(0, msText.length - 1);
+    // msText = toString(msText).substring(0, msText.length-1);
+    // msText = msText.toString();
+    // msText = msText.toString().slice(0, msText.length - 1);
+    
+    // console.log(msText, typeof msText);
+
+    let timerInSolverPart = document.querySelector(".solver-part > p:nth-child(2)");
+    timerInSolverPart.innerHTML = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
+}
 
 
 function solveCube() {

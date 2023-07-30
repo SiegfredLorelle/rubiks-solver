@@ -359,6 +359,10 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: 7px 9px 0 black;
 } */
 
+.color-assign-page>.solver-part {
+    text-transform: lowercase;
+}
+
 .color-assign-page>.solver-part>div,
 .color-assign-page>.solved-part>div {
     margin: 1.5rem;
