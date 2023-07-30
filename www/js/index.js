@@ -117,7 +117,7 @@ const sides = [
     [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
     [7, 19, 10, 22],    // Top
-    [4, 16, 1, 13],     // Bottom
+    [4, 16, 1, 13],     // bottom
 ]
 
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
@@ -611,10 +611,12 @@ function updateDashboard() {
 
     // console.log("TOTAL MS:" + totalMS);
     let date = new Date();
-    let curDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getYear()}`;
+    let yr = date.getFullYear() + "";
+    yr = yr.substring(2);
+    let curDate = `${date.getMonth() + 1}/${date.getDate()}/${yr}`;
 
     dashboard.push({
-        time: time,
+        time: timeShortFormat,
         totalMS: totalMS,
         date: curDate,
     });
@@ -628,14 +630,30 @@ function updateDashboard() {
         dashboard.pop();
     }
 
+    updateRecordsInDashBoard();
 }
+
+function updateRecordsInDashBoard() {
+    let recordContainers = document.querySelectorAll(".dashboard-page .settings-container > li > button");
+    console.log(recordContainers);
+    for (const [i, record] of dashboard.entries()) {
+        let container = recordContainers[i];
+        let timeText = container.querySelector("p:nth-last-child(2)");
+        let dateText = container.querySelector("p:last-child");
+
+        timeText.innerHTML = record.time;
+        dateText.innerHTML = record.date;
+
+        // console.log(timeText, dateText);
+    }
+}   
 
 
 function updateTimerInSolverPart() {
     let hrText = hr < 10 ? "0" + hr : hr;
     let minText = min < 10 ? "0" + min : min;
     let secText = sec < 10 ? "0" + sec : sec;
-    let msText = ms < 100 ? "0" + ms : ms + "";
+    let msText = ms < 100 ? "0" + ms : ms + " ";
     msText = msText.substring(0, msText.length - 1);
     time = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
     timeShortFormat = `${hrText}:${minText}:${secText}:${msText}`;
