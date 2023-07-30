@@ -577,6 +577,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .container label {
+    color: #020202;
     display: block;
     font-weight: bold;
     margin-bottom: 5px;

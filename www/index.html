@@ -244,25 +244,50 @@
             <div class="feedback-page">
                 <div class="container">
                     <h1>Feedback Form</h1>
-                    <form id="feedback-form">
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" required>
+                    <form class="contact__form" id="contact-form">
+                        <div class="contact__form-input">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Your Name *"
+                            class="contact__input"
+                            id="contact-name"
+                          />
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
+          
+                        <div class="contact__form-input">
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Your e-mail"
+                            class="contact__input"
+                            id="contact-email"
+                          />
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject:</label>
-                            <input type="text" id="subject" name="subject" required>
+          
+                        <div class="contact__form-input">
+                          <input
+                            type="text"
+                            name="subject"
+                            placeholder="Write a Subject"
+                            class="contact__input"
+                            id="contact-subject"
+                          />
                         </div>
-                        <div class="form-group">
-                            <label for="message">Feedback:</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
+          
+                        <div class="contact__form-input">
+                          <textarea
+                            name="message"
+                            id="contact-message"
+                            class="contact__input textarea"
+                            placeholder="Your Message"
+                          ></textarea>
                         </div>
-                        <button type="submit">Submit Feedback</button>
-                    </form>
+          
+                        <input type="submit" value="Submit" class="btn" />
+          
+                        <p class="error__message" id="error-message"></p>
+                      </form>
                 </div>
         </main>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -283,6 +308,7 @@
             </div> -->
 
     </div>
+    <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js'></script>
     <script src="./js/cube.js"></script>
     <script src="cordova.js"></script>
