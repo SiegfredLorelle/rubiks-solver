@@ -103,8 +103,13 @@ let hr = 0;
 let min = 0;
 let sec = 0;
 let ms = 0;
+let totalMS = 0;
 let isTimerOngoing = false;
 let timer;
+
+
+// Used for dashboard
+let dashboard = [];
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -546,7 +551,7 @@ function startTimer() {
         min = 0;
         sec = 0;
         ms = 0;
-        
+        totalMS = 0;
         console.log("STARTED TIMER");
         setTimeout(updateTimer, 1);
         // return;
@@ -559,6 +564,7 @@ function updateTimer() {
     }
 
     ms += 10;
+    totalMS += 10;
     if (ms === 1000) {
         sec++;
         ms = 0;
@@ -581,13 +587,47 @@ function updateTimer() {
 }
 
 function stopTimer() {
+    updateDashboard();
     isTimerOngoing = false;
     hr = 0;
     min = 0;
     sec = 0;
     ms = 0;
+    totalMS = 0;
     updateTimerInSolverPart();
     clearTimeout(timer);
+}
+
+function updateDashboard() {
+    // console.log(dashboard);
+
+    // let msInDasboard = [];
+    
+    // for (const record of dashboard) {
+    //     msInDasboard.push(record.totalMS);
+    // }
+
+
+
+    // console.log("TOTAL MS:" + totalMS);
+    let date = new Date();
+    let curDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getYear()}`;
+
+    dashboard.push({
+        time: time,
+        totalMS: totalMS,
+        date: curDate,
+    });
+
+
+    dashboard.sort((a, b) => {
+        return a.totalMS - b.totalMS;
+    });
+
+    if (dashboard.length > 3) {
+        dashboard.pop();
+    }
+
 }
 
 
