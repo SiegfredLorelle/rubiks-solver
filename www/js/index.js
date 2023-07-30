@@ -95,7 +95,13 @@ let firstLayerSide;
 let beforeCount;
 let afterCount;
 
-let time = "00:00:00";
+// Used for timer
+let time = "00hr 00min 00s 00ms";
+let hr = 0;
+let min = 0;
+let sec = 0;
+let ms = 0;
+let isTimerOngoing = false;
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -501,10 +507,69 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
+
+    startTimer();
     console.log(pendingMoves);
     
 
 
+}
+
+function startTimer() {
+    if (isTimerOngoing) {
+        return;
+    }
+
+    hr = 0;
+    min = 0;
+    sec = 0;
+    ms = 0;
+
+    setTimeout(updateTimer, 1);
+
+}
+
+function updateTimer() {
+    ms += 10;
+    if (ms === 1000) {
+        sec++;
+        ms = 0;
+    }
+
+    if (sec === 60) {
+        min++;
+        sec = 0;
+    }
+
+    if (min === 60) {
+        hr++;
+        min = 0;
+        sec = 0;
+    }
+    time = `${hr}:${min}:${sec}:${ms}`;
+    // console.log(time);
+    updateTimerInSolverPart();
+    setTimeout(updateTimer, 10);
+
+}
+
+
+
+
+function updateTimerInSolverPart() {
+    let hrText = hr < 10 ? "0" + hr : hr;
+    let minText = min < 10 ? "0" + min : min;
+    let secText = sec < 10 ? "0" + sec : sec;
+    let msText = ms < 100 ? "0" + ms : ms + "";
+    msText = msText.substring(0, msText.length - 1);
+    // msText = toString(msText).substring(0, msText.length-1);
+    // msText = msText.toString();
+    // msText = msText.toString().slice(0, msText.length - 1);
+    
+    // console.log(msText, typeof msText);
+
+    let timerInSolverPart = document.querySelector(".solver-part > p:nth-child(2)");
+    timerInSolverPart.innerHTML = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
 }
 
 
