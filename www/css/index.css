@@ -359,7 +359,8 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: 7px 9px 0 black;
 } */
 
-.color-assign-page>.solver-part {
+.color-assign-page>.solver-part,
+.solved-part > hgroup > p:last-child {
     text-transform: lowercase;
 }
 
