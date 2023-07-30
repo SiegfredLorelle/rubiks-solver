@@ -51,6 +51,7 @@ let nextMoveBtn;
 let backMoveBtn;
 let tryAgainBtn;
 let feedbackBtn;
+let dashboardBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -97,6 +98,7 @@ let afterCount;
 
 // Used for timer
 let time = "00hr 00min 00s 00ms";
+let timeShortFormat = "00:00:00:00";
 let hr = 0;
 let min = 0;
 let sec = 0;
@@ -164,6 +166,8 @@ function onStart() {
     nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
     tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
     feedbackBtn = document.querySelector(".settings-page li > button[value=Feedback]");
+    dashboardBtn = document.querySelector(".settings-page li > button[value=Dashboard]");
+    // console.log(dashboardBtn);
     // console.log(feedbackBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
@@ -253,6 +257,9 @@ function manageActivePage() {
     else if (activePageName === "feedback-page") {
         onFeedbackPage();
     }
+    else if (activePageName === "dashboard-page") {
+        onDashboardPage();
+    }
 }
 
 
@@ -283,9 +290,15 @@ function onColorAssignPage() {
 function onSettingsPage() {
     listenToSwipes();
     listenToBtnTap(feedbackBtn);
+    listenToBtnTap(dashboardBtn);
+
 }
 
 function onFeedbackPage() {
+    listenToSwipes();
+}
+
+function onDashboardPage() {
     listenToSwipes();
 }
 
@@ -472,12 +485,19 @@ function listenToBtnTap(btn) {
             break;
         case feedbackBtn:
             feedbackBtn.addEventListener("click", onFeedbackBtnTap);
+            break;
+        case dashboardBtn:
+            dashboardBtn.addEventListener("click", onDashboardBtnTap);
     }
 }
 
 function onSolveBtnTap() {
     changePartOfPage("solver-part");
     checkIsCubeSolved();
+}
+
+function onDashboardBtnTap() {
+    changePage("dashboard-page");
 }
 
 let i = 0;
@@ -578,6 +598,7 @@ function updateTimerInSolverPart() {
     let msText = ms < 100 ? "0" + ms : ms + "";
     msText = msText.substring(0, msText.length - 1);
     time = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
+    timeShortFormat = `${hrText}:${minText}:${secText}:${msText}`;
     // console.log(time);
 
     let timerInSolverPart = document.querySelector(".solver-part > p:nth-child(2)");
@@ -1446,6 +1467,9 @@ function onSwipeLeft() {
         case "feedback-page":
             changePage("settings-page");
             break;
+        case "dashboard-page":
+            changePage("settings-page");
+            break;
         default:
             console.log("NO PG TO REDITECT!");
     }   
@@ -1512,9 +1536,12 @@ function onBackButton() {
         case "feedback-page":
             changePage("settings-page");
             break;
+        case "dashboard-page":
+            changePage("settings-page");
+            break;
         default:
             console.log("NO PG TO REDITECT!");
-    }
+    }  
 }
 
 // ================= FEEDBACK FORM =================

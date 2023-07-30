@@ -238,59 +238,89 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Feedback Page TODO -->
+            <!-- Feedback Page -->
             <div class="feedback-page">
                 
                 <div class="contact__container">
                     <form class="contact__form" id="contact-form">
                         <img src="img/feedback.png" class="feedback-img" alt="EDIT THIS! Temporary Image for Cube">
                         <div class="contact__form-input">
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Your Name *"
-                            class="contact__input"
-                            id="contact-name"
-                          />
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name *"
+                                class="contact__input"
+                                id="contact-name"
+                            />
                         </div>
-          
+
                         <div class="contact__form-input">
-                          <input
-                            type="email"
-                            name="email"
-                            placeholder="Your e-mail"
-                            class="contact__input"
-                            id="contact-email"
-                          />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your e-mail"
+                                class="contact__input"
+                                id="contact-email"
+                            />
                         </div>
-          
+
                         <div class="contact__form-input">
-                          <input
-                            type="text"
-                            name="subject"
-                            placeholder="Write a Subject"
-                            class="contact__input"
-                            id="contact-subject"
-                          />
+                            <input
+                                type="text"
+                                name="subject"
+                                placeholder="Write a Subject"
+                                class="contact__input"
+                                id="contact-subject"
+                            />
                         </div>
-          
+
                         <div class="contact__form-input">
-                          <textarea
-                            name="message"
-                            id="contact-message"
-                            class="contact__input textarea"
-                            placeholder="Your Message"
-                          ></textarea>
+                            <textarea
+                                name="message"
+                                id="contact-message"
+                                class="contact__input textarea"
+                                placeholder="Your Message"
+                            ></textarea>
                         </div>
-          
+
                         <input type="submit" value="Submit" class="btn" />
-          
                         <p class="error__message" id="error-message"></p>
-                      </form>
+                        </form>
                 </div>
+            </div>
+
+            <!-- Dashboard page -->
+            <div class="dashboard-page">
+                <div class="dashboard-page flex">
+                    <div>
+                        <img src="img/settings.png" class="menu-responsive" alt="EDIT THIS! Temporary Image for Cube">
+                        <ul class="settings-container">
+                            <li><button class="settings-container" value="Dashboard">
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <p>00:00:00:00</p> 
+                                    <p>7/31/23</p> 
+                                </button>
+                            </li>
+                            <li><button class="settings-container" value="Animation Speed">
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <p>00:00:00:00</p> 
+                                    <p>7/31/23</p> 
+                                </button>
+                            <li><button class="settings-container" value="Feedback">
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <p>00:00:00:00</p> 
+                                    <p>7/31/23</p> 
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
         </main>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
         </ul>
@@ -319,7 +349,15 @@
 
 </html>
 
-<!-- BUG: QUICK TAPS TRIGGERING SWIPES WHEN TAPS ARE FAR FROM EACH OTHER -->
-<!-- BUG: FIX LANDSCAPE LAYOUT -->
-<!-- TODO: MAKE START WITH INTO CLICKABLE BUTTON -->
-<!-- TODO: APPLY SELECTED COLOR TO CUBE ON TAP !!!!!! -->
+<!-- 
+TODOS:
+DASHBOARD
+REMOVE ANIMATION SPEED SA SETTINGS
+OPTION TO PLAY CUBE
+HOME BTN REDIRECT
+INFO PG
+FIX CHANGE COLOR (HOLD)
+FIX RESET, BACK BTN
+SHOW MOVE NOTATION
+MAKE LOGO HOME BTN
+CATCH ERRORS WHEN SOLVING UNSOLVABLE ALGO -->
