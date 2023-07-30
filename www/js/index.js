@@ -95,7 +95,12 @@ let firstLayerSide;
 let beforeCount;
 let afterCount;
 
+// Used for timer
 let time = "00:00:00";
+let hr = 0;
+let min = 0;
+let sec = 0;
+let isTimerOngoing = false;
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -501,11 +506,51 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
+
+    startTimer();
     console.log(pendingMoves);
     
 
 
 }
+
+function startTimer() {
+    if (isTimerOngoing) {
+        return;
+    }
+
+    hr = 0;
+    min = 0;
+    sec = 0;
+    count = 0;
+
+    setTimeout(updateTimer, 1);
+
+}
+
+function updateTimer() {
+    count++;
+    if (count === 100) {
+        sec++;
+        count = 0;
+    }
+
+    if (sec === 60) {
+        min++;
+        sec = 0;
+    }
+
+    if (min === 60) {
+        hour++;
+        min = 0;
+        sec = 0;
+    }
+    time = `${hr}:${min}:${sec}:${count}`;
+    console.log(time);
+    setTimeout(updateTimer, 1);
+
+}
+
 
 
 function solveCube() {
