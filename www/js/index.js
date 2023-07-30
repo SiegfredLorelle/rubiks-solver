@@ -100,6 +100,7 @@ let time = "00:00:00";
 let hr = 0;
 let min = 0;
 let sec = 0;
+let ms = 0;
 let isTimerOngoing = false;
 
 const sides = [
@@ -522,17 +523,17 @@ function startTimer() {
     hr = 0;
     min = 0;
     sec = 0;
-    count = 0;
+    ms = 0;
 
     setTimeout(updateTimer, 1);
 
 }
 
 function updateTimer() {
-    count++;
-    if (count === 100) {
+    ms += 10;
+    if (ms === 1000) {
         sec++;
-        count = 0;
+        ms = 0;
     }
 
     if (sec === 60) {
@@ -545,9 +546,9 @@ function updateTimer() {
         min = 0;
         sec = 0;
     }
-    time = `${hr}:${min}:${sec}:${count}`;
+    time = `${hr}:${min}:${sec}:${ms}`;
     console.log(time);
-    setTimeout(updateTimer, 1);
+    setTimeout(updateTimer, 10);
 
 }
 
