@@ -522,6 +522,11 @@ input[type="color"]::-webkit-color-swatch {
 .settings-container {
     list-style: none;
     padding: 0;
+    /* color: #ffffff; */
+}
+
+.settings-container > p {
+    color: #ffffff;
 }
 
 /* Styles for each settings button */

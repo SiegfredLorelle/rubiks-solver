@@ -51,6 +51,7 @@ let nextMoveBtn;
 let backMoveBtn;
 let tryAgainBtn;
 let feedbackBtn;
+let dashboardBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -97,12 +98,18 @@ let afterCount;
 
 // Used for timer
 let time = "00hr 00min 00s 00ms";
+let timeShortFormat = "00:00:00:00";
 let hr = 0;
 let min = 0;
 let sec = 0;
 let ms = 0;
+let totalMS = 0;
 let isTimerOngoing = false;
 let timer;
+
+
+// Used for dashboard
+let dashboard = [];
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -110,7 +117,7 @@ const sides = [
     [2, 14, 8, 20],     // Right
     [6, 9, 0, 3],       // Rear
     [7, 19, 10, 22],    // Top
-    [4, 16, 1, 13],     // Bottom
+    [4, 16, 1, 13],     // bottom
 ]
 
 const indicesInMoveU = [6, 9, 11, 23, 21, 18, 20, 8];
@@ -164,6 +171,8 @@ function onStart() {
     nextMoveBtn = document.querySelector(".color-assign-page > .solver-part .next-move-btn");
     tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
     feedbackBtn = document.querySelector(".settings-page li > button[value=Feedback]");
+    dashboardBtn = document.querySelector(".settings-page li > button[value=Dashboard]");
+    // console.log(dashboardBtn);
     // console.log(feedbackBtn);
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
@@ -253,6 +262,9 @@ function manageActivePage() {
     else if (activePageName === "feedback-page") {
         onFeedbackPage();
     }
+    else if (activePageName === "dashboard-page") {
+        onDashboardPage();
+    }
 }
 
 
@@ -283,9 +295,15 @@ function onColorAssignPage() {
 function onSettingsPage() {
     listenToSwipes();
     listenToBtnTap(feedbackBtn);
+    listenToBtnTap(dashboardBtn);
+
 }
 
 function onFeedbackPage() {
+    listenToSwipes();
+}
+
+function onDashboardPage() {
     listenToSwipes();
 }
 
@@ -472,12 +490,19 @@ function listenToBtnTap(btn) {
             break;
         case feedbackBtn:
             feedbackBtn.addEventListener("click", onFeedbackBtnTap);
+            break;
+        case dashboardBtn:
+            dashboardBtn.addEventListener("click", onDashboardBtnTap);
     }
 }
 
 function onSolveBtnTap() {
     changePartOfPage("solver-part");
     checkIsCubeSolved();
+}
+
+function onDashboardBtnTap() {
+    changePage("dashboard-page");
 }
 
 let i = 0;
@@ -526,7 +551,7 @@ function startTimer() {
         min = 0;
         sec = 0;
         ms = 0;
-        
+        totalMS = 0;
         console.log("STARTED TIMER");
         setTimeout(updateTimer, 1);
         // return;
@@ -539,6 +564,7 @@ function updateTimer() {
     }
 
     ms += 10;
+    totalMS += 10;
     if (ms === 1000) {
         sec++;
         ms = 0;
@@ -561,23 +587,76 @@ function updateTimer() {
 }
 
 function stopTimer() {
+    updateDashboard();
     isTimerOngoing = false;
     hr = 0;
     min = 0;
     sec = 0;
     ms = 0;
+    totalMS = 0;
     updateTimerInSolverPart();
     clearTimeout(timer);
 }
+
+function updateDashboard() {
+    // console.log(dashboard);
+
+    // let msInDasboard = [];
+    
+    // for (const record of dashboard) {
+    //     msInDasboard.push(record.totalMS);
+    // }
+
+
+
+    // console.log("TOTAL MS:" + totalMS);
+    let date = new Date();
+    let yr = date.getFullYear() + "";
+    yr = yr.substring(2);
+    let curDate = `${date.getMonth() + 1}/${date.getDate()}/${yr}`;
+
+    dashboard.push({
+        time: timeShortFormat,
+        totalMS: totalMS,
+        date: curDate,
+    });
+
+
+    dashboard.sort((a, b) => {
+        return a.totalMS - b.totalMS;
+    });
+
+    if (dashboard.length > 3) {
+        dashboard.pop();
+    }
+
+    updateRecordsInDashBoard();
+}
+
+function updateRecordsInDashBoard() {
+    let recordContainers = document.querySelectorAll(".dashboard-page .settings-container > li > button");
+    console.log(recordContainers);
+    for (const [i, record] of dashboard.entries()) {
+        let container = recordContainers[i];
+        let timeText = container.querySelector("p:nth-last-child(2)");
+        let dateText = container.querySelector("p:last-child");
+
+        timeText.innerHTML = record.time;
+        dateText.innerHTML = record.date;
+
+        // console.log(timeText, dateText);
+    }
+}   
 
 
 function updateTimerInSolverPart() {
     let hrText = hr < 10 ? "0" + hr : hr;
     let minText = min < 10 ? "0" + min : min;
     let secText = sec < 10 ? "0" + sec : sec;
-    let msText = ms < 100 ? "0" + ms : ms + "";
+    let msText = ms < 100 ? "0" + ms : ms + " ";
     msText = msText.substring(0, msText.length - 1);
     time = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
+    timeShortFormat = `${hrText}:${minText}:${secText}:${msText}`;
     // console.log(time);
 
     let timerInSolverPart = document.querySelector(".solver-part > p:nth-child(2)");
@@ -1446,6 +1525,9 @@ function onSwipeLeft() {
         case "feedback-page":
             changePage("settings-page");
             break;
+        case "dashboard-page":
+            changePage("settings-page");
+            break;
         default:
             console.log("NO PG TO REDITECT!");
     }   
@@ -1512,9 +1594,12 @@ function onBackButton() {
         case "feedback-page":
             changePage("settings-page");
             break;
+        case "dashboard-page":
+            changePage("settings-page");
+            break;
         default:
             console.log("NO PG TO REDITECT!");
-    }
+    }  
 }
 
 // ================= FEEDBACK FORM =================
