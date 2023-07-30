@@ -102,6 +102,7 @@ let min = 0;
 let sec = 0;
 let ms = 0;
 let isTimerOngoing = false;
+let timer;
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -428,6 +429,7 @@ function checkIsCubeSolved() {
 function onCubeSolved() {
     updateSolvedPartContent("Cube Solved!", time);
     changePartOfPage("solved-part");
+    stopTimer();
 }
 
 function checkCubeValidity() {
@@ -500,6 +502,11 @@ function onNextMoveBtnTap() {
 
 
     /* ACTUAL CODE */
+    if (!isTimerOngoing) {
+        startTimer();
+        isTimerOngoing = true;
+    }
+
     if (!pendingMoves.length) {
         checkIsCubeSolved();
         solveCube();
@@ -507,8 +514,7 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
-
-    startTimer();
+    
     console.log(pendingMoves);
     
 
@@ -516,20 +522,22 @@ function onNextMoveBtnTap() {
 }
 
 function startTimer() {
-    if (isTimerOngoing) {
+        hr = 0;
+        min = 0;
+        sec = 0;
+        ms = 0;
+        
+        console.log("STARTED TIMER");
+        setTimeout(updateTimer, 1);
+        // return;
+}
+
+
+function updateTimer() {
+    if (!isTimerOngoing) {
         return;
     }
 
-    hr = 0;
-    min = 0;
-    sec = 0;
-    ms = 0;
-
-    setTimeout(updateTimer, 1);
-
-}
-
-function updateTimer() {
     ms += 10;
     if (ms === 1000) {
         sec++;
@@ -546,14 +554,21 @@ function updateTimer() {
         min = 0;
         sec = 0;
     }
-    time = `${hr}:${min}:${sec}:${ms}`;
-    // console.log(time);
+    // time = `${hr}:${min}:${sec}:${ms}`;
     updateTimerInSolverPart();
-    setTimeout(updateTimer, 10);
+    timer = setTimeout(updateTimer, 10);
 
 }
 
-
+function stopTimer() {
+    isTimerOngoing = false;
+    hr = 0;
+    min = 0;
+    sec = 0;
+    ms = 0;
+    updateTimerInSolverPart();
+    clearTimeout(timer);
+}
 
 
 function updateTimerInSolverPart() {
@@ -562,14 +577,11 @@ function updateTimerInSolverPart() {
     let secText = sec < 10 ? "0" + sec : sec;
     let msText = ms < 100 ? "0" + ms : ms + "";
     msText = msText.substring(0, msText.length - 1);
-    // msText = toString(msText).substring(0, msText.length-1);
-    // msText = msText.toString();
-    // msText = msText.toString().slice(0, msText.length - 1);
-    
-    // console.log(msText, typeof msText);
+    time = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
+    // console.log(time);
 
     let timerInSolverPart = document.querySelector(".solver-part > p:nth-child(2)");
-    timerInSolverPart.innerHTML = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
+    timerInSolverPart.innerHTML = time;
 }
 
 
@@ -578,14 +590,34 @@ function solveCube() {
         solveFirstLayer();
     }
     else {
-        console.log("FIRST LAYER IS SOLVED!");
-        performMove("X");
-        updateSolvedPartContent("First Layer Solved!", time);
-        changePartOfPage("solved-part");
+        onFirstLayerSolved();
     }
 }
 
-function updateSolvedPartContent(msg, time) {
+
+function onFirstLayerSolved() {
+    console.log("FIRST LAYER IS SOLVED!");
+    performMove("X");
+    resetVar();
+    updateSolvedPartContent("First Layer Solved!");
+    changePartOfPage("solved-part");
+    stopTimer();
+}
+
+function resetVar() {
+    isTimerOngoing = false;
+    isFirstLayerFound = false;
+    isFirstLayerFound = false;
+    maxColor = [];
+    color;
+    firstLayerClrCount;
+    firstLayerSide;
+    beforeCount;
+    afterCount;
+}
+
+
+function updateSolvedPartContent(msg) {
     const content = document.querySelector(".solved-part > hgroup > p:nth-child(2)");
     const timeText = document.querySelector(".solved-part > hgroup > p:last-child");
     content.innerHTML = msg;
