@@ -95,6 +95,8 @@ let firstLayerSide;
 let beforeCount;
 let afterCount;
 
+let time = "00:00:00";
+
 const sides = [
     [11, 23, 5, 17],    // Left
     [21, 18, 15, 12],   // Front
@@ -418,8 +420,7 @@ function checkIsCubeSolved() {
 }
 
 function onCubeSolved() {
-    // console.log("CONGRATS CUBE IS SOLVED");
-
+    updateSolvedPartContent("Cube Solved!", time);
     changePartOfPage("solved-part");
 }
 
@@ -513,7 +514,17 @@ function solveCube() {
     }
     else {
         console.log("FIRST LAYER IS SOLVED!");
+        performMove("X");
+        updateSolvedPartContent("First Layer Solved!", time);
+        changePartOfPage("solved-part");
     }
+}
+
+function updateSolvedPartContent(msg, time) {
+    const content = document.querySelector(".solved-part > hgroup > p:nth-child(2)");
+    const timeText = document.querySelector(".solved-part > hgroup > p:last-child");
+    content.innerHTML = msg;
+    timeText.innerHTML = time;
 }
 
 // let isFirstLayerFound = false;
