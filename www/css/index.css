@@ -557,83 +557,70 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 /* =============== feedback ================= */
+
 .feedback-img {
-    padding-top: 10%;
+    position: relative;
+    padding-top: 20%;
     padding-bottom: 10%;
-    width: auto;
-    height: 40%;
+    width: 55%;
+    height: 25%;
 }
 
-.contact__container {
-    grid-template-columns: repeat(2, 1fr);
+.contact__form {
     align-items: center;
-    column-gap: 4rem;
-  }
-  
-  .contact__description,
-  .contact__input {
-    font-weight: var(--weight-400);
-  }
-  
-  .contact__description {
-    margin-bottom: 2rem;
-  }
-  
-  .contact__description a {
-    color: #4B946A;
-    font-weight: 2px;
-  }
-  
-  .contact__form {
     position: relative;
-  }
-  
-  .contact__input {
+    margin-left: 5%;
+    margin-right: 5%;
+    /*width: 100%;  Make sure the form takes up the full width */
+    /*max-width: 750px;  Set a maximum width for the form if needed */
+}
+
+.contact__form-input {
+    width: 100%; /* Make sure the form input takes up the full width */
+}
+
+.contact__input {
     border: 2px solid var(--border-color);
     padding: 0.8rem 1.25rem;
-    width: 80%;
+    width: 100%;
     border-radius: 5px;
     font-size: var(--smaller-font-size);
-    margin-bottom: 2rem;
-  }
-  
-  .textarea {
+    margin-bottom: 1.25rem;
+}
+
+.textarea {
     height: 120px;
     resize: none;
-  }
-  
-  .error__message {
-    position: absolute;
-    bottom: -12%;
-    left: 0;
+}
+
+.error__message {
+    margin-top: 5%;
     font-size: var(--small-font-size);
     font-weight: var(--weight-400);
-  }
-  
-  .color-first {
+    color: red; /* Optionally, set the color for error messages */
+}
+
+.color-first {
     color: var(--first-color);
-  }
-  
-  .btn {
+}
+
+.btn {
+    border-radius: 10px;
     display: inline-block;
-    color: #e4dbdb;
-    background-color: #6d6868;
-    border: 2px solid #232222;
+    color: var(--title-color);
+    background-color: #403f3f;
     padding: 1rem 2.5rem;
-    border-radius: 5px;
     font-size: var(--small-font-size);
     font-weight: var(--weight-500);
     letter-spacing: 2px;
     cursor: pointer;
     transition: all 0.3s var(--transition);
-    margin-top: auto;
   }
   
   .btn:hover {
-    background-color: #4d4b4b;
+    background-color: #232222;
     color: var(--first-color);
   }
-  
 
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {

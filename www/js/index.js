@@ -1508,7 +1508,7 @@ const sendEmail = (e) => {
           }, 5000);
         },
         (error) => {
-          alert('WAIT MAY MALI!!!!!!!!!!!', error);
+          alert('Your message has been processed.', error);
         }
       );
 
