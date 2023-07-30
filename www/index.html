@@ -30,7 +30,7 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
     <meta http-equiv="Content-Security-Policy" content="
-            default-src 'self' data: gap: https://*.googleapis.com/ https://*.fontawesome.com/ https://*.gstatic.com https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js 'unsafe-eval'; 
+            default-src 'self' data: gap: https://*.googleapis.com/ https://*.fontawesome.com/ https://*.gstatic.com https://cdnjs.cloudflare.com/ajax/libs/three.js/95/three.min.js https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js 'unsafe-eval'; 
             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.fontawesome.com/; 
             media-src *; 
             img-src 'self' data: content:;
@@ -207,7 +207,10 @@
                 </div>
                 <!-- Solved pg -->
                 <div class="solved-part part">
-                    <p>Congratss!!<br>Cube Solved!!</p>
+                    <hgroup>
+                        <h3>Congratss!!</h3>
+                        <p>Cube Solved!!</p>
+                    </hgroup>
                     <div class="flex">
                         <button class="try-again-btn">Try Again</button>
                     </div>

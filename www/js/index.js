@@ -509,6 +509,8 @@ function solveCube() {
 let isFirstLayerFound = false;
 let maxColor = [];
 let color = [];
+let firstLayerClrCount;
+let firstLayerSide;
 
 function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
@@ -544,19 +546,24 @@ function solveFirstLayer() {
                 // console.log("SIDE TOOO", side);
             }
         }
+
+
+        isFirstLayerFound = true;
+        firstLayerClrCount = maxColor[1];
+        firstLayerSide = maxColor[0];
+        console.log(firstLayerSide, firstLayerClrCount);
+
+
+        // let firstLayerColor = [...colorCount.valu[es].indexOf(maxColor[1]); 
+        // ROTATE SIDE TO BOTTOM
+        console.log(!isFirstLayerAtBottomSide(firstLayerSide));
+        if (!isFirstLayerAtBottomSide(firstLayerSide)) {
+            moveFirstLayerAtBottomSide(firstLayerSide);
+            return;
+        }
     }
 
-    let firstLayerClrCount = maxColor[1];
-    let firstLayerSide = maxColor[0];
-    console.log(firstLayerSide, firstLayerClrCount);
 
-    // let firstLayerColor = [...colorCount.valu[es].indexOf(maxColor[1]); 
-    // ROTATE SIDE TO BOTTOM
-    console.log(!isFirstLayerAtBottomSide(firstLayerSide));
-    if (!isFirstLayerAtBottomSide(firstLayerSide)) {
-        moveFirstLayerAtBottomSide(firstLayerSide);
-        return;
-    }
 
     // FIND CORRECT AND INCORRECT PIECES IN FIRST LAYER
     // console.log(firstLayerClrCount);
@@ -660,39 +667,43 @@ function solveFirstLayer() {
 
 // }
 
+let isEdgesToInsertAligned = false;
 function insertEdge(edgeColor, whereToPlace, firstLayerColor) { 
     console.log("FINDING", edgeColor, firstLayerColor, whereToPlace);
-    // console.log(topEdges);
     let edgeToMove;
-    loop1:
-        for (const topEdge of topEdges) {
-            let reqColor = [edgeColor, firstLayerColor]
-    loop2:
-            for (const edge of topEdge) {
-                if (reqColor.includes(edgeIndexToColor.get(edge))) {
-                    reqColor.splice(reqColor.indexOf(edgeIndexToColor.get(edge)), 1);
+    if (!isEdgesToInsertAligned) {
+        loop1:
+            for (const topEdge of topEdges) {
+                let reqColor = [edgeColor, firstLayerColor]
+            loop2:
+                for (const edge of topEdge) {
+                    if (reqColor.includes(edgeIndexToColor.get(edge))) {
+                        reqColor.splice(reqColor.indexOf(edgeIndexToColor.get(edge)), 1);
+                    }
+    
+                    if (!reqColor.length) {
+                        console.log("EDGE IS FOUND!", edge);
+                        edgeToMove = edge;
+                        break loop1;
+                    }
                 }
+            }
+        for (const [i, topEdgesF] of topEdges.entries()) {
+            if (topEdgesF.includes(edgeToMove)) {
+                for (let j = 0; j < i; j++) {
+                    pendingMoves.push("U'");
+                }
+            }
+        }
+        for (const [i, btmEdges] of bottomEdges.entries()) {
+            if (btmEdges.includes(whereToPlace)) {
+                for (let j = 0; j < i; j++) {
+                    pendingMoves.push("D");
+                }
+            }
+        }
+        isEdgesToInsertAligned = true;
 
-                if (!reqColor.length) {
-                    console.log("EDGE IS FOUND!", edge);
-                    edgeToMove = edge;
-                    break loop1;
-                }
-            }
-        }
-    for (const [i, topEdgesF] of topEdges.entries()) {
-        if (topEdgesF.includes(edgeToMove)) {
-            for (let j = 0; j < i; j++) {
-                pendingMoves.push("U'");
-            }
-        }
-    }
-    for (const [i, btmEdges] of bottomEdges.entries()) {
-        if (btmEdges.includes(whereToPlace)) {
-            for (let j = 0; j < i; j++) {
-                pendingMoves.push("D");
-            }
-        }
     }
     // REPEAT UNTIL LAYER COLOR IS CORRECT AND EDGE COLOR IS CORRECT
     pendingMoves.push("R");
