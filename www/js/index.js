@@ -84,6 +84,16 @@ let colorCount = new Map();
 
 let moveNotationMap = new Map();
 
+// Called in solve first layer func
+let isFirstLayerFound = false;
+let maxColor = [];
+let color;
+let firstLayerClrCount;
+let firstLayerSide;
+
+// Called in solve first layer and insert edge func
+let beforeCount;
+let afterCount;
 
 const sides = [
     [11, 23, 5, 17],    // Left
@@ -506,11 +516,11 @@ function solveCube() {
     }
 }
 
-let isFirstLayerFound = false;
-let maxColor = [];
-let color = [];
-let firstLayerClrCount;
-let firstLayerSide;
+// let isFirstLayerFound = false;
+// let maxColor = [];
+// let color;
+// let firstLayerClrCount;
+// let firstLayerSide;
 
 function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
@@ -592,6 +602,8 @@ function solveFirstLayer() {
                 }
 
             console.log(`EDGES: ${edges}`);
+            console.log(`FIRST LAYER SIDE: ${firstLayerSide}`);
+            console.log(`BTM SIDE: ${sides.at(-1)}`);
             edges = edges.filter((edge) => {
                 return !firstLayerSide.includes(edge);
             })
@@ -612,6 +624,7 @@ function solveFirstLayer() {
                                 edges.splice(edges.indexOf(otherEdge), 1);
                                 if (edgeIndexToColor.get(edge) === edgeIndexToColor.get(otherEdge)) {
                                     console.log(`CORRECT EDGE: ${edge} and ${otherEdge}`);
+                                    // if ()
                                     
                                     const [leftSide, rightSide] = findLeftAndRight(edge, otherEdge);
 
@@ -625,6 +638,7 @@ function solveFirstLayer() {
                                     }
                                     else {
                                         console.log("FIX LEFT SIDE");
+                                        // beforeCount = countCorrectClrInFirstLayer(color);
                                         insertEdge(edgeIndexToColor.get(leftSide[1]), leftSide[0], color);
                                     }
 
@@ -668,8 +682,16 @@ function solveFirstLayer() {
 // }
 
 let isEdgesToInsertAligned = false;
+// let beforeCount;
+// let afterCount;
+
 function insertEdge(edgeColor, whereToPlace, firstLayerColor) { 
     console.log("FINDING", edgeColor, firstLayerColor, whereToPlace);
+
+
+    beforeCount = countCorrectClrInFirstLayer(firstLayerColor);
+    console.log("BEFORE COUNT ", beforeCount);
+
     let edgeToMove;
     if (!isEdgesToInsertAligned) {
         loop1:
@@ -703,39 +725,47 @@ function insertEdge(edgeColor, whereToPlace, firstLayerColor) {
             }
         }
         isEdgesToInsertAligned = true;
-
     }
+
     // REPEAT UNTIL LAYER COLOR IS CORRECT AND EDGE COLOR IS CORRECT
     pendingMoves.push("R");
     pendingMoves.push("U");
     pendingMoves.push("R'");
     pendingMoves.push("U'");
 
-    console.log("DONEE!!");
+}
 
-    console.log("MOVES COMPLETE");
 
+function countCorrectClrInFirstLayer(color) {
+    let counter = 0;
+    for (const edge of sides.at(-1)) {
+        if (edgeIndexToColor.get(edge) === color) {
+            counter++;
+        }
+    }
+    return counter;
 }
 
 function findLeftAndRight(edge, otherEdge) {
 
     let edgesLayer = [[0, 3], [5, 17], [15, 12], [14, 2]];
 
+    console.log("EDGES: ", edge, otherEdge);
     for (let [i, edgeLayer] of edgesLayer.entries()) {
-        if (edgeLayer.includes(edge), edgeLayer.includes(otherEdge)) {
+        if (edgeLayer.includes(edge) && edgeLayer.includes(otherEdge)) {
             // console.log(edgeLayer);
             if (i === 0) {
-                leftSide = edgesLayer[3]
-                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]
+                leftSide = edgesLayer[3];
+                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1];
             }
 
             else if (i === 3) {
-                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1]
-                rightSide = edgesLayer[0]
+                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1];
+                rightSide = edgesLayer[0];
             }
             else {
-                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1]
-                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1]
+                leftSide = edgesLayer[edgesLayer.indexOf(edgeLayer) - 1];
+                rightSide = edgesLayer[edgesLayer.indexOf(edgeLayer) + 1];
             }
         }
     }
@@ -853,6 +883,20 @@ function isFirstLayerEdgesSolved(side) {
 
 function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)(moveNotation);
+    isEdgeInsertedCorrectly(beforeCount, afterCount);
+}
+
+
+function isEdgeInsertedCorrectly(before) {
+    if (!before) {
+        return;
+    }
+
+    after = countCorrectClrInFirstLayer(color);
+    if (before !== after) {
+        isEdgesToInsertAligned = false;
+    }
+
 }
 
 // let layer = {x: 0, y: 1, z: 0};`
