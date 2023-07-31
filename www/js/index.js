@@ -54,6 +54,7 @@ let feedbackBtn;
 let dashboardBtn;
 let homeBtns;
 let resetBtn;
+let helpBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -176,7 +177,7 @@ function onStart() {
     dashboardBtn = document.querySelector(".settings-page li > button[value=Dashboard]");
     homeBtns = document.querySelectorAll(".home-btn");
     resetBtn = document.querySelector(".color-assign-page .reset-btn");
-    console.log(resetBtn);
+    helpBtn = document.querySelector(".settings-page li > button[value=Help]");
 
 
     let parts = document.querySelectorAll("main div.part");
@@ -283,6 +284,9 @@ function manageActivePage() {
     else if (activePageName === "dashboard-page") {
         onDashboardPage();
     }
+    else if (activePageName === "help-page") {
+        onHelpPage();
+    }
 }
 
 
@@ -317,6 +321,7 @@ function onSettingsPage() {
     listenToSwipes();
     listenToBtnTap(feedbackBtn);
     listenToBtnTap(dashboardBtn);
+    listenToBtnTap(helpBtn);
 
 }
 
@@ -325,6 +330,10 @@ function onFeedbackPage() {
 }
 
 function onDashboardPage() {
+    listenToSwipes();
+}
+
+function onHelpPage() {
     listenToSwipes();
 }
 
@@ -518,6 +527,8 @@ function listenToBtnTap(btn) {
             break;
         case resetBtn:
             resetBtn.addEventListener("click", onResetBtnTap);
+        case helpBtn:
+            helpBtn.addEventListener("click", onHelpBtnTap);
     }
 }
 
@@ -532,6 +543,10 @@ function onDashboardBtnTap() {
 
 function onResetBtnTap() {
     resetColors();
+}
+
+function onHelpBtnTap() {
+    changePage("help-page");
 }
 
 function resetColors() {
@@ -1617,9 +1632,12 @@ function onSwipeLeft() {
         case "dashboard-page":
             changePage("settings-page");
             break;
+        case "help-page":
+            changePage("settings-page");
+            break;
         default:
             console.log("NO PG TO REDITECT!");
-    }   
+    }  
 }
 
 
@@ -1686,6 +1704,9 @@ function onBackButton() {
             changePage("settings-page");
             break;
         case "dashboard-page":
+            changePage("settings-page");
+            break;
+        case "help-page":
             changePage("settings-page");
             break;
         default:
