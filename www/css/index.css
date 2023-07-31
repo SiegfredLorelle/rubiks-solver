@@ -366,7 +366,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .color-assign-page>.solver-part>div,
 .color-assign-page>.solved-part>div {
-    margin: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .color-assign-page>.solved-part>hgroup {
