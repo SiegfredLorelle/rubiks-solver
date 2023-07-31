@@ -883,7 +883,7 @@ class Cube {
     /* NOTE: APPLIES COLOR TO CUBE */
     
     /* COLORS TO ALL EDGES */
-    this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
+    // this.edges.forEach( edge => edge.material.color.setHex( colors[ edge.name ] ) );
     
   }
   
@@ -1444,7 +1444,7 @@ class Controls {
       // console.log(this.flipType);
       
 
-      if ( this.flipType === 'layer' ) {
+      if ( this.flipType === 'layer' && selectedCube === "3") {
 
         this.rotateLayer( delta, false, layer => {
 

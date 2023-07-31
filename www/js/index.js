@@ -181,7 +181,7 @@ function onStart() {
     homeBtns = document.querySelectorAll(".home-btn");
     resetBtn = document.querySelector(".color-assign-page .reset-btn");
     helpBtn = document.querySelector(".settings-page li > button[value=Help]");
-    backBtnInSolvePg =document.querySelector(".color-assign-page .fa-right-from-bracket");
+    backBtnsInSolvePg =document.querySelectorAll(".back-btn");
 
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
@@ -197,6 +197,15 @@ function onStart() {
                 return;
             }
             changePage("home-page");
+        });
+    });
+
+    
+    backBtnsInSolvePg.forEach(backBtnInSolvePg => {
+        backBtnInSolvePg.addEventListener("click", () => {
+            if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                changePage("cube-select-page");
+            }
         });
     });
 
@@ -319,7 +328,7 @@ function onColorAssignPage() {
     // listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
-    listenToBtnTap(backBtnInSolvePg);
+    // listenToBtnTap(backBtnInSolvePg);
     listenToColorChange();
     window.version = '0.99.2';
     window.game = new Game();
@@ -371,12 +380,38 @@ function onCubeSelectBtnClick(event) {
     // console.log(selectedCube);
     changePage("color-assign-page");
     if (selectedCube === "3") {
-        changePartOfPage("solver-part");
+        changePartOfPage("freestyle-part");
+        color3x3Cube();
+
     }
 }
 
 
+function color3x3Cube() {
+    // indices.forEach(index => );
+    const colors = ["#ffffff", "#1a76bf", "#eee25a", "#ff5442", "#feb147", "#54ce8e"]
+    const indices = Array.from({ length: 54 }, (value, index) => index);
+    console.log(indices);
+    
+            for (let i = indices.length - 1; i > 0; i--) { 
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [indices[i], indices[j]] = [indices[j], indices[i]]; 
+        }
 
+        
+        
+    let k = 0;
+    let l = 0;
+    indices.forEach(index => {
+        window.game.cube.updateEdgesColors(index, colors[l]);
+        k++;
+        if (k >= 9) {
+            l++;
+            k = 0;
+        } 
+    });
+    // window.game.cube.updateColors();
+}
 
 function listenToSettingsBtnClick() {
     settingsBtn.addEventListener("click", onSettingsBtnClick);
@@ -562,8 +597,8 @@ function listenToBtnTap(btn) {
             break;
         case helpBtn:
             helpBtn.addEventListener("click", onHelpBtnTap);
-        case backBtnInSolvePg:
-            backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
+        // case backBtnInSolvePg:
+        //     backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
     }
 }
 
@@ -584,11 +619,9 @@ function onHelpBtnTap() {
     changePage("help-page");
 }
 
-function onBackBtnInSolvePgTap() {
-    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-        changePage("cube-select-page");
-    }
-}
+// function onBackBtnInSolvePgTap() {
+
+// }
 
 function resetColors() {
     for (const i of indices) {
@@ -1650,10 +1683,20 @@ function onSwipeLeft() {
                     changePage("cube-select-page");
                     break;
                 case "solver-part":
-                    changePartOfPage("color-assign-part");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
                     break;
                 case "solved-part":
-                    changePage("cube-select-page");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
+                case "freestyle-part":
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
                 default:
                     console.log("ERROR");
             }
@@ -1672,7 +1715,7 @@ function onSwipeLeft() {
             break;
         default:
             console.log("NO PG TO REDITECT!");
-    }  
+    }   
 }
 
 
@@ -1724,10 +1767,20 @@ function onBackButton() {
                     changePage("cube-select-page");
                     break;
                 case "solver-part":
-                    changePartOfPage("color-assign-part");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
                     break;
                 case "solved-part":
-                    changePage("cube-select-page");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
+                case "freestyle-part":
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
                 default:
                     console.log("ERROR");
             }
