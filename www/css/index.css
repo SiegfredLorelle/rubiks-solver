@@ -368,7 +368,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .color-assign-page>.solver-part,
 .solved-part > hgroup > p:last-child {
-    text-transform: lowercase;
+    text-transform: initial;
 }
 
 .color-assign-page>.solver-part>div,
