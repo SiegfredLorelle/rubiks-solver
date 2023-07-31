@@ -644,6 +644,21 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--first-color);
   }
 
+  /* Common styles for the settings page */
+.help-page {
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+}
+
+/* Styles for the container of settings buttons */
+.help-container {
+    list-style: none;
+    padding: 0;
+    /* color: #ffffff; */
+}
+
+
 /* IN CORDOVA DEFAULT STRUCTURE */
 @media DISABLED {
 
