@@ -316,10 +316,11 @@ function onColorAssignPage() {
     // listenToSwipes();
     listenToHold();
     listenToColorTap();
-    listenToValueChange();
+    // listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
     listenToBtnTap(backBtnInSolvePg);
+    listenToColorChange();
     window.version = '0.99.2';
     window.game = new Game();
     resetColors();
@@ -362,10 +363,20 @@ function unlistenToCubeSelectBntClick() {
 }
 
 function onCubeSelectBtnClick(event) {
-    selectedCube = event.target.value;
+    selectedCube = event.currentTarget.value;
+    console.log(selectedColor);
+    if (!selectedCube) {
+        alert("An error has occurred. Try doing it again.");
+    }
     // console.log(selectedCube);
     changePage("color-assign-page");
+    if (selectedCube === "3") {
+        changePartOfPage("solver-part");
+    }
 }
+
+
+
 
 function listenToSettingsBtnClick() {
     settingsBtn.addEventListener("click", onSettingsBtnClick);
@@ -403,7 +414,6 @@ function onHold(heldColor) {
     // console.log("HOLD", heldColor);
     heldColor.disabled = false;
     heldColor.click();
-    
 }
 
 function disableColors() {
@@ -418,6 +428,17 @@ function listenToColorTap() {
     colors.forEach(color => {
         color.addEventListener("touchstart", onSelectColor);
     })
+}
+
+
+function listenToColorChange() {
+    for (const color of colors) {
+        color.addEventListener("input", () => {
+            // console.log("COLOR HAS CHANGED!");
+            resetColors();
+        });
+    }
+
 }
 
 function onSelectColor(event) {
@@ -509,16 +530,15 @@ function checkCubeValidity() {
     return true;
 }
 
-function listenToValueChange() {
-    colors.forEach(color => {
-        color.addEventListener("change", onColorChange);
-    });
-}
+// function listenToValueChange() {
+//     colors.forEach(color => {
+//         color.addEventListener("input", onColorChange);
+//     });
+// }
 
-function onColorChange(event) {
-    selectedColor = event.target.value;
-    // console.log(selectedColor);
-}
+// function onColorChange(event) {
+//     selectedColor = event.target.value;
+// }
 
 function listenToBtnTap(btn) {
     switch (btn) {
