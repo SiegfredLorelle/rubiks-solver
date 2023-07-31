@@ -381,11 +381,38 @@ function onCubeSelectBtnClick(event) {
     changePage("color-assign-page");
     if (selectedCube === "3") {
         changePartOfPage("freestyle-part");
+        color3x3Cube();
+
     }
 }
 
 
+function color3x3Cube() {
+    // indices.forEach(index => );
+    const colors = ["#ffffff", "#1a76bf", "#eee25a", "#ff5442", "#feb147", "#54ce8e"]
+    const indices = Array.from({ length: 54 }, (value, index) => index);
+    console.log(indices);
+    
+        let j = 0;
+        for (let i = indices.length - 1; i > 0; i--) { 
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [indices[i], indices[j]] = [indices[j], indices[i]]; 
+        }
 
+        
+        
+    let k = 0;
+    let l = 0;
+    indices.forEach(index => {
+        window.game.cube.updateEdgesColors(index, colors[l]);
+        k++;
+        if (k >= 9) {
+            l++;
+            k = 0;
+        } 
+    });
+    // window.game.cube.updateColors();
+}
 
 function listenToSettingsBtnClick() {
     settingsBtn.addEventListener("click", onSettingsBtnClick);
@@ -1657,10 +1684,20 @@ function onSwipeLeft() {
                     changePage("cube-select-page");
                     break;
                 case "solver-part":
-                    changePartOfPage("color-assign-part");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
                     break;
                 case "solved-part":
-                    changePage("cube-select-page");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
+                case "freestyle-part":
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
                 default:
                     console.log("ERROR");
             }
@@ -1679,7 +1716,7 @@ function onSwipeLeft() {
             break;
         default:
             console.log("NO PG TO REDITECT!");
-    }  
+    }   
 }
 
 
@@ -1731,10 +1768,20 @@ function onBackButton() {
                     changePage("cube-select-page");
                     break;
                 case "solver-part":
-                    changePartOfPage("color-assign-part");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
                     break;
                 case "solved-part":
-                    changePage("cube-select-page");
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
+                case "freestyle-part":
+                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                        changePage("cube-select-page");
+                    }
+                    break;
                 default:
                     console.log("ERROR");
             }
