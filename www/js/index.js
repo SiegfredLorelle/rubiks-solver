@@ -53,6 +53,7 @@ let tryAgainBtn;
 let feedbackBtn;
 let dashboardBtn;
 let homeBtns;
+let resetBtn;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -174,6 +175,8 @@ function onStart() {
     feedbackBtn = document.querySelector(".settings-page li > button[value=Feedback]");
     dashboardBtn = document.querySelector(".settings-page li > button[value=Dashboard]");
     homeBtns = document.querySelectorAll(".home-btn");
+    resetBtn = document.querySelector(".color-assign-page .reset-btn");
+    console.log(resetBtn);
 
 
     let parts = document.querySelectorAll("main div.part");
@@ -295,10 +298,12 @@ function onColorAssignPage() {
     listenToColorTap();
     listenToValueChange();
     listenToBtnTap(tryAgainBtn);
+    listenToBtnTap(resetBtn);
     window.version = '0.99.2';
     window.game = new Game();
-    colorCount.clear();
-    edgeIndex = 0;
+    resetColors();
+    // colorCount.clear();
+    // edgeIndex = 0;
     // window.game.cube.size = 2;
 }
 
@@ -455,6 +460,7 @@ function checkIsCubeSolved() {
 function onCubeSolved() {
     updateSolvedPartContent("Cube Solved!", time);
     changePartOfPage("solved-part");
+    updateDashboard();
     stopTimer();
 }
 
@@ -501,6 +507,9 @@ function listenToBtnTap(btn) {
             break;
         case dashboardBtn:
             dashboardBtn.addEventListener("click", onDashboardBtnTap);
+            break;
+        case resetBtn:
+            resetBtn.addEventListener("click", onResetBtnTap);
     }
 }
 
@@ -511,6 +520,21 @@ function onSolveBtnTap() {
 
 function onDashboardBtnTap() {
     changePage("dashboard-page");
+}
+
+function onResetBtnTap() {
+    resetColors();
+}
+
+function resetColors() {
+    for (const i of indices) {
+        window.game.cube.updateEdgesColors(i, "#b2b6c1");
+        edgeIndexToColor.set(i, null);
+    }
+    colorCount.clear();
+    edgeIndex = 0;
+    solveBtn.disabled = true;
+
 }
 
 let i = 0;
@@ -595,7 +619,6 @@ function updateTimer() {
 }
 
 function stopTimer() {
-    updateDashboard();
     isTimerOngoing = false;
     hr = 0;
     min = 0;
@@ -662,7 +685,7 @@ function updateTimerInSolverPart() {
     let minText = min < 10 ? "0" + min : min;
     let secText = sec < 10 ? "0" + sec : sec;
     let msText = ms < 100 ? "0" + ms : ms + " ";
-    msText = msText.substring(0, msText.length - 1);
+    msText = msText.slice(0, 2);
     time = `${hrText}hr ${minText}min ${secText}s ${msText}ms`;
     timeShortFormat = `${hrText}:${minText}:${secText}:${msText}`;
     // console.log(time);
@@ -688,6 +711,7 @@ function onFirstLayerSolved() {
     resetVar();
     updateSolvedPartContent("First Layer Solved!");
     changePartOfPage("solved-part");
+    updateDashboard();
     stopTimer();
 }
 
@@ -1553,6 +1577,7 @@ function changePage(pageToActivate) {
     if (activePart !== "color-assign-part") {
         changePartOfPage("color-assign-part");
     }
+    stopTimer();
 }
 
 function changePartOfPage(partOfPageToActivate) {

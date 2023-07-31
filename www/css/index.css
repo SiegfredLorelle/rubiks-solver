@@ -334,10 +334,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .color-assign-page>.color-assign-part>.solve-reset-container {
-    /* margin-bottom: 3rem; */
+    margin-bottom: 1.5rem;
     width: 100%;
-    /* height: 10%; */
-    /* height: 5%; */
 }
 
 .color-assign-page>.color-assign-part>.solve-reset-container>button,
