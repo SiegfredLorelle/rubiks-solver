@@ -55,6 +55,7 @@ let dashboardBtn;
 let homeBtns;
 let resetBtn;
 let helpBtn;
+let backBtnInSolvePg;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -192,21 +193,18 @@ function onStart() {
         homeBtn.addEventListener("click", () => {
             if (homeBtn.parentNode.tagName === "NAV") {
                 if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                    changePage("home-page");
+                    changePage("cube-select-page");
                 }
-                return;
             }
-            changePage("home-page");
+            else {
+                changePage("home-page");
+            }
         });
     });
 
     
     backBtnsInSolvePg.forEach(backBtnInSolvePg => {
-        backBtnInSolvePg.addEventListener("click", () => {
-            if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                changePage("cube-select-page");
-            }
-        });
+        backBtnInSolvePg.addEventListener("click", backWarning)
     });
 
     moveNotationText = document.querySelector(".solver-part > p:first-child");
@@ -217,6 +215,13 @@ function onStart() {
     findActivePart();
 
     resetMoveNotationMap();
+}
+
+
+function backWarning() {
+    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+        changePage("cube-select-page");
+    }
 }
 
 /* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
