@@ -316,10 +316,11 @@ function onColorAssignPage() {
     // listenToSwipes();
     listenToHold();
     listenToColorTap();
-    listenToValueChange();
+    // listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
     listenToBtnTap(backBtnInSolvePg);
+    listenToColorChange();
     window.version = '0.99.2';
     window.game = new Game();
     resetColors();
@@ -403,7 +404,6 @@ function onHold(heldColor) {
     // console.log("HOLD", heldColor);
     heldColor.disabled = false;
     heldColor.click();
-    
 }
 
 function disableColors() {
@@ -418,6 +418,17 @@ function listenToColorTap() {
     colors.forEach(color => {
         color.addEventListener("touchstart", onSelectColor);
     })
+}
+
+
+function listenToColorChange() {
+    for (const color of colors) {
+        color.addEventListener("input", () => {
+            // console.log("COLOR HAS CHANGED!");
+            resetColors();
+        });
+    }
+
 }
 
 function onSelectColor(event) {
@@ -509,16 +520,15 @@ function checkCubeValidity() {
     return true;
 }
 
-function listenToValueChange() {
-    colors.forEach(color => {
-        color.addEventListener("change", onColorChange);
-    });
-}
+// function listenToValueChange() {
+//     colors.forEach(color => {
+//         color.addEventListener("input", onColorChange);
+//     });
+// }
 
-function onColorChange(event) {
-    selectedColor = event.target.value;
-    // console.log(selectedColor);
-}
+// function onColorChange(event) {
+//     selectedColor = event.target.value;
+// }
 
 function listenToBtnTap(btn) {
     switch (btn) {
