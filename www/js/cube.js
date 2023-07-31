@@ -888,22 +888,9 @@ class Cube {
   }
   
   updateEdgesColors( index, color) {
-    // this.edge[]
-    // let index = 0;
     color = color.slice(1);
 
     this.edges[index].material.color.setHex(`0x${color}`);
-    // console.log(this.edges[0]);
-
-    // this.edges.forEach(edge => {
-    //   // console.log(edge);
-    //   edge.addEventListener("click", (event) => {
-    //     console.log(event.target);
-    //   })
-    // });
-
-    // for
-    
   }
 
 }
@@ -1622,43 +1609,6 @@ class Controls {
 
   }
 
-  // keyboardMove( type, move, callback ) {
-
-  //   if ( this.state !== STILL ) return;
-  //   if ( this.enabled !== true ) return;
-
-  //   if ( type === 'LAYER' ) {
-
-  //     const layer = this.getLayer( move.position );
-
-  //     this.flipAxis = new THREE.Vector3();
-  //     this.flipAxis[ move.axis ] = 1;
-  //     this.state = ROTATING;
-
-  //     this.selectLayer( layer );
-  //     this.rotateLayer( move.angle, false, layer => {
-
-  //       this.game.storage.saveGame();
-  //       this.state = STILL;
-  //       this.checkIsSolved();
-
-  //     } );
-
-  //   } else if ( type === 'CUBE' ) {
-
-  //     this.flipAxis = new THREE.Vector3();
-  //     this.flipAxis[ move.axis ] = 1;
-  //     this.state = ROTATING;
-
-  //     this.rotateCube( move.angle, () => {
-
-  //       this.state = STILL;
-
-  //     } );
-
-  //   }
-
-  // }
 
   scrambleCube() {
 
@@ -2264,11 +2214,6 @@ class Preferences {
 
     };
 
-    // this.ranges.scramble.list.forEach( ( item, i ) => {
-
-    //   item.innerHTML = this.game.scrambler.scrambleLength[ this.game.cube.size ][ i ];
-
-    // } );
     
   }
 
@@ -2558,23 +2503,6 @@ class Storage {
 
   saveGame() {
 
-    // const gameInProgress = true;
-    // const gameCubeData = { names: [], positions: [], rotations: [] };
-    // const gameTime = this.game.timer.deltaTime;
-
-    // gameCubeData.size = this.game.cube.sizeGenerated;
-
-    // this.game.cube.pieces.forEach( piece => {
-
-    //   gameCubeData.names.push( piece.name );
-    //   gameCubeData.positions.push( piece.position );
-    //   gameCubeData.rotations.push( piece.rotation.toVector3() );
-
-    // } );
-
-    // localStorage.setItem( 'theCube_playing', gameInProgress );
-    // localStorage.setItem( 'theCube_savedState', JSON.stringify( gameCubeData ) );
-    // localStorage.setItem( 'theCube_time', gameTime );
 
   }
 
@@ -2586,28 +2514,9 @@ class Storage {
 
   }
 
-  // loadScores() {
-
-  //   try {
-
-  //   } catch( e ) {}
-
-  // }
-
 
   loadPreferences() {
 
-    // try {
-
-    //   const preferences = JSON.parse( localStorage.getItem( 'theCube_preferences' ) );
-
-    //   if ( ! preferences ) throw new Error();
-
-    //   this.game.themes.setTheme( preferences.theme );
-
-    //   return true;
-
-    // } catch (e) {
 
       this.game.cube.size = parseInt(selectedCube);
       this.game.controls.flipConfig = 0;
@@ -3002,24 +2911,6 @@ class Game {
       if ( this.state === STATE.Playing ) return;
 
       if ( this.state === STATE.Menu ) {
-
-        // if ( ! tappedTwice ) {
-
-        //   tappedTwice = true;
-        //   setTimeout( () => tappedTwice = false, 300 );
-        //   return false;
-
-        // }
-
-        // this.game( SHOW );
-
-      // } else if ( this.state === STATE.Complete ) {
-
-      //   // this.complete( HIDE );
-
-      // } else if ( this.state === STATE.Stats ) {
-
-      //   // this.stats( HIDE );
 
       } 
 

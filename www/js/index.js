@@ -201,7 +201,8 @@ function onStart() {
             }
             else {
                 changePage("home-page");
-            }        });
+            }
+        });
     });
 
     
@@ -212,7 +213,6 @@ function onStart() {
     moveNotationText = document.querySelector(".solver-part > p:first-child");
 
 
-    // console.log(mapParts);
     findActivePage();
     findActivePart();
 
@@ -285,9 +285,7 @@ function findActivePage() {
 
 
 function findActivePart() {
-    // switch(activePage) {
     activePart = document.querySelector("main div.part.active");
-    // console.log(activePart.classList[0]);
     activePartName = activePart.classList[0];
 }
 
@@ -329,21 +327,16 @@ function onCubeSelectPage() {
 }
 
 function onColorAssignPage() {
-    // listenToSwipes();
     listenToHold();
     listenToColorTap();
-    // listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
-    // listenToBtnTap(backBtnInSolvePg);
     listenToColorChange();
     window.version = '0.99.2';
     window.game = new Game();
     resetColors();
     
-    // colorCount.clear();
-    // edgeIndex = 0;
-    // window.game.cube.size = 2;
+
 }
 
 function onSettingsPage() {
@@ -384,7 +377,6 @@ function onCubeSelectBtnClick(event) {
     if (!selectedCube) {
         alert("An error has occurred. Try doing it again.");
     }
-    // console.log(selectedCube);
     changePage("color-assign-page");
     if (selectedCube === "3") {
         alert("Note that the 3x3 solver is still under development.\n" +
@@ -420,7 +412,6 @@ function color3x3Cube() {
             k = 0;
         } 
     });
-    // window.game.cube.updateColors();
 }
 
 function listenToSettingsBtnClick() {
@@ -479,7 +470,6 @@ function listenToColorTap() {
 function listenToColorChange() {
     for (const color of colors) {
         color.addEventListener("input", () => {
-            // console.log("COLOR HAS CHANGED!");
             resetColors();
         });
     }
@@ -575,15 +565,6 @@ function checkCubeValidity() {
     return true;
 }
 
-// function listenToValueChange() {
-//     colors.forEach(color => {
-//         color.addEventListener("input", onColorChange);
-//     });
-// }
-
-// function onColorChange(event) {
-//     selectedColor = event.target.value;
-// }
 
 function listenToBtnTap(btn) {
     switch (btn) {
@@ -607,8 +588,6 @@ function listenToBtnTap(btn) {
             break;
         case helpBtn:
             helpBtn.addEventListener("click", onHelpBtnTap);
-        // case backBtnInSolvePg:
-        //     backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
     }
 }
 
@@ -628,10 +607,6 @@ function onResetBtnTap() {
 function onHelpBtnTap() {
     changePage("help-page");
 }
-
-// function onBackBtnInSolvePgTap() {
-
-// }
 
 function resetColors() {
     for (const i of indices) {
@@ -711,7 +686,6 @@ function startTimer() {
         totalMS = 0;
         console.log("STARTED TIMER");
         setTimeout(updateTimer, 1);
-        // return;
 }
 
 
@@ -737,7 +711,6 @@ function updateTimer() {
         min = 0;
         sec = 0;
     }
-    // time = `${hr}:${min}:${sec}:${ms}`;
     updateTimerInSolverPart();
     timer = setTimeout(updateTimer, 10);
 
@@ -755,17 +728,7 @@ function stopTimer() {
 }
 
 function updateDashboard() {
-    // console.log(dashboard);
 
-    // let msInDasboard = [];
-    
-    // for (const record of dashboard) {
-    //     msInDasboard.push(record.totalMS);
-    // }
-
-
-
-    // console.log("TOTAL MS:" + totalMS);
     let date = new Date();
     let yr = date.getFullYear() + "";
     yr = yr.substring(2);
@@ -873,18 +836,12 @@ function updateSolvedPartContent(msg) {
     timeText.innerHTML = time;
 }
 
-// let isFirstLayerFound = false;
-// let maxColor = [];
-// let color;
-// let firstLayerClrCount;
-// let firstLayerSide;
 
 function solveFirstLayer() {
     console.log("SOLVING FIRST LAYER");
 
     if (!isFirstLayerFound) {
         /* FIND THE SIDE FOR FIRST LAYER */
-        // let colorCount = new Map(); // color : count
         maxColor = [null, 0]; // side, count, color
         color = null;
         
@@ -896,7 +853,6 @@ function solveFirstLayer() {
             // colorCount.clear();
             let count = 0;
             for (let i = 0; i < side.length; i++) {
-                // console.log(edgeIndexToColor.get(side[0]), edgeIndexToColor.get(side[0]));
                 if (edgeIndexToColor.get(side[0]) === edgeIndexToColor.get(side[1])) {
                     count++;
                     color = edgeIndexToColor.get(side[0]);
@@ -906,11 +862,8 @@ function solveFirstLayer() {
                 side.push(side.shift());
             }
             
-            // console.log("FINAL", count);
             if (count >= maxColor[1]) {
                 maxColor = [side, count];
-                // color = side;
-                // console.log("SIDE TOOO", side);
             }
         }
 
@@ -921,7 +874,6 @@ function solveFirstLayer() {
         console.log(firstLayerSide, firstLayerClrCount);
 
 
-        // let firstLayerColor = [...colorCount.valu[es].indexOf(maxColor[1]); 
         // ROTATE SIDE TO BOTTOM
         console.log(!isFirstLayerAtBottomSide(firstLayerSide));
         if (!isFirstLayerAtBottomSide(firstLayerSide)) {
@@ -933,14 +885,11 @@ function solveFirstLayer() {
 
 
     // FIND CORRECT AND INCORRECT PIECES IN FIRST LAYER
-    // console.log(firstLayerClrCount);
     if (firstLayerClrCount > 0) {
-        // console.log("PUMASOK");
         let btmLayer = [1, 4, 16, 13];
         let edges = []; 
 
         for (let i = 0; i < btmLayer.length; i++) {
-            // console.log(btmLayer[0], btmLayer[1]);
             // CHECK IF THEIR EDGES ARE CORRECT
             if (edgeIndexToColor.get(btmLayer[0]) === edgeIndexToColor.get(btmLayer[1])) {
                 console.log(`SAME COLOR: ${btmLayer[0]}, ${btmLayer[1]}`);
@@ -981,31 +930,17 @@ function solveFirstLayer() {
                                 edges.splice(edges.indexOf(otherEdge), 1);
                                 if (edgeIndexToColor.get(edge) === edgeIndexToColor.get(otherEdge)) {
                                     console.log(`CORRECT EDGE: ${edge} and ${otherEdge}`);
-                                    // if ()
                                     
                                     const [leftSide, rightSide] = findLeftAndRight(edge, otherEdge);
 
-                                    // CHECK IF LEFT AND RIGHT IS CORRECT
                                     console.log(leftSide, rightSide);
                                     // CHECK IF COLOR IS CORRECT
-                                    // console.log(btmLayer.at(-1), btmLayer.at(btmLayer.indexOf(otherEdge + 1)));
                                     if (edgeIndexToColor.get(leftSide[0]) === edgeIndexToColor.get(leftSide[1])) {
-                                        // GO TO NEXT SIDE
                                         console.log("GO TO NEXT SIDE");
                                     }
                                     else {
-                                        console.log("FIX LEFT SIDE");
-                                        // beforeCount = countCorrectClrInFirstLayer(color);
                                         insertEdge(edgeIndexToColor.get(leftSide[1]), leftSide[0], color);
                                     }
-
-                                    // if (edgeIndexToColor.get(rightSide[0]) === edgeIndexToColor.get(rightSide[1])) {
-                                    //     console.log("GO TO NEXT SIDE");
-                                    // }
-                                    // else {
-                                    //     console.log("FIX RIGHT SIDE");
-                                    //     // insertEdge(edgeIndexToColor.get(rightSide[0]), rightSide[1], color);
-                                    // }
                                     
 
                                 }
@@ -1014,7 +949,6 @@ function solveFirstLayer() {
                     }
                 }
             }
-                // console.log("");
             }
 
 
@@ -1688,32 +1622,6 @@ function onSwipeLeft() {
         case "cube-select-page":
             changePage("home-page");
             break;
-        case "color-assign-page":
-            console.log(activePartName);
-            switch(activePartName) {
-                case "color-assign-part":
-                    // changePartOfPage("solver-part");
-                    changePage("cube-select-page");
-                    break;
-                case "solver-part":
-                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                        changePage("cube-select-page");
-                    }
-                    break;
-                case "solved-part":
-                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                        changePage("cube-select-page");
-                    }
-                    break;
-                case "freestyle-part":
-                    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                        changePage("cube-select-page");
-                    }
-                    break;
-                default:
-                    console.log("ERROR");
-            }
-            break;
         case "settings-page":
             changePage("cube-select-page");
             break;
@@ -1776,7 +1684,6 @@ function onBackButton() {
             console.log(activePartName);
             switch(activePartName) {
                 case "color-assign-part":
-                    // changePartOfPage("solver-part");
                     changePage("cube-select-page");
                     break;
                 case "solver-part":
