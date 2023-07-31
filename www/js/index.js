@@ -193,7 +193,15 @@ function onStart() {
     });
 
     homeBtns.forEach(homeBtn => {
-        homeBtn.addEventListener("click", homeWarning);
+        homeBtn.addEventListener("click", () => {
+            if (homeBtn.parentNode.tagName === "NAV") {
+                if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                    changePage("cube-select-page");
+                }
+            }
+            else {
+                changePage("home-page");
+            }        });
     });
 
     
@@ -209,17 +217,6 @@ function onStart() {
     findActivePart();
 
     resetMoveNotationMap();
-}
-
-function homeWarning() {
-    if (homeBtn.parentNode.tagName === "NAV") {
-        if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-            changePage("cube-select-page");
-        }
-    }
-    else {
-        changePage("home-page");
-    }
 }
 
 
