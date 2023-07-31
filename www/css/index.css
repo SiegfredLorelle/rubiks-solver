@@ -213,7 +213,6 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .cube-select-page>div>.cube-sizes-container>li>button {
-    font-size: 1.5rem;
     background-color: #747070;
     width: auto;
     padding-top: 1rem;
@@ -228,12 +227,22 @@ input[type="color"]::-webkit-color-swatch {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.3s var(--transition);
+    border-radius: 10px;
+    padding: 1rem 2.5rem;
+    font-size: var(--small-font-size);
+    font-weight: var(--weight-500);
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s var(--transition);
 }
 
 .cube-select-page>div>.cube-sizes-container>li>button:hover {
     background-color: #373535;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(32, 32, 32, 0.815);
 }
+
 
 .cube-select-page>div>.cube-sizes-container>li>button>img {
     height: 50px;
@@ -548,7 +557,8 @@ input[type="color"]::-webkit-color-swatch {
 
 
 .settings-container button:hover {
-    background-color: #b9b6b6;
+    background-color: #373535;
+    box-shadow: 0 4px 8px rgba(32, 32, 32, 0.815);
 }
 
 .settings-container>li>button {
@@ -588,16 +598,18 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .contact__input {
+    text-shadow: #020202;
+    background-color: #a09e9e;
     border: 2px solid var(--border-color);
     padding: 0.8rem 1.25rem;
     width: 100%;
-    border-radius: 5px;
-    font-size: var(--smaller-font-size);
+    border-radius: 10px;
+    font-size: smaller;
     margin-bottom: 1.25rem;
 }
 
 .textarea {
-    height: 120px;
+    height: 150px;
     resize: none;
 }
 
