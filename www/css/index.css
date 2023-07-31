@@ -316,8 +316,17 @@ input[type="color"]::-webkit-color-swatch {
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    /* text-align: center; */
+
 }
 
+.part.active > hgroup {
+    width: 100%;
+}
+
+.part.active > hgroup > p {
+    text-align: center;
+}
 
 .color-assign-page>.color-assign-part {
     width: 100%;
