@@ -192,7 +192,7 @@ function onStart() {
         homeBtn.addEventListener("click", () => {
             if (homeBtn.parentNode.tagName === "NAV") {
                 if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                    changePage("cube-select-page");
+                    changePage("home-page");
                 }
                 return;
             }
