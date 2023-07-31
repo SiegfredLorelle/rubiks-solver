@@ -380,6 +380,9 @@ function onCubeSelectBtnClick(event) {
     // console.log(selectedCube);
     changePage("color-assign-page");
     if (selectedCube === "3") {
+        alert("Note that the 3x3 solver is still under development.\n" +
+        "For now feel free to play with it in freestyle.");
+
         changePartOfPage("freestyle-part");
         color3x3Cube();
 
