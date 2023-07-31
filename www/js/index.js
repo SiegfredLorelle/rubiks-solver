@@ -195,6 +195,14 @@ function onStart() {
     findActivePage();
     findActivePart();
 
+    resetMoveNotationMap();
+}
+
+/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
+onStart();
+
+
+function resetMoveNotationMap() {
     moveNotationMap.set("U", moveU);
     moveNotationMap.set("U'", moveUPrime);
     moveNotationMap.set("U-indices", [6, 9, 11, 23, 21, 18, 20, 8]);
@@ -232,9 +240,6 @@ function onStart() {
     moveNotationMap.set("Z", moveZ);
     moveNotationMap.set("Z'", moveZPrime);
 }
-
-/* FOR TESTING ON WEB, ON ANDROID DEVICES USE ON DEVICE READY ON MOBILE APPS */
-onStart();
 
 function exitApp() {
     if (confirm("Exit?")) {
@@ -302,6 +307,7 @@ function onColorAssignPage() {
     window.version = '0.99.2';
     window.game = new Game();
     resetColors();
+    
     // colorCount.clear();
     // edgeIndex = 0;
     // window.game.cube.size = 2;
@@ -462,6 +468,8 @@ function onCubeSolved() {
     changePartOfPage("solved-part");
     updateDashboard();
     stopTimer();
+    resetMoveNotationMap();
+
 }
 
 function checkCubeValidity() {
@@ -534,6 +542,8 @@ function resetColors() {
     colorCount.clear();
     edgeIndex = 0;
     solveBtn.disabled = true;
+    resetMoveNotationMap();
+
 
 }
 
@@ -558,24 +568,41 @@ function onNextMoveBtnTap() {
 
 
 
-    /* ACTUAL CODE */
-    if (!isTimerOngoing) {
-        startTimer();
-        isTimerOngoing = true;
-    }
+    // try {
+        if (!isTimerOngoing) {
+            startTimer();
+            isTimerOngoing = true;
+        }
+    
+        if (!pendingMoves.length) {
+            checkIsCubeSolved();
+            solveCube();
+        }
 
-    if (!pendingMoves.length) {
-        checkIsCubeSolved();
-        solveCube();
-    }
-    if (pendingMoves.length) {
-        performMove(pendingMoves.shift());
-    }
+        if (pendingMoves.length) {
+            performMove(pendingMoves.shift());
+        }
+    // }
+    // catch (error) {
+    //     showError();
+    // }
+
+
+
+    /* ACTUAL CODE */
     
     console.log(pendingMoves);
-    
+}
 
-
+function showError() {
+    let msg = "The cube seems unsolvable. Ensure that the assigned colors are valid.\n\n" + 
+    "If this is an error, you may report it by sending us a message.\nWould you like to send us a message?";
+    if (confirm(msg)) {
+    changePage("feedback-page");
+    }
+    else {
+    changePage("cube-select-page");
+    }
 }
 
 function startTimer() {
@@ -713,6 +740,7 @@ function onFirstLayerSolved() {
     changePartOfPage("solved-part");
     updateDashboard();
     stopTimer();
+    resetMoveNotationMap();
 }
 
 function resetVar() {
@@ -1103,6 +1131,9 @@ function isFirstLayerEdgesSolved(side) {
 function performMove(moveNotation) {
     moveNotationMap.get(moveNotation)(moveNotation);
     isEdgeInsertedCorrectly(beforeCount, afterCount);
+    // if (isFirstLayerSolved()) {
+    //     onFirstLayerSolved();
+    // }
 }
 
 
