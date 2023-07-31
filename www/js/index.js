@@ -52,6 +52,7 @@ let backMoveBtn;
 let tryAgainBtn;
 let feedbackBtn;
 let dashboardBtn;
+let homeBtns;
 
 let edgeIndexToColor = new Map();
 edgeIndexToColor.set(11, null);
@@ -172,12 +173,21 @@ function onStart() {
     tryAgainBtn = document.querySelector(".color-assign-page > .solved-part .try-again-btn");
     feedbackBtn = document.querySelector(".settings-page li > button[value=Feedback]");
     dashboardBtn = document.querySelector(".settings-page li > button[value=Dashboard]");
-    // console.log(dashboardBtn);
-    // console.log(feedbackBtn);
+    homeBtns = document.querySelectorAll(".home-btn");
+
+
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
         mapParts.set(part.classList[0], part);
     });
+
+    homeBtns.forEach(homeBtn => {
+        homeBtn.addEventListener("click", () => {
+            changePage("home-page");
+        });
+    })
+
+
     // console.log(mapParts);
     findActivePage();
     findActivePart();
@@ -415,8 +425,6 @@ function onSelectColor(event) {
     // window.game.cube.updateEdgesColors(test[edgeIndex], selectedColor);
     // edgeIndexToColor.set(test[edgeIndex], selectedColor);
     // edgeIndex++;
-
-
 }
 
 
