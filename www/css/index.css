@@ -645,18 +645,52 @@ input[type="color"]::-webkit-color-swatch {
   }
 
   /* Common styles for the settings page */
-.help-page {
-    width: 100%;
-    height: 100%;
-    justify-content: start;
-}
+/* CSS for 2x2 Rubik's Solver App Help Page */
 
-/* Styles for the container of settings buttons */
-.help-container {
-    list-style: none;
-    padding: 0;
-    /* color: #ffffff; */
+/* CSS for 2x2 Rubik's Solver App Help Page */
+  
+/* CSS for 2x2 Rubik's Solver App Help Page */
+  
+  .help-page {
+    padding: 20px;
+    overflow-y: scroll; /* Enable vertical scrolling for the help page */
+    height: 100vh; /* Set the height of the help page to full viewport height */
+  }
+  
+  .help-container {
+    flex: 1;
+    margin-bottom: 5%;
+  }
+  
+  .help-header {
+    width:auto;
+    height: 200px;
+  }
+  
+  h4 {
+    color: #020202;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: none; /* Set text-transform to none to keep the letters in their original case */
+  }
+  
+  .help-description {
+    font-size: 16px;
+    line-height: 1.6;
+    text-transform: none; /* Set text-transform to none to keep the letters in their original case */
+    letter-spacing: 1px; /* Add letter padding of 1 pixel */
+    line-height: 1.8;
 }
+  
+  p {
+    text-align: justify; /* Justify the text */
+    text-transform: none;
+    letter-spacing: 0.5px; /* Add letter padding of 0.5 pixels for paragraphs */
+    line-height: 1.6;
+  }
+  
+  
 
 
 /* IN CORDOVA DEFAULT STRUCTURE */
