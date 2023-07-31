@@ -96,6 +96,9 @@ let color;
 let firstLayerClrCount;
 let firstLayerSide;
 
+let numOfMoves = 0;
+
+
 // Called in solve first layer and insert edge func
 let beforeCount;
 let afterCount;
@@ -190,16 +193,7 @@ function onStart() {
     });
 
     homeBtns.forEach(homeBtn => {
-        homeBtn.addEventListener("click", () => {
-            if (homeBtn.parentNode.tagName === "NAV") {
-                if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-                    changePage("cube-select-page");
-                }
-            }
-            else {
-                changePage("home-page");
-            }
-        });
+        homeBtn.addEventListener("click", homeWarning);
     });
 
     
@@ -215,6 +209,17 @@ function onStart() {
     findActivePart();
 
     resetMoveNotationMap();
+}
+
+function homeWarning() {
+    if (homeBtn.parentNode.tagName === "NAV") {
+        if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+            changePage("cube-select-page");
+        }
+    }
+    else {
+        changePage("home-page");
+    }
 }
 
 
@@ -668,7 +673,7 @@ function onNextMoveBtnTap() {
     /* ACTUAL CODE */
     console.log(pendingMoves);
     moveNotationText.innerHTML = pendingMoves.join(" ");
-
+    numOfMoves++;
     if (!isTimerOngoing) {
         startTimer();
         isTimerOngoing = true;
@@ -682,6 +687,11 @@ function onNextMoveBtnTap() {
     if (pendingMoves.length) {
         performMove(pendingMoves.shift());
     }
+
+    if (numOfMoves >= 50) {
+        showError();
+    } 
+
 
 }
 
@@ -1265,8 +1275,6 @@ function isEdgeInsertedCorrectly(before) {
     }
 
 }
-
-// let layer = {x: 0, y: 1, z: 0};`
 
 
 function moveU(moveNotation) {
