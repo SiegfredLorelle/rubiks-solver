@@ -1392,12 +1392,12 @@ class Controls {
 
         const rotation = this.dragDelta[ this.dragDirection ];
 
-        if ( this.flipType === 'layer' ) { 
+        if ( this.flipType === 'layer' && selectedCube === "3") { 
 
           // NOTE: ROTATES LAYERS
-          // this.group.rotateOnAxis( this.flipAxis, rotation );
-          // this.flipAngle += rotation; 
-          // console.log(this.flipAxis, rotation, this.flipAngle);
+          this.group.rotateOnAxis( this.flipAxis, rotation );
+          this.flipAngle += rotation; 
+          console.log(this.flipAxis, rotation, this.flipAngle);
 
         } else {
 

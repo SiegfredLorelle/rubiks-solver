@@ -363,10 +363,20 @@ function unlistenToCubeSelectBntClick() {
 }
 
 function onCubeSelectBtnClick(event) {
-    selectedCube = event.target.value;
+    selectedCube = event.currentTarget.value;
+    console.log(selectedColor);
+    if (!selectedCube) {
+        alert("An error has occurred. Try doing it again.");
+    }
     // console.log(selectedCube);
     changePage("color-assign-page");
+    if (selectedCube === "3") {
+        changePartOfPage("solver-part");
+    }
 }
+
+
+
 
 function listenToSettingsBtnClick() {
     settingsBtn.addEventListener("click", onSettingsBtnClick);
