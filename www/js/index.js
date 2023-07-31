@@ -114,6 +114,9 @@ let timer;
 // Used for dashboard
 let dashboard = [];
 
+
+let moveNotationText;
+
 const sides = [
     [11, 23, 5, 17],    // Left
     [21, 18, 15, 12],   // Front
@@ -195,7 +198,9 @@ function onStart() {
             }
             changePage("home-page");
         });
-    })
+    });
+
+    moveNotationText = document.querySelector(".solver-part > p:first-child");
 
 
     // console.log(mapParts);
@@ -598,31 +603,25 @@ function onNextMoveBtnTap() {
 
 
 
-
-    // try {
-        if (!isTimerOngoing) {
-            startTimer();
-            isTimerOngoing = true;
-        }
     
-        if (!pendingMoves.length) {
-            checkIsCubeSolved();
-            solveCube();
-        }
-
-        if (pendingMoves.length) {
-            performMove(pendingMoves.shift());
-        }
-    // }
-    // catch (error) {
-    //     showError();
-    // }
-
-
-
     /* ACTUAL CODE */
-    
     console.log(pendingMoves);
+    moveNotationText.innerHTML = pendingMoves.join(" ");
+
+    if (!isTimerOngoing) {
+        startTimer();
+        isTimerOngoing = true;
+    }
+
+    if (!pendingMoves.length) {
+        checkIsCubeSolved();
+        solveCube();
+    }
+
+    if (pendingMoves.length) {
+        performMove(pendingMoves.shift());
+    }
+
 }
 
 function showError() {
