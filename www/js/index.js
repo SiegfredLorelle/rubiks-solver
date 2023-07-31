@@ -393,8 +393,7 @@ function color3x3Cube() {
     const indices = Array.from({ length: 54 }, (value, index) => index);
     console.log(indices);
     
-        let j = 0;
-        for (let i = indices.length - 1; i > 0; i--) { 
+            for (let i = indices.length - 1; i > 0; i--) { 
             const j = Math.floor(Math.random() * (i + 1)); 
             [indices[i], indices[j]] = [indices[j], indices[i]]; 
         }
