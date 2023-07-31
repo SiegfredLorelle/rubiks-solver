@@ -655,12 +655,16 @@ input[type="color"]::-webkit-color-swatch {
   .help-page {
     padding: 20px;
     overflow-y: scroll; /* Enable vertical scrolling for the help page */
-    height: 100vh; /* Set the height of the help page to full viewport height */
+    height: 300dvh; /* Set the height of the help page to full viewport height */
+    touch-action: pan-y;
   }
   
   .help-container {
     flex: 1;
     margin-bottom: 5%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    touch-action: pan-y;
   }
   
   .help-header {

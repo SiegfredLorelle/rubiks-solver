@@ -1873,6 +1873,29 @@ const sendEmail = (e) => {
   }
 };
 
-contactForm.addEventListener('submit', sendEmail);
+// Get the scroll container element
+const scrollContainer = document.querySelector('.help-page, .help-container');
 
+let isDragging = false;
+let startY = 0;
+let scrollTop = 0;
 
+scrollContainer.addEventListener('touchstart', (e) => {
+  isDragging = true;
+  startY = e.touches[0].clientY;
+  scrollTop = scrollContainer.scrollTop;
+});
+
+scrollContainer.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  
+  const currentY = e.touches[0].clientY;
+  const deltaY = currentY - startY;
+  scrollContainer.scrollTop = scrollTop - deltaY;
+  
+  e.preventDefault(); // Prevent default touch scroll behavior
+});
+
+scrollContainer.addEventListener('touchend', () => {
+  isDragging = true;
+});
