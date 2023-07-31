@@ -181,7 +181,7 @@ function onStart() {
     homeBtns = document.querySelectorAll(".home-btn");
     resetBtn = document.querySelector(".color-assign-page .reset-btn");
     helpBtn = document.querySelector(".settings-page li > button[value=Help]");
-    backBtnInSolvePg =document.querySelector(".color-assign-page .fa-right-from-bracket");
+    backBtnsInSolvePg =document.querySelectorAll(".back-btn");
 
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
@@ -197,6 +197,15 @@ function onStart() {
                 return;
             }
             changePage("home-page");
+        });
+    });
+
+    
+    backBtnsInSolvePg.forEach(backBtnInSolvePg => {
+        backBtnInSolvePg.addEventListener("click", () => {
+            if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                changePage("cube-select-page");
+            }
         });
     });
 
@@ -319,7 +328,7 @@ function onColorAssignPage() {
     // listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
-    listenToBtnTap(backBtnInSolvePg);
+    // listenToBtnTap(backBtnInSolvePg);
     listenToColorChange();
     window.version = '0.99.2';
     window.game = new Game();
@@ -371,7 +380,7 @@ function onCubeSelectBtnClick(event) {
     // console.log(selectedCube);
     changePage("color-assign-page");
     if (selectedCube === "3") {
-        changePartOfPage("solver-part");
+        changePartOfPage("freestyle-part");
     }
 }
 
@@ -562,8 +571,8 @@ function listenToBtnTap(btn) {
             break;
         case helpBtn:
             helpBtn.addEventListener("click", onHelpBtnTap);
-        case backBtnInSolvePg:
-            backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
+        // case backBtnInSolvePg:
+        //     backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
     }
 }
 
@@ -584,11 +593,9 @@ function onHelpBtnTap() {
     changePage("help-page");
 }
 
-function onBackBtnInSolvePgTap() {
-    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
-        changePage("cube-select-page");
-    }
-}
+// function onBackBtnInSolvePgTap() {
+
+// }
 
 function resetColors() {
     for (const i of indices) {

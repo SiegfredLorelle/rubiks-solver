@@ -349,7 +349,8 @@ input[type="color"]::-webkit-color-swatch {
 
 .color-assign-page>.color-assign-part>.solve-reset-container>button,
 .color-assign-page>.solver-part>div>button,
-.color-assign-page>.solved-part>div>button {
+.color-assign-page>.solved-part>div>button,
+.color-assign-page>.freestyle-part>div>button {
     width: 33%;
     background-color: #020202;
     border-radius: 10px;
@@ -372,7 +373,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .color-assign-page>.solver-part>div,
-.color-assign-page>.solved-part>div {
+.color-assign-page>.solved-part>div,
+.color-assign-page>.freestyle-part>div {
     margin-bottom: 1.5rem;
 }
 
