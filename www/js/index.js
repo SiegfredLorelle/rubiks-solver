@@ -178,7 +178,7 @@ function onStart() {
     homeBtns = document.querySelectorAll(".home-btn");
     resetBtn = document.querySelector(".color-assign-page .reset-btn");
     helpBtn = document.querySelector(".settings-page li > button[value=Help]");
-
+    backBtnInSolvePg =document.querySelector(".color-assign-page .fa-right-from-bracket");
 
     let parts = document.querySelectorAll("main div.part");
     parts.forEach(part => {
@@ -187,6 +187,12 @@ function onStart() {
 
     homeBtns.forEach(homeBtn => {
         homeBtn.addEventListener("click", () => {
+            if (homeBtn.parentNode.tagName === "NAV") {
+                if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+                    changePage("cube-select-page");
+                }
+                return;
+            }
             changePage("home-page");
         });
     })
@@ -308,6 +314,7 @@ function onColorAssignPage() {
     listenToValueChange();
     listenToBtnTap(tryAgainBtn);
     listenToBtnTap(resetBtn);
+    listenToBtnTap(backBtnInSolvePg);
     window.version = '0.99.2';
     window.game = new Game();
     resetColors();
@@ -527,8 +534,11 @@ function listenToBtnTap(btn) {
             break;
         case resetBtn:
             resetBtn.addEventListener("click", onResetBtnTap);
+            break;
         case helpBtn:
             helpBtn.addEventListener("click", onHelpBtnTap);
+        case backBtnInSolvePg:
+            backBtnInSolvePg.addEventListener("click", onBackBtnInSolvePgTap);
     }
 }
 
@@ -547,6 +557,12 @@ function onResetBtnTap() {
 
 function onHelpBtnTap() {
     changePage("help-page");
+}
+
+function onBackBtnInSolvePgTap() {
+    if (confirm("Going back resets the cube.\n\nAre you sure want to go back?")) {
+        changePage("cube-select-page");
+    }
 }
 
 function resetColors() {
