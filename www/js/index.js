@@ -722,13 +722,24 @@ function updateTimerInSolverPart() {
 }
 
 
+let numberOfTimesWithoutPendingMoves = 0;
 function solveCube() {
-    if (!isFirstLayerSolved()) {
-        solveFirstLayer();
+    let prev = [...pendingMoves]; 
+        if (!isFirstLayerSolved()) {
+            solveFirstLayer();
+        }
+        else {
+            onFirstLayerSolved();
+        }
+
+
+    if (!prev.length && !pendingMoves.length) {
+        numberOfTimesWithoutPendingMoves++;
+        if (numberOfTimesWithoutPendingMoves >= 2) {
+            showError();
+        } 
     }
-    else {
-        onFirstLayerSolved();
-    }
+    
 }
 
 
@@ -746,13 +757,14 @@ function onFirstLayerSolved() {
 function resetVar() {
     isTimerOngoing = false;
     isFirstLayerFound = false;
-    isFirstLayerFound = false;
     maxColor = [];
     color;
     firstLayerClrCount;
     firstLayerSide;
     beforeCount;
     afterCount;
+    numberOfTimesWithoutPendingMoves = 0;
+    numberOfTimesEdgesWereInserted = 0;
 }
 
 
@@ -931,7 +943,7 @@ function solveFirstLayer() {
 let isEdgesToInsertAligned = false;
 // let beforeCount;
 // let afterCount;
-
+let numberOfTimesEdgesWereInserted = 0;
 function insertEdge(edgeColor, whereToPlace, firstLayerColor) { 
     console.log("FINDING", edgeColor, firstLayerColor, whereToPlace);
 
@@ -940,7 +952,14 @@ function insertEdge(edgeColor, whereToPlace, firstLayerColor) {
     console.log("BEFORE COUNT ", beforeCount);
 
     let edgeToMove;
+
+    if (numberOfTimesEdgesWereInserted >= 6) {
+        showError();
+        return;
+    }
+
     if (!isEdgesToInsertAligned) {
+        numberOfTimesEdgesWereInserted = 0;
         loop1:
             for (const topEdge of topEdges) {
                 let reqColor = [edgeColor, firstLayerColor]
@@ -980,6 +999,8 @@ function insertEdge(edgeColor, whereToPlace, firstLayerColor) {
     pendingMoves.push("R'");
     pendingMoves.push("U'");
 
+    numberOfTimesEdgesWereInserted++;
+
 }
 
 
@@ -1016,7 +1037,12 @@ function findLeftAndRight(edge, otherEdge) {
             }
         }
     }
-    return [leftSide, rightSide];
+    try {
+        return [leftSide, rightSide];
+    }
+    catch {
+        showError();
+    }
 }
 
 
@@ -1609,6 +1635,7 @@ function changePage(pageToActivate) {
         changePartOfPage("color-assign-part");
     }
     stopTimer();
+    resetVar();
 }
 
 function changePartOfPage(partOfPageToActivate) {
