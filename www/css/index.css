@@ -282,15 +282,11 @@ input[type="color"]::-webkit-color-swatch {
     height: 10%;
     padding: 0.5rem;
     color: #020202;
-    /* align-items: normal; */
-    /* justify-content: space-between; */
 }
 
 .color-assign-page>nav>img {
     width: 70px;
     height: 70px;
-    /* align-items: normal; */
-    /* justify-content: space-between; */
 }
 
 .color-assign-page>.ui,
@@ -362,10 +358,6 @@ input[type="color"]::-webkit-color-swatch {
 .color-assign-page>.color-assign-part>.solve-reset-container>button:disabled {
     background-color: #00000080;
 }
-
-/* .color-assign-page> .color-assign-part > .color-container>.flex-row>input[type="color"].selected {
-    box-shadow: 7px 9px 0 black;
-} */
 
 .color-assign-page>.solver-part,
 .solved-part > hgroup > p:last-child {
